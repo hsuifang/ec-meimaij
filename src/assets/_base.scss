@@ -1,0 +1,48 @@
+*,
+*:after,
+*:before {
+  position: relative;
+  transition: all 0.1s ease;
+  // outline: 1px solid #eee;
+  letter-spacing: 1px;
+}
+
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+body {
+  min-height: 100vh;
+  letter-spacing: 1px;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  &:hover {
+    color: $primary;
+  }
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+i,
+i:after,
+i:before{
+  vertical-align: unset !important;
+}
+
+i {
+  color: $info;
+  &:hover{
+    color: $primary;
+  }
+}
