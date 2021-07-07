@@ -1,40 +1,28 @@
 <template>
+  <section class="bg-light">
+    <div class="container text-center py-5">
+      <h2 class="fs-6">鎂麥 / 購物車</h2>
+    </div>
+  </section>
   <!-- 購物車 -->
   <div class="pb-5">
     <div class="container">
-      <div class="row mt-4 mb-4 p-5 bg-white rounded shadow-sm">
+      <div class="row mt-4 mb-4 p-5 bg-white rounded border">
         <div class="col-lg-12">
-          <div class="text-end mb-2" v-if="carts.length > 0">
-            <button
-              type="button"
-              class="btn btn-outline-secondary rounded-pill px-3"
-              :disabled="loadingItem.pos === 'delAll'"
-              @click="deleteAllCart"
-            >
-              刪除全部
-            </button>
-            <div
-              v-if="loadingItem.pos === 'delAll'"
-              class="spinner-border spinner-border-sm position-absolute top-50 start-100"
-              role="status"
-            >
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" class="border-0 bg-light">
+                  <th scope="col" class="py-3 border-0 bg-light">
                     <p>名稱</p>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
+                  <th scope="col" class="py-3 border-0 bg-light">
                     <p>金額</p>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
+                  <th scope="col" class="py-3 border-0 bg-light">
                     <p>數量</p>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
+                  <th scope="col" class="py-3 border-0 bg-light">
                     <p>刪除</p>
                   </th>
                 </tr>
@@ -49,21 +37,9 @@
                           alt=""
                           width="70"
                           height="70"
-                          class="img-fluid rounded shadow-sm me-3"
+                          class="img-fluid me-3"
                           style="height: 70px; object-fit: contain"
                         />
-                        <div class="ml-3 d-inline-block align-middle">
-                          <h5 class="mb-0 text-dark">{{ item.product.title }}</h5>
-                          <p class="text-muted font-weight-normal font-italic mb-2">
-                            類別: {{ item.product.category }}
-                          </p>
-                          <div v-if="item.coupon" class="text-muted fs-8">
-                            優惠券:
-                            <span class="bg-primary text-white rounded-pill py-1 px-2 fs-8">
-                              {{ item.coupon.code }}
-                            </span>
-                          </div>
-                        </div>
                       </div>
                     </th>
                     <td class="align-middle">
@@ -88,10 +64,10 @@
                     <td class="align-middle">
                       <button
                         type="button"
-                        class="btn btn-outline-danger"
+                        class="btn btn-outline-info"
                         @click="deleteItemFromCart({ cartId: item.id })"
                       >
-                        <i class="fa fa-trash"></i>
+                        <i class="bi bi-trash"></i>
                       </button>
                       <div
                         v-if="loadingItem.pos === 'delItem' && loadingItem.id === item.id"
@@ -110,149 +86,47 @@
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-      <!-- 個人資訊 -->
-      <div class="row p-5 bg-white rounded shadow-sm">
-        <div class="col-lg-6">
-          <h6 class="bg-light rounded-pill px-4 py-3 fw-bold text-secondary">優惠碼</h6>
-
-          <div class="p-2">
-            <div class="input-group mb-4 border rounded-pill p-2">
+          <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex">
               <input
+                id="coupon"
                 type="text"
-                aria-describedby="button-addon3"
-                class="form-control border-0"
-                v-model="couponCode"
+                class="form-control me-2"
+                style="width: 200px"
+                min="1"
               />
-              <div
-                v-if="loadingItem.pos === 'applyCoupon'"
-                class="position-absolute top-50 start-100"
-                style="transform: translateX(-10px)"
-              >
-                <div class="spinner-border spinner-border-sm" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div>
-              <div class="input-group-append border-0">
-                <button
-                  id="button-addon3"
-                  type="button"
-                  class="btn btn-secondary text-white px-4 rounded-pill"
-                  @click="applyCoupn"
-                >
-                  <i class="fa fa-gift me-2"></i>使用優惠券
-                </button>
-              </div>
+              <button type="button" class="btn btn-secondary text-white">
+                <i class="bi bi-gift text-white me-2"></i>使用優惠券
+              </button>
             </div>
-          </div>
-          <h6 class="bg-light rounded-pill px-4 py-3 fw-bold text-secondary">金額明細</h6>
-
-          <div class="pt-0 p-4">
-            <ul class="list-unstyled mb-4">
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">購買</strong><strong>NT$ {{ price.total }}</strong>
-              </li>
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">折扣</strong
-                ><strong>${{ price.final - price.total }}</strong>
-              </li>
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">總共</strong>
-                <h5 class="fw-bold">NT$ {{ price.final }}</h5>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <h6 class="bg-light rounded-pill px-4 py-3 fw-bold text-secondary">購買者資訊</h6>
-          <v-form ref="form" v-slot="{ errors }" @submit="requestOrder" class="px-3">
-            <div class="mb-3">
-              <label for="name" class="form-label">姓名</label>
-              <v-field
-                id="name"
-                name="姓名"
-                type="email"
-                class="form-control"
-                :class="{ 'is-invalid': errors['姓名'] }"
-                placeholder="請輸入姓名"
-                rules="required"
-                v-model="form.user.name"
-              ></v-field>
-              <error-message name="姓名" class="invalid-feedback"></error-message>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <v-field
-                id="email"
-                name="Email"
-                type="email"
-                class="form-control"
-                :class="{ 'is-invalid': errors['Email'] }"
-                placeholder="請輸入Email"
-                rules="email|required"
-                v-model="form.user.email"
-              ></v-field>
-              <error-message name="Email" class="invalid-feedback"></error-message>
-            </div>
-            <div class="mb-3">
-              <label for="tel" class="form-label">電話</label>
-              <v-field
-                id="tel"
-                name="電話"
-                type="tel"
-                class="form-control"
-                :class="{ 'is-invalid': errors['電話'] }"
-                placeholder="請輸入電話"
-                rules="min:8|max:10|required"
-                v-model="form.user.tel"
-              ></v-field>
-              <error-message name="電話" class="invalid-feedback"></error-message>
-            </div>
-            <div class="mb-3">
-              <label for="address" class="form-label">地址</label>
-              <v-field
-                id="address"
-                name="地址"
-                type="text"
-                class="form-control"
-                :class="{ 'is-invalid': errors['地址'] }"
-                placeholder="請輸入地址"
-                rules="required"
-                v-model="form.user.address"
-              ></v-field>
-              <error-message name="地址" class="invalid-feedback"></error-message>
-            </div>
-            <div class="mb-3">
-              <label for="message" class="form-label">留言或備註</label>
-              <textarea
-                id="message"
-                cols="30"
-                rows="2"
-                class="form-control"
-                v-model="form.message"
-              ></textarea>
-            </div>
-            <div class="text-end">
+            <div v-if="carts.length > 0">
               <button
-                type="submit"
-                class="btn btn-secondary rounded-pill py-2 px-4 text-white"
-                :disabled="loadingItem.pos === 'requestOrder' || this.carts.length === 0"
+                type="button"
+                class="btn btn-secondary px-3"
+                :disabled="loadingItem.pos === 'delAll'"
+                @click="deleteAllCart"
               >
-                購買確認
+                刪除全部
               </button>
               <div
-                v-if="loadingItem.pos === 'requestOrder'"
-                class="position-absolute top-50 start-100"
-                style="transform: translateX(-10px)"
+                v-if="loadingItem.pos === 'delAll'"
+                class="spinner-border spinner-border-sm position-absolute top-50 start-100"
+                role="status"
               >
-                <div class="spinner-border spinner-border-sm" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
+                <span class="visually-hidden">Loading...</span>
               </div>
             </div>
-          </v-form>
+          </div>
         </div>
+      </div>
+      <ul class="text-end pt-5 pb-3 border-bottom">
+        <li class="mb-4">小計: 1000</li>
+        <li class="mb-4">含稅: 0</li>
+        <li class="mb-4">總計: 1000</li>
+      </ul>
+      <div class="d-flex justify-content-between py-3">
+        <button type="button" class="btn btn-outline-secondary">繼續購物</button>
+        <button type="button" class="btn btn-primary px-4 text-white">結帳</button>
       </div>
     </div>
   </div>

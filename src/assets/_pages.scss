@@ -8,7 +8,8 @@
 %border-dot-after{
   content: '▪︎';
   position: absolute;
-  color: $gray-500;
+  // color: $secondary;
+  color: $secondary;
 }
 
 
@@ -167,7 +168,7 @@
   //   content: '';
   //   width: 100px;
   //   height: 2px;
-  //   background-color: $gray-500;
+  //   background-color: $secondary;
   //   position: absolute;
   //   bottom: -12px;
   //   left: 50%;
@@ -179,6 +180,14 @@
     top: 110%;
     left: 50%;
     transform: translateX(-50%);
-    text-shadow: 40px 0 $gray-500, 30px 0 $gray-500, 10px 0 $gray-500, -10px 0 $gray-500,  -30px 0 $gray-500, -40px 0 $gray-500,;
+    text-shadow: 40px 0 $secondary, 30px 0 $secondary, 10px 0 $secondary, -10px 0 $secondary,  -30px 0 $secondary, -40px 0 $secondary,;
+  }
+}
+
+.btn-outline-info {
+  &:hover {
+    i {
+      color: white
+    }
   }
 }

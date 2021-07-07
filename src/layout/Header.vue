@@ -70,7 +70,7 @@
           <a href="#">
             <i class="bi bi-bookmark-heart fs-5 me-3"></i>
           </a>
-          <div>
+          <a href="#" @click.prevent="checkCart">
             <i class="bi-bag-fill fs-5"></i>
             <p
               class="position-absolute left-50 bg-primary px-1 rounded-circle text-white"
@@ -78,9 +78,25 @@
             >
               20
             </p>
-          </div>
+          </a>
         </div>
       </div>
     </nav>
+    <CartOffcanvas ref="canvas" />
   </div>
 </template>
+<script>
+import CartOffcanvas from '@/components/CartOffcanvas.vue';
+
+export default {
+  components: {
+    CartOffcanvas,
+  },
+  methods: {
+    checkCart() {
+      this.$refs.canvas.open();
+    },
+  },
+  mounted() {},
+};
+</script>
