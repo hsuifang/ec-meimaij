@@ -4,16 +4,16 @@
       <div class="card-body">
         <!-- create Btn -->
         <div class="d-flex justify-content-md-between pr-3 mb-4">
-          <h2 class="h6 text-secondary">訂單清單</h2>
-        </div>
-        <div class="text-end mb-2" v-if="orders.length > 0">
-          <button
-            type="button"
-            class="btn btn-outline-secondary rounded-pill px-3"
-            @click="deleteAllOrders"
-          >
-            刪除全部
-          </button>
+          <h2 class="h6 text-info">訂單清單</h2>
+          <div class="text-end mb-2" v-if="orders.length > 0">
+            <button
+              type="button"
+              class="btn btn-outline-secondary py-2 px-3"
+              @click="deleteAllOrders"
+            >
+              刪除全部
+            </button>
+          </div>
         </div>
         <table class="table caption-top">
           <thead>
@@ -28,7 +28,7 @@
           </thead>
           <tbody>
             <tr v-if="isLoading">
-              <td class="text-center text-muted" colspan="5">
+              <td class="text-center text-muted" colspan="6">
                 <img width="100" src="https://media.giphy.com/media/wnYB3vx9t6PXiq1ubB/giphy.gif" />
               </td>
             </tr>
@@ -60,7 +60,7 @@
                 <td>
                   <button
                     type="button"
-                    class="btn btn-sm btn-primary me-1"
+                    class="btn btn-sm btn-outline-info me-1"
                     data-action="remove"
                     @click="handleOrderItem(item)"
                   >

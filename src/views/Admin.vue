@@ -1,21 +1,23 @@
 <template>
-  <div class="container py-5">
-    <ul class="nav justify-content-center align-items-center">
-      <li class="nav-item"><router-link class="nav-link" to="/">回到前台</router-link></li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/admin/products">後台產品列表</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/admin/orders">後台訂單</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/admin/coupons">後台優惠券</router-link>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link" @click.prevent="handleLogout">登出</a>
-      </li>
-    </ul>
-    <router-view v-if="isAuthenticated"></router-view>
+  <div class="back">
+    <div class="container py-5">
+      <ul class="nav justify-content-center align-items-center">
+        <li class="nav-item"><router-link class="nav-link" to="/">回到前台</router-link></li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/admin/products">產品列表</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/admin/orders">訂單</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/admin/coupons">優惠券</router-link>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="handleLogout">登出</a>
+        </li>
+      </ul>
+      <router-view v-if="isAuthenticated"></router-view>
+    </div>
   </div>
 </template>
 <script>
@@ -75,3 +77,16 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+// f6ab4a
+// 7e4c4f
+
+.back {
+  min-height: 100vh;
+  background: #efefef;
+  .router-link-exact-active {
+    font-weight: bold;
+    border-bottom: 3px solid #7e4c4f;
+  }
+}
+</style>

@@ -6,24 +6,22 @@
     }"
     class="swiper-container"
   >
-    <swiper-slide v-for="img in images" :key="img.id">
+    <swiper-slide v-for="item in covers" :key="item.id">
       <div
         class="swiper-content"
         :style="{
-          backgroundImage: `url(${img.url})`,
+          backgroundImage: `url(${item.url})`,
         }"
       >
         <div class="container">
           <div class="row">
             <div class="col-md-6 offset-md-1">
               <div class="slider-text">
-                <h3>Your Pets Deserve The Best</h3>
-                <h1>Shop All Pet Products</h1>
-                <p class="mb-4">
-                  Lorem ipsum dolor sit amet,adipiscing elits eiusmod tempor lorem ipsum xercitat
-                  the quis nostrud exercitation ullamco
-                </p>
-                <a href="#" class="btn btn-primary text-white" tabindex="0">前往購物</a>
+                <h2 class="mb-3">{{ item.content.title }}</h2>
+                <h5 class="mb-4" v-html="item.content.text"></h5>
+                <router-link to="products" class="btn btn-primary text-white px-4"
+                  >前往購物</router-link
+                >
               </div>
             </div>
           </div>
@@ -54,20 +52,33 @@ export default {
   data() {
     return {
       parallaxSwiperWidth: 0,
-      images: [
-        { id: 1, url: '/images/alvan-nee-T-0EW-SEbsE-unsplash.jpg' },
-        { id: 2, url: '/images/michael-oxendine-t7wwffh6x8E-unsplash.jpg' },
-        { id: 3, url: '/images/jamie-street-0nk6XZp7_1E-unsplash.jpg' },
+      covers: [
+        {
+          id: 1,
+          url: '/images/cover1.jpg',
+          content: {
+            title: '限時購買免運',
+            text: '常溫商品滿NT$ 699<br>冷凍商品滿NT$ 1799',
+          },
+        },
+        {
+          id: 2,
+          url: '/images/cover2.jpg',
+          content: {
+            title: '生食產品新上市',
+            text: '低溫高壓滅菌<br>寶貝健康從天然食物',
+          },
+        },
+        {
+          id: 3,
+          url: '/images/cover3.jpg',
+          content: {
+            title: '零食產品新上市',
+            text: '雞胸肉原肉乾<br>頂級豬肉原肉乾',
+          },
+        },
       ],
     };
-  },
-  methods: {
-    onSwiper(swiper) {
-      console.log(swiper);
-    },
-    onSlideChange() {
-      console.log('slide change');
-    },
   },
 };
 </script>
@@ -92,9 +103,11 @@ export default {
   align-items: center;
 }
 .slider-text {
-  padding: 1.25rem;
-  color: #ccc;
-  background: rgba(#333, 0.3);
+  padding: 2rem;
+  background: rgba(#fff, 0.3);
+  h5 {
+    line-height: 1.5;
+  }
 }
 
 .swiper-slide img {

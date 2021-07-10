@@ -64,9 +64,7 @@
           </ul>
         </div>
         <div class="d-flex align-items-center">
-          <a href="#">
-            <i class="bi bi-person fs-4 me-3"></i>
-          </a>
+          <router-link to="login"><i class="bi bi-person fs-4 me-3"></i></router-link>
           <a href="#">
             <i class="bi bi-bookmark-heart fs-5 me-3"></i>
           </a>

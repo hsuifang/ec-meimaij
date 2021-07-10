@@ -121,12 +121,13 @@
       </div>
       <ul class="text-end pt-5 pb-3 border-bottom">
         <li class="mb-4">小計: 1000</li>
-        <li class="mb-4">含稅: 0</li>
+        <li class="mb-4">折扣: 0</li>
+        <!-- usedCode -->
         <li class="mb-4">總計: 1000</li>
       </ul>
       <div class="d-flex justify-content-between py-3">
         <button type="button" class="btn btn-outline-secondary">繼續購物</button>
-        <button type="button" class="btn btn-primary px-4 text-white">結帳</button>
+        <router-link class="btn btn-primary px-4 text-white" to="checkout">結帳</router-link>
       </div>
     </div>
   </div>
@@ -138,7 +139,6 @@ import {
   apiDeleteCart,
   apiDeleteAllCart,
   apiUpdateCart,
-  apiGenerateOrder,
   apiApplyCoupon,
 } from '@/api';
 
@@ -153,15 +153,6 @@ export default {
       loadingItem: {
         pos: '',
         id: '',
-      },
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
-        },
-        message: '',
       },
       couponCode: '',
       usedCode: '',
@@ -227,28 +218,6 @@ export default {
         }
       } catch (error) {
         this.$vErrorNotice();
-      }
-    },
-    async requestOrder() {
-      this.toggleLoding({ pos: 'requestOrder' });
-      try {
-        const res = await apiGenerateOrder({
-          user: this.form.user,
-          message: this.form.message,
-        });
-        const { success } = res.data;
-        if (success) {
-          this.$vHttpsNotice(res, '送出訂單');
-          this.$router.push('/');
-          // await this.fetchCartList();
-          // await this.$refs.form.resetForm(); // 記得要清data資料
-        } else {
-          this.$vHttpsNotice(res, '送出訂單');
-        }
-      } catch (error) {
-        this.$vErrorNotice();
-      } finally {
-        this.toggleLoding({ pos: '' });
       }
     },
     async applyCoupn() {

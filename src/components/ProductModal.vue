@@ -53,7 +53,9 @@
                       @change="uploadFile"
                     />
                     <div class="position-absolute bottom-0 end-0">
-                      <i class="fas fa-spinner fa-spin" v-if="fileUploading"></i>
+                      <div class="spinner-border" role="status" v-if="fileUploading">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     </div>
                   </div>
                   <div class="input-group mb-3" v-if="uploadType === 2">
@@ -135,6 +137,16 @@
                     placeholder="內容"
                     row="5"
                     v-model="currentProductItem.content"
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="spec" class="form-label">規格</label>
+                  <textarea
+                    class="form-control"
+                    id="spec"
+                    placeholder="規格"
+                    row="10"
+                    v-model="currentProductItem.spec"
                   ></textarea>
                 </div>
 
@@ -274,6 +286,8 @@ export default {
           style: 'danger',
           title: '檔案大小不得超過1GB',
         });
+        this.$refs.fileInput.value = '';
+        this.fileUploading = false;
       } else {
         try {
           const formData = new FormData();

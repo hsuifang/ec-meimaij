@@ -2,71 +2,72 @@
   <!-- Carousel -->
   <ImagesCarousel class="pb-4" />
   <!-- Annoucement  -->
-
   <div class="container pb-lg-8">
     <div class="row">
       <div class="col-lg-4 border-end-custom mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
-          <img src="images/line.svg" alt="" width="50" class="mb-3" />
-          <h4>24 X 7 Free Support</h4>
-          <p>Passage Of Lorem Ipsum.</p>
+          <img src="images/line-color.svg" alt="line" width="50" class="mb-3" />
+          <h4 class="mb-2">LINE 服務</h4>
+          <p>10:00 - 21:00 LINE專人線上諮詢</p>
         </div>
       </div>
       <div class="col-lg-4 border-end-custom mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
-          <img src="images/lorry.svg" alt="" width="50" class="mb-3" />
-          <h4>Free Shipping</h4>
-          <p>Passage of Lorem Ipsum.</p>
+          <img src="images/truck.svg" alt="" width="50" class="mb-3" />
+          <h4 class="mb-2">滿額免運</h4>
+          <p>常溫商品滿NT$ 699免運</p>
+          <p>冷凍商品滿NT$ 1799免運</p>
         </div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
-          <img src="images/exchange.svg" alt="" width="50" class="mb-3" />
-          <h4>Money Back Guarantee</h4>
-          <p>Passage of Lorem Ipsum.</p>
+          <img src="images/box-color.svg" alt="" width="50" class="mb-3" />
+          <h4 class="mb-2">快速配送</h4>
+          <p>工作日12:00前訂單，當日出貨</p>
+          <p>台灣本島最快隔日送達</p>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Ad -->
-
   <div class="container pb-4 pb-lg-8">
     <div class="row">
       <!-- left side -->
       <div class="col-lg-6">
         <div class="row g-0 mb-5">
           <div class="col-6">
-            <a href="#" class="img"
-              ><img height="300" src="images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg" alt="dog"
-            /></a>
+            <router-link to="products" class="img">
+              <img height="300" class="obj-fit-contain" src="images/favorite1.jpg" alt="dog" />
+            </router-link>
           </div>
           <div class="col-6 d-flex flex-column justify-content-center align-items-start ps-5 pe-3">
-            <span class="badge bg-danger rounded-pill mb-3">新商品</span>
-            <h3 class="mb-3">Pet Boarding & Daycare</h3>
-            <p class="mb-3 text-info">Lorem ipsum dolor sit dolor sit amet, consectetur anas</p>
+            <span class="badge bg-danger rounded-pill mb-3 py-2">新商品</span>
+            <h3 class="mb-3">雞肉/牛肉餐盒</h3>
+            <p class="mb-3 text-info">
+              特選上等牛、雞的新鮮材料，並保有精華烹調而成，風味極佳，讓寵物吃得營養均衡！
+            </p>
             <button type="button" class="btn btn-outline-primary">購鎂麥</button>
           </div>
         </div>
         <div class="row g-0">
           <div class="col-6 d-flex flex-column justify-content-center align-items-start p-3">
-            <span class="badge bg-info rounded-pill mb-3">最高7折折扣</span>
-            <h3 class="mb-3">Pet Boarding & Daycare</h3>
-            <p class="mb-3 text-info">Lorem ipsum dolor sit dolor sit amet, consectetur anas</p>
+            <span class="badge bg-info rounded-pill mb-3 py-2">最高7折折扣</span>
+            <h3 class="mb-3">雞肉大麥乾糧</h3>
+            <p class="mb-3 text-info">強化肌肉所需的優質蛋白質/天然纖維助於腸道消化健康</p>
             <button type="button" class="btn btn-primary text-white">購鎂麥</button>
           </div>
           <div class="col-6">
-            <a href="#" class="img text-end"
-              ><img height="300" src="images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg" alt="dog"
-            /></a>
+            <router-link to="products" class="img">
+              <img height="300" class="obj-fit-contain" src="images/favorite2.jpg" alt="dog" />
+            </router-link>
           </div>
         </div>
       </div>
       <!-- right side -->
       <div class="col-lg-6">
-        <a href="#" class="coverImg text-end"
-          ><img src="images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg" alt="dog"
-        /></a>
+        <router-link to="products" class="coverImg">
+          <img height="300" src="images/ad.jpg" alt="dog" />
+        </router-link>
       </div>
     </div>
   </div>
@@ -74,7 +75,7 @@
   <div class="container pb-4 pb-lg-8">
     <div class="section-title text-center mb-8">
       <h2 class="mb-2">熱銷商品</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <p>看看大家的寵物寶貝都愛吃些什麼 ?</p>
     </div>
 
     <ul class="row list-unstyled pt-3">
@@ -86,61 +87,25 @@
   <!-- 用戶說 -->
   <section class="bg-light">
     <div class="container py-4 py-lg-8">
-      <div class="section-title text-center mb-8">
+      <div class="section-title text-center mb-5 mb-lg-8">
         <h2 class="mb-2">購買者心得</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> -->
       </div>
       <div class="row pt-3">
-        <div class="col-lg-4">
+        <div class="col-lg-4 mb-5 mb-lg-0" v-for="item in clientFeedBack" :key="item.id">
           <div class="pin shadow-sm p-5 bg-white">
-            <p class="mb-2">lorem*3lorem*3lorem*3lorem*3</p>
+            <p class="mb-4 fw-bold text-secondary">購買雞肉乾糧 --</p>
             <div class="d-flex align-items-center">
               <img
-                src="http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg"
+                :src="item.avator"
                 alt="avator"
                 width="50"
                 height="50"
-                class="rounded-circle overflow-hidden me-3 border border-primary border-2"
+                class="rounded-circle overflow-hidden me-3 border border-secondary border-2"
               />
               <div>
-                <h6>飼養黃金獵犬高先生</h6>
-                <p class="text-info">我家挑食的小寶貝超級愛</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="pin shadow-sm p-5 bg-white">
-            <p class="mb-2">lorem*3lorem*3lorem*3lorem*3</p>
-            <div class="d-flex align-items-center">
-              <img
-                src="http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg"
-                alt="avator"
-                width="50"
-                height="50"
-                class="rounded-circle overflow-hidden me-3 border border-primary border-2"
-              />
-              <div>
-                <h6>飼養黃金獵犬高先生</h6>
-                <p class="text-info">我家挑食的小寶貝超級愛</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="pin shadow-sm p-5 bg-white">
-            <p class="mb-2">lorem*3lorem*3lorem*3lorem*3</p>
-            <div class="d-flex align-items-center">
-              <img
-                src="http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg"
-                alt="avator"
-                width="50"
-                height="50"
-                class="rounded-circle overflow-hidden me-3 border border-primary border-2"
-              />
-              <div>
-                <h6>飼養黃金獵犬高先生</h6>
-                <p class="text-info">我家挑食的小寶貝超級愛</p>
+                <h6 class="mb-1">飼養{{ item.pet }}{{ item.name }}</h6>
+                <p class="text-info">{{ item.feedback }}</p>
               </div>
             </div>
           </div>
@@ -234,6 +199,35 @@ export default {
             type: 'warning',
             text: 'NEW',
           },
+        },
+      ],
+      clientFeedBack: [
+        {
+          id: 1,
+          avator:
+            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+          name: '陳先生',
+          pet: '黃金獵犬',
+          product: '雞肉乾糧',
+          feedback: '我家挑食的小寶貝超級愛',
+        },
+        {
+          id: 2,
+          avator:
+            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+          name: '許花',
+          pet: '博美',
+          product: '潔牙骨',
+          feedback: '一邊玩樂一邊清潔，嘴巴香香',
+        },
+        {
+          id: 3,
+          avator:
+            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+          name: '台北yoyo',
+          pet: '米克斯',
+          product: '生食',
+          feedback: '看他吃得很開心，我就很開心',
         },
       ],
     };

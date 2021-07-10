@@ -4,9 +4,9 @@
       <div class="card-body">
         <!-- create Btn -->
         <div class="d-flex justify-content-md-between pr-3 mb-4">
-          <h2 class="h6 text-secondary">產品清單</h2>
+          <h2 class="h6 text-info">產品清單</h2>
           <button
-            class="btn btn-outline-primary rounded-pill shadow-sm"
+            class="btn btn-outline-primary shadow-sm py-2"
             type="button"
             aria-controls="modifyProductItem"
             @click="handleProductItem(null)"
@@ -44,7 +44,7 @@
               <td>
                 <button
                   type="button"
-                  class="btn btn-sm btn-primary me-1"
+                  class="btn btn-sm btn-outline-info me-1"
                   data-action="remove"
                   @click="handleProductItem(item)"
                 >
@@ -61,8 +61,8 @@
               </td>
             </tr>
             <!-- no data -->
-            <tr v-if="products.length === 0" class="text-center text-muted" colspan="5">
-              <td class="text-center text-muted" colspan="5">無商品</td>
+            <tr v-if="products.length === 0" class="text-center text-muted" colspan="6">
+              <td class="text-center text-muted" colspan="6">無商品</td>
             </tr>
           </tbody>
         </table>
@@ -221,6 +221,9 @@ export default {
       this.initGenerateForm();
       this.fetchProductData();
     },
+  },
+  created() {
+    this.init();
   },
 };
 </script>

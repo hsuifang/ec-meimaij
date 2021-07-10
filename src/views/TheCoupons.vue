@@ -4,9 +4,9 @@
       <div class="card-body">
         <!-- create Btn -->
         <div class="d-flex justify-content-md-between pr-3 mb-4">
-          <h2 class="h6 text-secondary">優惠券清單</h2>
+          <h2 class="h6 text-info">優惠券清單</h2>
           <button
-            class="btn btn-outline-primary rounded-pill shadow-sm"
+            class="btn btn-outline-primary py-2 shadow-sm"
             type="button"
             aria-controls="modifyCoupoonItem"
             @click="handleCouponItem(null)"
@@ -27,7 +27,7 @@
           </thead>
           <tbody>
             <tr v-if="isLoading">
-              <td class="text-center text-muted" colspan="5">
+              <td class="text-center text-muted" colspan="6">
                 <img width="100" src="https://media.giphy.com/media/wnYB3vx9t6PXiq1ubB/giphy.gif" />
               </td>
             </tr>
@@ -52,7 +52,7 @@
                 <td>
                   <button
                     type="button"
-                    class="btn btn-sm btn-primary me-1"
+                    class="btn btn-sm btn-outline-info me-1"
                     data-action="remove"
                     @click="handleCouponItem(item)"
                   >

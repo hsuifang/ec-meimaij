@@ -585,7 +585,7 @@ $table-variants: (
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
 // scss-docs-start input-btn-variables
-$input-btn-padding-y: 0.375rem !default;
+$input-btn-padding-y: 0.75rem; //0.375rem !default;
 $input-btn-padding-x: 0.75rem !default;
 $input-btn-font-family: null !default;
 $input-btn-font-size: $font-size-base !default;
@@ -1313,12 +1313,12 @@ $progress-bar-transition: width 0.6s ease !default;
 
 // scss-docs-start list-group-variables
 $list-group-color: $gray-900 !default;
-$list-group-bg: $white !default;
+$list-group-bg: $light;//$white !default;
 $list-group-border-color: rgba($black, 0.125) !default;
 $list-group-border-width: $border-width !default;
 $list-group-border-radius: $border-radius !default;
 
-$list-group-item-padding-y: $spacer / 2 !default;
+$list-group-item-padding-y: 1rem; //$spacer / 2 !default;
 $list-group-item-padding-x: $spacer !default;
 $list-group-item-bg-scale: -80% !default;
 $list-group-item-color-scale: 40% !default;

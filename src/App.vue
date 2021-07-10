@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <Loading v-model:active="isLoading" :is-full-page="fullPage" loader="bars" color="#ffbbb9" />
+  <Loading v-model:active="isLoading" :is-full-page="fullPage" loader="bars" color="#7e4c4f" />
   <ToastMessage />
 </template>
 
