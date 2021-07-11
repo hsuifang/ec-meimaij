@@ -120,13 +120,15 @@
         </div>
       </div>
       <ul class="text-end pt-5 pb-3 border-bottom">
-        <li class="mb-4">小計: 1000</li>
-        <li class="mb-4">折扣: 0</li>
+        <li class="mb-4">小計: NT$ {{ price.total }}</li>
+        <li class="mb-4">折扣: NT$ {{ price.fin - price.total }}</li>
         <!-- usedCode -->
-        <li class="mb-4">總計: 1000</li>
+        <li class="mb-4">總計: NT$ {{ price.final_total }}</li>
       </ul>
       <div class="d-flex justify-content-between py-3">
-        <button type="button" class="btn btn-outline-secondary">繼續購物</button>
+        <router-link class="btn btn-primary text-outline-secondary" to="products"
+          >繼續購物</router-link
+        >
         <router-link class="btn btn-primary px-4 text-white" to="checkout">結帳</router-link>
       </div>
     </div>
@@ -134,92 +136,19 @@
 </template>
 
 <script>
-import {
-  apiGetCartList,
-  apiDeleteCart,
-  apiDeleteAllCart,
-  apiUpdateCart,
-  apiApplyCoupon,
-} from '@/api';
+import cartsMixin from '@/mixins/cartsMixin';
+import { apiApplyCoupon } from '@/api';
 
 export default {
+  mixins: [cartsMixin],
   data() {
     return {
-      carts: [],
-      price: {
-        total: 0,
-        final_total: 0,
-      },
-      loadingItem: {
-        pos: '',
-        id: '',
-      },
       couponCode: '',
       usedCode: '',
       coupons: [],
     };
   },
   methods: {
-    async fetchCartList() {
-      this.$vLoading(true);
-      try {
-        const res = await apiGetCartList();
-        const { success, data } = res.data;
-        if (success) {
-          this.carts = data.carts;
-          this.price.total = data.total;
-          this.price.final = data.final_total;
-        } else {
-          this.$vHttpsNotice(res, '查看購物清單');
-        }
-      } catch (error) {
-        this.$vErrorNotice();
-      } finally {
-        this.$vLoading(false);
-      }
-    },
-    async updateCart({ cartId, productId, qty }) {
-      try {
-        const res = await apiUpdateCart({ cartId, productId, qty });
-        const { success } = res.data;
-        if (success) {
-          this.fetchCartList();
-        } else {
-          this.$vHttpsNotice(res, '修改購物車');
-        }
-      } catch (error) {
-        this.$vErrorNotice();
-      }
-    },
-    async deleteItemFromCart({ cartId }) {
-      this.toggleLoding({ pos: 'delItem', id: cartId });
-      try {
-        const res = await apiDeleteCart(cartId);
-        const { success } = res.data;
-        if (success) {
-          this.fetchCartList();
-        } else {
-          this.$vHttpsNotice(res, '刪除購物車項目');
-        }
-        this.toggleLoding({ pos: '', id: '' });
-      } catch (error) {
-        this.$vErrorNotice();
-      }
-    },
-    async deleteAllCart() {
-      try {
-        const res = await apiDeleteAllCart();
-        const { success } = res.data;
-        if (success) {
-          this.carts = [];
-          this.fetchCartList();
-        } else {
-          this.$vHttpsNotice(res, '刪除所有購物車');
-        }
-      } catch (error) {
-        this.$vErrorNotice();
-      }
-    },
     async applyCoupn() {
       this.toggleLoding({ pos: 'applyCoupon' });
       try {
@@ -235,13 +164,6 @@ export default {
         this.toggleLoding({ pos: '' });
       }
     },
-    toggleLoding({ pos, id }) {
-      this.loadingItem.pos = pos;
-      this.loadingItem.id = id;
-    },
-  },
-  created() {
-    this.fetchCartList();
   },
 };
 </script>

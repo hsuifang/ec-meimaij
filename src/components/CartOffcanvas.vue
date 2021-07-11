@@ -20,26 +20,35 @@
         <li
           class="d-flex align-items-center py-4 px-3"
           :class="{ 'border-bottom': item !== 10 }"
-          v-for="item in 10"
+          v-for="item in carts"
           :key="`${item}item`"
         >
           <div class="w-25">
-            <div class="w-100" style="padding-bottom: 100%; background: #eee"></div>
+            <img
+              :src="item.product.imageUrl"
+              alt="imageUrl"
+              width="70"
+              height="70"
+              class="img-fluid me-3 obj-fit-contain"
+            />
+            <!-- <div class="w-100" style="padding-bottom: 100%; background: #eee"></div> -->
           </div>
           <div class="w-75 ms-3">
-            <h3 class="h6">product title</h3>
-            <p>NT$ 1,400</p>
+            <h3 class="h6">{{ item.product.title }}</h3>
+            <p>NT$ {{ item.product.price }}</p>
             <div class="d-flex justify-content-between align-items-end">
               <div class="fw-bold">
-                <a href="#" class="pe-2">
+                <a href="#" class="pe-2" @click.prevent="minusCartQty">
                   <i class="bi bi-dash fs-6"></i>
                 </a>
-                <span class="fs-6">2</span>
-                <a href="#" class="ps-2">
+                <span class="fs-6">{{ item.qty }}</span>
+                <a href="#" class="ps-2" @click.prevent="addCartQty">
                   <i class="bi bi-plus fs-6"></i>
                 </a>
               </div>
-              <button class="btn btn-outline-info"><i class="bi bi-trash"></i></button>
+              <button class="btn btn-outline-info" @click="deleteItemFromCart({ cartId: item.id })">
+                <i class="bi bi-trash"></i>
+              </button>
             </div>
           </div>
         </li>
@@ -47,10 +56,14 @@
       <div>
         <div class="offcanvas-footer border">
           <div class="p-3">
-            <p>購買五項產品</p>
-            <h4 class="py-3">總共：$10000</h4>
-            <button class="btn btn-outline-primary btn-lg w-100 mb-3" type="button">購物車</button>
-            <button class="btn btn-primary btn-lg w-100" type="button">直接購買</button>
+            <p>購買{{ carts.length }}項產品</p>
+            <h4 class="py-3">總共：${{ price.final_total }}</h4>
+            <router-link to="cart" class="btn btn-outline-primary btn-lg w-100 mb-3" type="button"
+              >購物車</router-link
+            >
+            <router-link to="/checkout" class="btn btn-primary btn-lg w-100" type="button"
+              >直接購買</router-link
+            >
           </div>
         </div>
       </div>
@@ -58,9 +71,11 @@
   </div>
 </template>
 <script>
+import cartsMixin from '@/mixins/cartsMixin';
 import Offcanvas from 'bootstrap/js/dist/offcanvas';
 
 export default {
+  mixins: [cartsMixin],
   data() {
     return {
       bsOffcanvas: '',
@@ -73,10 +88,19 @@ export default {
     close() {
       this.bsOffcanvas.hide();
     },
+    minusCartQty() {
+      console.log('minusCartQty');
+    },
+    addCartQty() {
+      console.log('addCartQty');
+    },
   },
   mounted() {
     const offCanvas = this.$refs.canvas;
     this.bsOffcanvas = new Offcanvas(offCanvas);
+  },
+  created() {
+    this.fetchCartList();
   },
 };
 </script>

@@ -6,7 +6,7 @@
         <img :src="product.imageUrl" alt="productImg" />
       </div>
       <div class="product__trigger" v-show="type == 'grid'">
-        <a href="#" class="me-4" @click.prevent="addCart"
+        <a href="#" class="me-4" @click.prevent="addToCart({ productId: product.id, qty: 1 })"
           ><i class="bi bi-bag-plus-fill fs-2"></i></a
         ><a href="#" @click.prevent="viewDetail(product.id)"
           ><i class="bi bi-info-square fs-2"></i
@@ -55,6 +55,8 @@
   </div>
 </template>
 <script>
+import cartsMixin from '@/mixins/cartsMixin';
+
 export default {
   name: 'ShopProduct',
   // temp
@@ -72,6 +74,7 @@ export default {
       default: 0,
     },
   },
+  mixins: [cartsMixin],
   data() {
     return {
       product: {},

@@ -13,15 +13,18 @@
         <div class="p-4">
           <h3 class="fs-6 mb-4 fw-bold">產品類型</h3>
           <ul class="ps-1">
-            <li class="mb-2"><a href="#" class="text-primary">全部</a></li>
-            <li class="mb-2"><a href="#">生肉餐 | 3</a></li>
-            <li class="mb-2"><a href="#">鮮食 | 2</a></li>
-            <li class="mb-2"><a href="#">零食 | 3</a></li>
-            <li class="mb-2"><a href="#">乾糧 | 2</a></li>
+            <li class="mb-2" v-for="type in typesList" :key="type.category">
+              <a
+                href="#"
+                @click.prevent="typeSelected = type.category"
+                :class="{ 'text-primary': typeSelected === type.category }"
+                >{{ type.category }} | {{ type.count }}</a
+              >
+            </li>
           </ul>
         </div>
         <!-- tag -->
-        <div class="p-4">
+        <!-- <div class="p-4">
           <h3 class="fs-6 mb-4 fw-bold">產品標籤</h3>
           <div>
             <button class="btn btn-light border rounded-pill me-2 px-3" type="button">健康</button>
@@ -29,10 +32,10 @@
               小型犬
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="col-lg-9">
-        <ul class="d-flex mb-4">
+        <ul class="d-flex mb-4" data-discript="filterViewType">
           <li class="p-1">
             <a href="#" data-view="product-grid" @click.prevent="productView = 'grid'"
               ><i
@@ -68,8 +71,8 @@
             <ProductsViewCard :type="productView" :content="item" />
           </div> -->
         </div>
-        <div class="d-flex justify-content-center">
-          <Pagination />
+        <div class="d-flex justify-content-center" v-if="this.typeSelected === '全部'">
+          <Pagination :pageInfo="pageInfo" @changePage="changePage" />
         </div>
       </div>
     </div>
@@ -78,6 +81,7 @@
 <script>
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
 import Pagination from '@/components/Pagination.vue';
+import { apiGetCleintProducts, apiGetProductsAll } from '@/api';
 
 export default {
   name: 'product',
@@ -88,88 +92,92 @@ export default {
   data() {
     return {
       productView: 'grid',
-      products: [
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 700,
-          price: 600,
-          title: 'AA',
-          unit: '個',
-          star: 1,
-          status: {
-            type: 'danger',
-            text: 'HOT',
-          },
-        },
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: '/images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 100,
-          price: 100,
-          title: 'BB',
-          unit: '個',
-          star: 5,
-          status: {
-            type: 'warning',
-            text: 'NEW',
-          },
-        },
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 699,
-          price: 600,
-          title: 'CC',
-          unit: '個',
-          star: 3.5,
-          status: {
-            type: 'danger',
-            text: 'HOT',
-          },
-        },
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: '/images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 699,
-          price: 600,
-          title: 'DD',
-          unit: '個',
-          star: 4,
-          status: {
-            type: 'warning',
-            text: 'NEW',
-          },
-        },
-      ],
+      productsAll: [],
+      products: [],
+      pageInfo: {
+        current_page: 1,
+        has_next: false,
+        has_pre: false,
+        total_pages: 1,
+      },
+      typeSelected: '全部',
     };
   },
   computed: {
-    productViewColClass() {
-      return this.productView === 'grid' ? 'col-lg-4' : 'col-12';
+    typesList() {
+      const types = this.productsAll.reduce((acc, current) => {
+        const idx = acc.findIndex((item) => item.category === current.category);
+        if (idx === -1) {
+          return [...acc, { category: current.category, count: 1 }];
+        }
+        acc[idx].count += 1;
+        return acc;
+      }, []);
+      return [
+        {
+          category: '全部',
+          count: this.products.length,
+        },
+        ...types,
+      ];
     },
+  },
+  methods: {
+    async fetchProductList(page = 1) {
+      this.$vLoading(true);
+      try {
+        const res = await apiGetCleintProducts(page);
+        const { success, products, pagination } = res.data;
+        if (success) {
+          this.productsAll = products;
+          this.products = products;
+          this.pageInfo = pagination;
+        } else {
+          this.$vHttpsNotice(res, '產品顯示');
+        }
+      } catch (error) {
+        this.$vErrorNotice();
+      } finally {
+        this.$vLoading(false);
+      }
+    },
+    async filterCategoryProduct() {
+      try {
+        const res = await apiGetProductsAll();
+        const { success, products } = res.data;
+        if (success) {
+          this.productsAll = products;
+          this.products = products.filter((product) => product.category === this.typeSelected);
+          this.pageInfo = {
+            current_page: 1,
+            has_next: false,
+            has_pre: false,
+            total_pages: 1,
+          };
+        } else {
+          this.$vHttpsNotice(res, '產品顯示');
+        }
+      } catch (error) {
+        this.$vErrorNotice();
+      } finally {
+        this.$vLoading(false);
+      }
+    },
+    changePage(page) {
+      this.fetchOrders(page);
+    },
+  },
+  watch: {
+    typeSelected(val) {
+      if (val === '全部') {
+        this.fetchProductList();
+      } else {
+        this.filterCategoryProduct();
+      }
+    },
+  },
+  created() {
+    this.fetchProductList();
   },
 };
 </script>

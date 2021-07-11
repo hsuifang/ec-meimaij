@@ -24,10 +24,10 @@
 
   <div class="pb-5">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-7">
-          <h3 class="h5 mb-4 py-3 fw-bold">購買者資訊</h3>
-          <v-form ref="form" v-slot="{ errors }" @submit="requestOrder">
+      <v-form ref="form" v-slot="{ errors }" @submit="requestOrder">
+        <div class="row">
+          <div class="col-lg-7">
+            <h3 class="h5 mb-4 py-3 fw-bold">購買者資訊</h3>
             <div class="mb-3 mb-lg-4">
               <label for="name" class="form-label">姓名</label>
               <v-field
@@ -94,62 +94,63 @@
                 v-model="form.message"
               ></textarea>
             </div>
-          </v-form>
-        </div>
-        <div class="col-lg-5">
-          <h3 class="h5 mb-4 py-3 fw-bold">購買項目</h3>
-          <ul class="bg-light list-group list-group-flush p-5 mb-3 mb-lg-4">
-            <li class="list-group-item d-flex justify-content-between">
-              <p class="fw-bold">名稱</p>
-              <p class="fw-bold">金額</p>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <p>產品 * 1</p>
-              <p>金額</p>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <p>產品2 * 1</p>
-              <p>金額</p>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <p class="fw-bold">小計</p>
-              <p class="fw-bold">NTsdfasf</p>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <p class="fw-bold">折扣</p>
-              <p class="fw-bold">NT123</p>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <p class="fw-bold">總計</p>
-              <p class="fw-bold">NT123</p>
-            </li>
-          </ul>
-          <div class="text-end">
-            <button
-              type="submit"
-              class="btn btn-primary px-4 text-white"
-              :disabled="loadingItem.pos === 'requestOrder'"
-            >
-              購買確認
-            </button>
-            <div
-              v-if="loadingItem.pos === 'requestOrder'"
-              class="position-absolute top-50 start-100"
-              style="transform: translateX(-10px)"
-            >
-              <div class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="col-lg-5">
+            <h3 class="h5 mb-4 py-3 fw-bold">購買項目</h3>
+            <ul class="bg-light list-group list-group-flush p-5 mb-3 mb-lg-4">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="fw-bold">名稱</p>
+                <p class="fw-bold">金額</p>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between"
+                v-for="cart in carts"
+                :key="cart.id"
+              >
+                <p>{{ cart.product.title }} * {{ cart.num }}</p>
+                <p>{{ $filters.currency(cart.product.price) }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="fw-bold">小計</p>
+                <p class="fw-bold">{{ $filters.currency(price.total) }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="fw-bold">折扣</p>
+                <p class="fw-bold">{{ $filters.currency(price.total - price.final_total) }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="fw-bold">總計</p>
+                <p class="fw-bold">{{ $filters.currency(price.final_total) }}</p>
+              </li>
+            </ul>
+            <div class="text-end">
+              <button
+                type="submit"
+                class="btn btn-primary px-4 text-white"
+                :disabled="loadingItem.pos === 'requestOrder'"
+              >
+                購買確認
+              </button>
+              <div
+                v-if="loadingItem.pos === 'requestOrder'"
+                class="position-absolute top-50 start-100"
+                style="transform: translateX(-10px)"
+              >
+                <div class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </v-form>
     </div>
   </div>
 </template>
 <script>
 import Collapse from 'bootstrap/js/dist/collapse';
 import { apiGenerateOrder } from '@/api';
+import cartsMixin from '@/mixins/cartsMixin';
 
 export default {
   name: 'checkout',
@@ -171,6 +172,8 @@ export default {
       collapse: '',
     };
   },
+  mixins: [cartsMixin],
+  inject: ['emitter'],
   methods: {
     async requestOrder() {
       this.toggleLoding({ pos: 'requestOrder' });
@@ -185,6 +188,7 @@ export default {
           this.$router.push('/');
           // may do
           // 成功頁面
+          this.emitter.emit('updateCart');
         } else {
           this.$vHttpsNotice(res, '送出訂單');
         }
@@ -200,6 +204,7 @@ export default {
   },
   mounted() {
     this.collapse = new Collapse(this.$refs.collapse);
+    this.fetchCartList();
   },
 };
 </script>

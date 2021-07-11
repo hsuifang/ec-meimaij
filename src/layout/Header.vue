@@ -29,14 +29,14 @@
               <router-link to="/" class="nav-link active" aria-current="page">首頁</router-link>
             </li>
             <li v-dropdown class="nav-item me-3 dropdown">
-              <a
+              <router-link
+                to="/products"
                 class="nav-link dropdown-toggle"
                 href="javascript:void(0)"
                 role="button"
                 aria-expanded="false"
+                >鎂麥產品</router-link
               >
-                鎂麥產品
-              </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="javascript:void(0)">鎂麥生肉餐</a></li>
                 <li><a class="dropdown-item" href="javascript:void(0)">鎂麥鮮食</a></li>
@@ -71,10 +71,10 @@
           <a href="#" @click.prevent="checkCart">
             <i class="bi-bag-fill fs-5"></i>
             <p
-              class="position-absolute left-50 bg-primary px-1 rounded-circle text-white"
-              style="font-size: 12px; padding-top: 2px; padding-bottom: 2px; top: -17px"
+              class="position-absolute left-50 bg-primary px-1 py-0 text-white rounded-circle"
+              style="font-size: 12px; padding-top: 2px; padding-bottom: 2px; top: -14px; left: 2px"
             >
-              20
+              {{ carts?.length }}
             </p>
           </a>
         </div>
@@ -85,16 +85,26 @@
 </template>
 <script>
 import CartOffcanvas from '@/components/CartOffcanvas.vue';
+import cartsMixin from '@/mixins/cartsMixin';
 
 export default {
   components: {
     CartOffcanvas,
   },
+  inject: ['emitter'],
+  mixins: [cartsMixin],
   methods: {
     checkCart() {
       this.$refs.canvas.open();
     },
   },
-  mounted() {},
+  mounted() {
+    this.emitter.on('updateCart', () => {
+      this.fetchCartList();
+    });
+  },
+  created() {
+    this.fetchCartList();
+  },
 };
 </script>
