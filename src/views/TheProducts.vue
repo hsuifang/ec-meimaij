@@ -18,6 +18,7 @@
           <thead>
             <tr>
               <th scope="col">產品名稱</th>
+              <th scope="col">類別</th>
               <th scope="col">評價</th>
               <th scope="col">原價</th>
               <th scope="col">售價</th>
@@ -28,6 +29,7 @@
           <tbody>
             <tr v-for="item in products" :key="item.id">
               <td>{{ item.title }}</td>
+              <td>{{ item.category }}</td>
               <td>{{ item.rate || '-' }}</td>
               <td>$ {{ item.origin_price }}</td>
               <td>$ {{ item.price }}</td>
@@ -61,8 +63,8 @@
               </td>
             </tr>
             <!-- no data -->
-            <tr v-if="products.length === 0" class="text-center text-muted" colspan="6">
-              <td class="text-center text-muted" colspan="6">無商品</td>
+            <tr v-if="products.length === 0" class="text-center text-muted">
+              <td class="text-center text-muted" colspan="7">無商品</td>
             </tr>
           </tbody>
         </table>

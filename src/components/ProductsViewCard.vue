@@ -14,7 +14,7 @@
       </div>
       <div class="product__badge">
         <span class="badge" :class="`bg-${product.status?.type}`">{{ product.status?.text }}</span>
-        <div>
+        <div class="ms-auto">
           <i
             class="bi bi-star-fill text-primary"
             :class="star"
@@ -83,7 +83,7 @@ export default {
     },
     starClass() {
       const starArr = ['bi-star', 'bi-star', 'bi-star', 'bi-star', 'bi-star'];
-      const star = this.product?.star || 0;
+      const star = this.product?.rate || 0;
       starArr.forEach((item, idx) => {
         if (star >= idx + 1) {
           starArr[idx] = 'bi-star-fill';

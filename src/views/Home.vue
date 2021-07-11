@@ -117,6 +117,7 @@
 <script>
 import ImagesCarousel from '@/components/ImagesCarousel.vue';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
+import { apiGetProductsAll } from '@/api';
 
 export default {
   components: {
@@ -125,82 +126,88 @@ export default {
   },
   data() {
     return {
-      products: [
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 700,
-          price: 600,
-          title: 'AA',
-          unit: '個',
-          star: 1,
-          status: {
-            type: 'danger',
-            text: 'HOT',
-          },
-        },
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: '/images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 100,
-          price: 100,
-          title: 'BB',
-          unit: '個',
-          star: 5,
-          status: {
-            type: 'warning',
-            text: 'NEW',
-          },
-        },
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 699,
-          price: 600,
-          title: 'CC',
-          unit: '個',
-          star: 3.5,
-          status: {
-            type: 'danger',
-            text: 'HOT',
-          },
-        },
-        {
-          category: '主食',
-          content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: '/images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg',
-          is_enabled: 1,
-          num: 1,
-          origin_price: 699,
-          price: 600,
-          title: 'DD',
-          unit: '個',
-          star: 4,
-          status: {
-            type: 'warning',
-            text: 'NEW',
-          },
-        },
-      ],
+      // status: {
+      //   type: 'danger',
+      //   text: 'HOT',
+      // },
+      // products: [
+      //   {
+      //     category: '主食',
+      //     content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     id: '-L9tH8jxVb2Ka_DYPwng',
+      //     imageUrl:
+      //       'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+      //     is_enabled: 1,
+      //     num: 1,
+      //     origin_price: 700,
+      //     price: 600,
+      //     title: 'AA',
+      //     unit: '個',
+      //     star: 1,
+      //     status: {
+      //       type: 'danger',
+      //       text: 'HOT',
+      //     },
+      //   },
+      //   {
+      //     category: '主食',
+      //     content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     id: '-L9tH8jxVb2Ka_DYPwng',
+      //     imageUrl: '/images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg',
+      //     is_enabled: 1,
+      //     num: 1,
+      //     origin_price: 100,
+      //     price: 100,
+      //     title: 'BB',
+      //     unit: '個',
+      //     star: 5,
+      //     status: {
+      //       type: 'warning',
+      //       text: 'NEW',
+      //     },
+      //   },
+      //   {
+      //     category: '主食',
+      //     content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     id: '-L9tH8jxVb2Ka_DYPwng',
+      //     imageUrl:
+      //       'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+      //     is_enabled: 1,
+      //     num: 1,
+      //     origin_price: 699,
+      //     price: 600,
+      //     title: 'CC',
+      //     unit: '個',
+      //     star: 3.5,
+      //     status: {
+      //       type: 'danger',
+      //       text: 'HOT',
+      //     },
+      //   },
+      //   {
+      //     category: '主食',
+      //     content: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     description: '針對定期購買的家長，推出96折的優惠方案，可任選口味並分三次取貨。',
+      //     id: '-L9tH8jxVb2Ka_DYPwng',
+      //     imageUrl: '/images/richard-brutyo-Sg3XwuEpybU-unsplash.jpg',
+      //     is_enabled: 1,
+      //     num: 1,
+      //     origin_price: 699,
+      //     price: 600,
+      //     title: 'DD',
+      //     unit: '個',
+      //     star: 4,
+      //     status: {
+      //       type: 'warning',
+      //       text: 'NEW',
+      //     },
+      //   },
+      // ],
+      products: [],
+      randomProducts: [],
       clientFeedBack: [
         {
           id: 1,
@@ -231,6 +238,25 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    async setFamousProducts() {
+      const res = await apiGetProductsAll();
+      const { products } = res.data;
+      const productAllLength = products.length;
+      const getMaxLength = 4;
+      const productSet = [];
+      for (let i = 0; this.products.length < getMaxLength; i += 1) {
+        const idx = Math.floor(Math.random() * productAllLength);
+        if (!productSet.includes(idx)) {
+          productSet.push(idx);
+          this.products.push(products[idx]);
+        }
+      }
+    },
+  },
+  created() {
+    this.setFamousProducts();
   },
 };
 </script>

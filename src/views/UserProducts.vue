@@ -18,7 +18,6 @@
             <li class="mb-2"><a href="#">鮮食 | 2</a></li>
             <li class="mb-2"><a href="#">零食 | 3</a></li>
             <li class="mb-2"><a href="#">乾糧 | 2</a></li>
-            <li class="mb-2"><a href="#">超值組合 | 2</a></li>
           </ul>
         </div>
         <!-- tag -->

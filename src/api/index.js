@@ -13,6 +13,7 @@ export const apiCheckUser = (token) => req('post', '/api/user/check', { api_toke
 // 客戶購物 [免驗證]
 //
 // 產品列表
+export const apiGetProductsAll = () => req('get', `${userPath}/products/all`);
 export const apiGetCleintProducts = (page) => req('get', `${userPath}/products?page=${page}`);
 // 單一產品細節
 export const apiGetSpecficProduct = (id) => req('get', `${userPath}/product/${id}`);
