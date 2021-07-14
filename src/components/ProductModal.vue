@@ -251,7 +251,7 @@
                   </div>
                   <div class="col-12">
                     <button type="submit" class="btn btn-primary text-white w-100 rounded-pill">
-                      新增/編輯
+                      {{ currentProductItem.id ? '編輯' : '新增' }}
                     </button>
                   </div>
                 </div>

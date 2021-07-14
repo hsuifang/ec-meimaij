@@ -27,15 +27,14 @@
             <img
               :src="item.product.imageUrl"
               alt="imageUrl"
-              width="70"
-              height="70"
+              width="80"
+              height="80"
               class="img-fluid me-3 obj-fit-contain"
             />
-            <!-- <div class="w-100" style="padding-bottom: 100%; background: #eee"></div> -->
           </div>
           <div class="w-75 ms-3">
-            <h3 class="h6">{{ item.product.title }}</h3>
-            <p>NT$ {{ item.product.price }}</p>
+            <h3 class="h6 mb-1">{{ item.product.title }}</h3>
+            <p class="fw-bold text-info">{{ $filters.currency(item.product.price) }}</p>
             <div class="d-flex justify-content-between align-items-end">
               <div class="fw-bold">
                 <a href="#" class="pe-2" @click.prevent="minusCartQty">

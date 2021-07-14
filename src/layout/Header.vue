@@ -8,10 +8,10 @@
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarScroll"
           aria-controls="navbarScroll"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          @click="navbarToggle = !navbarToggle"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,8 +23,9 @@
             class="navbar-brand-item"
           />
         </div>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-          <ul class="navbar-nav navbar-nav-scoll">
+        <!-- laptop nav -->
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav navbar-nav-scroll">
             <li class="nav-item me-3">
               <router-link to="/" class="nav-link active" aria-current="page">首頁</router-link>
             </li>
@@ -32,7 +33,6 @@
               <router-link
                 to="/products"
                 class="nav-link dropdown-toggle"
-                href="javascript:void(0)"
                 role="button"
                 aria-expanded="false"
                 >鎂麥產品</router-link
@@ -64,7 +64,7 @@
           </ul>
         </div>
         <div class="d-flex align-items-center">
-          <router-link to="login"><i class="bi bi-person fs-4 me-3"></i></router-link>
+          <router-link to="/login"><i class="bi bi-person fs-4 me-3"></i></router-link>
           <a href="#">
             <i class="bi bi-bookmark-heart fs-5 me-3"></i>
           </a>
@@ -78,6 +78,28 @@
             </p>
           </a>
         </div>
+      </div>
+      <!-- mobile nav -->
+      <div class="mobile-collapse" :class="{ show: navbarToggle }">
+        <ul class="navbar-nav navbar-nav-scroll p-4">
+          <li class="nav-item me-3">
+            <router-link to="/" class="nav-link active" aria-current="page">首頁</router-link>
+          </li>
+          <li class="nav-item me-3">
+            <router-link to="/products" class="nav-link" role="button" aria-expanded="false"
+              >鎂麥產品</router-link
+            >
+          </li>
+          <!-- v-dropdown -->
+          <li class="nav-item me-3">
+            <a class="nav-link" href="javascript:void(0)" role="button" aria-expanded="false">
+              常見問題
+            </a>
+          </li>
+          <li class="nav-item">
+            <router-link to="/products" class="nav-link">專欄</router-link>
+          </li>
+        </ul>
       </div>
     </nav>
     <CartOffcanvas ref="canvas" />
@@ -93,6 +115,11 @@ export default {
   },
   inject: ['emitter'],
   mixins: [cartsMixin],
+  data() {
+    return {
+      navbarToggle: false,
+    };
+  },
   methods: {
     checkCart() {
       this.$refs.canvas.open();

@@ -4,7 +4,7 @@
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     }"
-    class="swiper-container"
+    class="home-swiper"
   >
     <swiper-slide v-for="item in covers" :key="item.id">
       <div
@@ -82,38 +82,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.swiper-container {
-  width: 100%;
-  height: 60vh;
-}
-.swiper-content {
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-.swiper-slide {
-  min-height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.slider-text {
-  padding: 2rem;
-  background: rgba(#fff, 0.3);
-  h5 {
-    line-height: 1.5;
-  }
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-</style>

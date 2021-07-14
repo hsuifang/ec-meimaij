@@ -40,7 +40,6 @@ export default {
         const res = await apiAddCart({ id: productId, qty });
         this.emitter.emit('updateCart');
         this.$vHttpsNotice(res, '加入購物車');
-        console.log(this.emitter);
       } catch (error) {
         this.$vErrorNotice();
       } finally {

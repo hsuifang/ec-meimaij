@@ -1,27 +1,35 @@
 <template>
-  <section class="bg-light mb-6">
-    <div class="container text-center py-5">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">鎂麥產品 / 健康 ▪︎ 寵愛</a></li>
-          <li class="breadcrumb-item active" aria-current="page">detail</li>
-        </ol>
-      </nav>
-    </div>
-  </section>
-
+  <PageTitle>
+    <template v-slot:breadcrumb>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">鎂麥產品 / 健康 ▪︎ 寵愛</li>
+        <li class="breadcrumb-item active" aria-current="page">detail</li>
+      </ol>
+    </template>
+  </PageTitle>
   <div class="container mb-8">
     <div class="row">
       <div class="col-lg-5">
-        <div class="squre-img mb-3" style="background: rgba(246, 171, 74, 0.1)">
-          <img :src="productDetail.imageUrl" alt="" />
+        <div class="w-100" @click="show(mainImage.id)">
+          <div class="squre-img mb-3" style="background: rgba(246, 171, 74, 0.1)">
+            <img :src="mainImage.src" alt="mainImage" />
+          </div>
+          <div class="position-absolute bottom-0 end-0">
+            <i class="bi bi-search fs-2"></i>
+          </div>
         </div>
-        <div class="product-swiper">
-          <swiper :slidesPerView="3" :spaceBetween="20" class="mySwiper">
-            <swiper-slide v-for="(img, idx) in productDetail.imagesUrl" :key="`${idx}thumbnailImg`"
-              ><img :src="img" alt="thumbnailImg" style="background: rgba(246, 171, 74, 0.1)"
-            /></swiper-slide>
-          </swiper>
+        <div class="d-flex">
+          <img
+            v-for="(img, idx) in imgs"
+            :key="`${idx}thumbnailImg`"
+            :src="img.src"
+            alt="thumbnailImg"
+            width="80"
+            height="80"
+            class="me-2 obj-fit-contain"
+            style="background: rgba(246, 171, 74, 0.1)"
+            @click="mainImageIdx = img.id"
+          />
         </div>
       </div>
       <div class="col-lg-7">
@@ -36,14 +44,14 @@
             ></i>
             | <a href="#" @click.prevent>看評價</a>
           </div>
-          <h3 class="text-primary mb-4">
-            {{ productDetail.price }}
-            <del class="h4 text-info">${{ productDetail.origin_price }}</del>
+          <h3 class="text-primary mb-3 mb-lg-4">
+            {{ $filters.currency(productDetail.price) }}
+            <del class="h4 text-info">{{ $filters.currency(productDetail.origin_price) }}</del>
           </h3>
           <p class="text-info mb-2" v-html="productDetail.description"></p>
           <p class="text-info mb-4" v-html="productDetail.content"></p>
-          <div class="d-flex">
-            <div class="d-flex align-items-center">
+          <div class="d-lg-flex">
+            <div class="d-flex align-items-center mb-3 mb-lg-0">
               <label for="input-quantity" class="me-2">數量</label>
               <input
                 type="text"
@@ -63,48 +71,34 @@
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="p-8 bg-light">
-      <ul class="d-flex justify-content-center mb-5">
-        <li
-          class="h5 me-6 pb-3 fw-bold border-primary border-4"
-          :class="{ 'border-bottom': tabContnet === 'description' }"
-        >
-          <a href="#" class="text-info" @click.prevent="tabContnet = 'description'">產品說明</a>
-        </li>
-        <li
-          class="h5 pb-3 fw-bold border-primary border-4"
-          :class="{ 'border-bottom': tabContnet === 'productValue' }"
-        >
-          <a href="#" class="text-info" @click.prevent="tabContnet = 'productValue'">商品評價</a>
-        </li>
-      </ul>
-      <div v-show="tabContnet === 'description'">
-        <p class="py-3 fw-bold">說明 ---</p>
-        <p>{{ productDetail.description }}</p>
-        <p class="py-3 fw-bold">內容 ---</p>
-        <p>{{ productDetail.content }}</p>
-        <p class="py-3 fw-bold">規格 ---</p>
-        <p v-html="productDetail.spec"></p>
-        <!-- <ul>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremlore</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremloremloremlorem</li>
-          <li>loremloremlorlorem</li>
-          <li>loremloremloremloremloremloremloremloremloremlorem</li>
-        </ul> -->
-      </div>
-      <div v-show="tabContnet === 'productValue'">商品評價</div>
+
+  <div class="container p-4 p-lg-8 bg-light">
+    <ul class="d-flex justify-content-center mb-5">
+      <li
+        class="h5 me-6 pb-3 fw-bold border-primary border-4"
+        :class="{ 'border-bottom': tabContnet === 'description' }"
+      >
+        <a href="#" class="text-info" @click.prevent="tabContnet = 'description'">產品說明</a>
+      </li>
+      <li
+        class="h5 pb-3 fw-bold border-primary border-4"
+        :class="{ 'border-bottom': tabContnet === 'productValue' }"
+      >
+        <a href="#" class="text-info" @click.prevent="tabContnet = 'productValue'">商品評價</a>
+      </li>
+    </ul>
+    <div v-show="tabContnet === 'description'">
+      <p class="py-3 fw-bold">說明 ---</p>
+      <p>{{ productDetail.description }}</p>
+      <p class="py-3 fw-bold">內容 ---</p>
+      <p>{{ productDetail.content }}</p>
+      <p class="py-3 fw-bold">規格 ---</p>
+      <p v-html="productDetail.spec"></p>
     </div>
+    <div v-show="tabContnet === 'productValue'">商品評價</div>
   </div>
 
-  <div class="container py-8">
+  <div class="container p-4 p-lg-8">
     <div class="section-title text-center mb-6">
       <h2 class="mb-2">你可能有興趣</h2>
     </div>
@@ -114,28 +108,52 @@
       </li>
     </ul>
   </div>
+
+  <div class="p-3">
+    <VueEasyLightbox
+      scrollDisabled
+      escDisabled
+      moveDisabled
+      :visible="visible"
+      :imgs="imgs"
+      :index="imageIdx"
+      @hide="handleHide"
+    >
+      <template v-slot:prev-btn="{ prev }">
+        <button class="btn btn-light" @click="prev" style="top: 50vh">&lt;</button>
+      </template>
+
+      <template v-slot:next-btn="{ next }">
+        <button
+          class="btn btn-light text-end position-absolute end-0"
+          @click="next"
+          style="top: 50vh"
+        >
+          &gt;
+        </button>
+      </template>
+    </VueEasyLightbox>
+  </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
 import { apiGetSpecficProduct, apiGetProductsAll, apiAddCart } from '@/api';
-// Import Swiper styles
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.min.css';
-import SwiperCore, { Navigation } from 'swiper/core';
+import VueEasyLightbox from 'vue-easy-lightbox';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
-
-SwiperCore.use([Navigation]);
+import PageTitle from '@/layout/PageTitle.vue';
 
 export default {
   components: {
-    Swiper,
-    SwiperSlide,
     ProductsViewCard,
+    VueEasyLightbox,
+    PageTitle,
   },
   inject: ['emitter'],
   data() {
     return {
+      visible: false,
+      imageIdx: 0,
+      mainImageIdx: 0,
       productId: '',
       requestQty: null,
       tabContnet: 'description',
@@ -146,6 +164,16 @@ export default {
         id: '',
       },
     };
+  },
+  computed: {
+    imgs() {
+      const { imageUrl, imagesUrl = [] } = this.productDetail;
+      const tempImages = imagesUrl.map((img, idx) => ({ id: idx + 1, src: img }));
+      return [{ id: 0, src: imageUrl }, ...tempImages];
+    },
+    mainImage() {
+      return this.imgs.find((img) => img.id === this.mainImageIdx) || '';
+    },
   },
   methods: {
     async showProductDetail(id) {
@@ -178,21 +206,48 @@ export default {
       this.loadingItem.id = id;
     },
     async addToCart() {
-      try {
-        const res = await apiAddCart({ id: this.productId, qty: this.requestQty });
-        this.$vHttpsNotice(res, '加入購物車');
-        this.emitter.emit('updateCart');
-      } catch (error) {
-        this.$vErrorNotice();
-      } finally {
-        this.toggleLoding({ pos: '', id: '' });
+      if (this.requestQty < 1) {
+        this.emitter.emit('notice-message', {
+          style: 'danger',
+          title: '數量需大於1',
+        });
+        this.requestQty = 1;
+      } else {
+        try {
+          const res = await apiAddCart({ id: this.productId, qty: this.requestQty });
+          this.$vHttpsNotice(res, '加入購物車');
+          this.emitter.emit('updateCart');
+        } catch (error) {
+          this.$vErrorNotice();
+        } finally {
+          this.toggleLoding({ pos: '', id: '' });
+        }
       }
+    },
+    init() {
+      this.productId = this.$route.params.id;
+      if (this.productId) {
+        this.showProductDetail(this.productId);
+        this.setFamousProducts();
+      } else {
+        this.$router.push('/products');
+      }
+    },
+    show(idx) {
+      this.imageIdx = idx;
+      this.visible = true;
+    },
+    handleHide() {
+      this.visible = false;
+    },
+  },
+  watch: {
+    '$route.params.id'() {
+      this.init();
     },
   },
   created() {
-    this.productId = this.$route.params.id;
-    this.showProductDetail(this.productId);
-    this.setFamousProducts();
+    this.init();
   },
 };
 </script>
@@ -211,17 +266,8 @@ export default {
     object-fit: contain;
   }
 }
-.product-swiper {
-  .swiper-wrapper,
-  .swiper-container {
-    height: auto;
-  }
-  .swiper-slide {
-    min-height: unset;
-    img {
-      max-height: 100px;
-      object-fit: contain;
-    }
-  }
+.vel-toolbar,
+.vel-toolbar .toolbar-btn {
+  background: #fff;
 }
 </style>

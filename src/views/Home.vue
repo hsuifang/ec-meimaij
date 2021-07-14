@@ -1,8 +1,8 @@
 <template>
   <!-- Carousel -->
-  <ImagesCarousel class="pb-4" />
+  <ImagesCarousel />
   <!-- Annoucement  -->
-  <div class="container pb-lg-8">
+  <div class="container py-4 py-lg-8">
     <div class="row">
       <div class="col-lg-4 border-end-custom mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">

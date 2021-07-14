@@ -1,9 +1,9 @@
 <template>
-  <section class="bg-light">
-    <div class="container text-center py-5">
+  <PageTitle>
+    <template v-slot:breadcrumb>
       <h2 class="fs-6">鎂麥 / 購物車</h2>
-    </div>
-  </section>
+    </template>
+  </PageTitle>
   <!-- 購物車 -->
   <div class="pb-5">
     <div class="container">
@@ -43,7 +43,7 @@
                       </div>
                     </th>
                     <td class="align-middle">
-                      <strong>NT$ {{ item.product.price }}</strong>
+                      <strong>{{ $filters.currency(item.product.price) }}</strong>
                     </td>
                     <td class="align-middle">
                       <input
@@ -120,15 +120,12 @@
         </div>
       </div>
       <ul class="text-end pt-5 pb-3 border-bottom">
-        <li class="mb-4">小計: NT$ {{ price.total }}</li>
-        <li class="mb-4">折扣: NT$ {{ price.fin - price.total }}</li>
-        <!-- usedCode -->
-        <li class="mb-4">總計: NT$ {{ price.final_total }}</li>
+        <li class="mb-4">小計: {{ $filters.currency(price.total) }}</li>
+        <li class="mb-4">折扣: {{ $filters.currency(price.final_total - price.total) }}</li>
+        <li class="mb-4">總計: {{ $filters.currency(price.final_total) }}</li>
       </ul>
       <div class="d-flex justify-content-between py-3">
-        <router-link class="btn btn-primary text-outline-secondary" to="products"
-          >繼續購物</router-link
-        >
+        <router-link class="btn btn-outline-secondary" to="products">繼續購物</router-link>
         <router-link class="btn btn-primary px-4 text-white" to="checkout">結帳</router-link>
       </div>
     </div>
@@ -138,8 +135,12 @@
 <script>
 import cartsMixin from '@/mixins/cartsMixin';
 import { apiApplyCoupon } from '@/api';
+import PageTitle from '@/layout/PageTitle.vue';
 
 export default {
+  components: {
+    PageTitle,
+  },
   mixins: [cartsMixin],
   data() {
     return {
@@ -164,6 +165,9 @@ export default {
         this.toggleLoding({ pos: '' });
       }
     },
+  },
+  created() {
+    this.fetchCartList();
   },
 };
 </script>

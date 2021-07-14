@@ -1,11 +1,9 @@
 <template>
-  <!-- banner -->
-  <!-- 可能可用圖片 -->
-  <section class="bg-light">
-    <div class="container text-center py-5">
+  <PageTitle>
+    <template v-slot:breadcrumb>
       <h2 class="fs-6">鎂麥產品 / 健康 ▪︎ 寵愛</h2>
-    </div>
-  </section>
+    </template>
+  </PageTitle>
   <div class="container py-6">
     <div class="row">
       <div class="col-lg-3">
@@ -23,16 +21,6 @@
             </li>
           </ul>
         </div>
-        <!-- tag -->
-        <!-- <div class="p-4">
-          <h3 class="fs-6 mb-4 fw-bold">產品標籤</h3>
-          <div>
-            <button class="btn btn-light border rounded-pill me-2 px-3" type="button">健康</button>
-            <button class="btn btn-light border rounded-pill me-2 px-3" type="button">
-              小型犬
-            </button>
-          </div>
-        </div> -->
       </div>
       <div class="col-lg-9">
         <ul class="d-flex mb-4" data-discript="filterViewType">
@@ -62,14 +50,6 @@
               <ProductsViewCard :type="productView" :content="item" />
             </div>
           </template>
-          <!-- 方法二 -->
-          <!-- <div
-            v-for="item in products"
-            :key="item.id"
-            :class="[productView === 'list' ? 'col-12' : 'col-lg-4']"
-          >
-            <ProductsViewCard :type="productView" :content="item" />
-          </div> -->
         </div>
         <div class="d-flex justify-content-center" v-if="this.typeSelected === '全部'">
           <Pagination :pageInfo="pageInfo" @changePage="changePage" />
@@ -79,15 +59,17 @@
   </div>
 </template>
 <script>
+import { apiGetCleintProducts, apiGetProductsAll } from '@/api';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
 import Pagination from '@/components/Pagination.vue';
-import { apiGetCleintProducts, apiGetProductsAll } from '@/api';
+import PageTitle from '@/layout/PageTitle.vue';
 
 export default {
   name: 'product',
   components: {
     ProductsViewCard,
     Pagination,
+    PageTitle,
   },
   data() {
     return {
@@ -141,6 +123,7 @@ export default {
         this.$vLoading(false);
       }
     },
+
     async filterCategoryProduct() {
       try {
         const res = await apiGetProductsAll();
@@ -178,6 +161,7 @@ export default {
   },
   created() {
     this.fetchProductList();
+    // this.filterCategoryProduct();
   },
 };
 </script>

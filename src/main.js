@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-
+import VueEasyLightbox from 'vue-easy-lightbox';
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
@@ -47,6 +47,7 @@ app.config.globalProperties.$vErrorNotice = errorHandleMessage;
 app.directive('dropdown', dirDropdown);
 
 app
+  .use(VueEasyLightbox)
   .use(VueLoading)
   .use(router)
   .component('v-form', Form)

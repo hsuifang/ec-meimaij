@@ -1,9 +1,9 @@
 <template>
-  <section class="bg-light mb-8">
-    <div class="container text-center py-5">
+  <PageTitle>
+    <template v-slot:breadcrumb>
       <h2 class="fs-6">鎂麥 / 購買</h2>
-    </div>
-  </section>
+    </template>
+  </PageTitle>
   <div class="container mb-4">
     <a
       href="#"
@@ -148,12 +148,16 @@
   </div>
 </template>
 <script>
-import Collapse from 'bootstrap/js/dist/collapse';
 import { apiGenerateOrder } from '@/api';
+import Collapse from 'bootstrap/js/dist/collapse';
 import cartsMixin from '@/mixins/cartsMixin';
+import PageTitle from '@/layout/PageTitle.vue';
 
 export default {
   name: 'checkout',
+  components: {
+    PageTitle,
+  },
   data() {
     return {
       loadingItem: {
