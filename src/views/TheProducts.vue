@@ -106,10 +106,8 @@ export default {
       products: [],
       productCount: 0,
       pageInfo: {
-        current_page: 1,
-        has_next: false,
-        has_pre: false,
-        total_pages: 1,
+        current: 1,
+        total: 1,
       },
       isCreateItem: true,
     };
@@ -141,12 +139,15 @@ export default {
             ...item,
             is_enabled: Boolean(item.is_enabled),
           }));
-          this.pageInfo = pagination;
+          this.pageInfo = {
+            current: pagination.current_page,
+            total: pagination.total_pages,
+          };
         } else {
           this.$vHttpsNotice(res, '產品資料');
         }
       } catch (error) {
-        console.log(error);
+        this.$vLoading(false);
       } finally {
         this.$vLoading(false);
       }
@@ -166,7 +167,6 @@ export default {
           }
         } catch (error) {
           this.$vLoading(false);
-          console.log(error);
         }
       }
     },

@@ -7,8 +7,8 @@
       </ol>
     </template>
   </PageTitle>
-  <div class="container mb-8">
-    <div class="row">
+  <div class="container pt-0 pb-4 py-lg-6">
+    <div class="row mb-4 mb-lg-8">
       <div class="col-lg-5">
         <div class="w-100" @click="show(mainImage.id)">
           <div class="squre-img mb-3" style="background: rgba(246, 171, 74, 0.1)">
@@ -39,7 +39,7 @@
             <i
               class="bi bi-star-fill text-primary"
               :class="star"
-              v-for="(star, idx) in 5"
+              v-for="(star, idx) in starClass"
               :key="`star${idx}`"
             ></i>
             | <a href="#" @click.prevent>看評價</a>
@@ -70,32 +70,64 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="container p-4 p-lg-8 bg-light">
-    <ul class="d-flex justify-content-center mb-5">
-      <li
-        class="h5 me-6 pb-3 fw-bold border-primary border-4"
-        :class="{ 'border-bottom': tabContnet === 'description' }"
-      >
-        <a href="#" class="text-info" @click.prevent="tabContnet = 'description'">產品說明</a>
-      </li>
-      <li
-        class="h5 pb-3 fw-bold border-primary border-4"
-        :class="{ 'border-bottom': tabContnet === 'productValue' }"
-      >
-        <a href="#" class="text-info" @click.prevent="tabContnet = 'productValue'">商品評價</a>
-      </li>
-    </ul>
-    <div v-show="tabContnet === 'description'">
-      <p class="py-3 fw-bold">說明 ---</p>
-      <p>{{ productDetail.description }}</p>
-      <p class="py-3 fw-bold">內容 ---</p>
-      <p>{{ productDetail.content }}</p>
-      <p class="py-3 fw-bold">規格 ---</p>
-      <p v-html="productDetail.spec"></p>
+    <div class="pt-3 p-4 pt-lg-6 p-lg-8 bg-light">
+      <ul class="d-flex justify-content-center mb-5">
+        <li
+          class="h5 me-6 pb-3 fw-bold border-primary border-4"
+          :class="{ 'border-bottom': tabContnet === 'description' }"
+        >
+          <a href="#" class="text-info" @click.prevent="tabContnet = 'description'">產品說明</a>
+        </li>
+        <li
+          class="h5 pb-3 fw-bold border-primary border-4"
+          :class="{ 'border-bottom': tabContnet === 'productValue' }"
+        >
+          <a href="#" class="text-info" @click.prevent="tabContnet = 'productValue'">商品評價</a>
+        </li>
+      </ul>
+      <div v-show="tabContnet === 'description'">
+        <p class="py-3 fw-bold">說明 ---</p>
+        <p>{{ productDetail.description }}</p>
+        <p class="py-3 fw-bold">內容 ---</p>
+        <p>{{ productDetail.content }}</p>
+        <p class="py-3 fw-bold">規格 ---</p>
+        <p v-html="productDetail.spec"></p>
+      </div>
+      <div v-show="tabContnet === 'productValue'">
+        <ul>
+          <li class="py-4">
+            <div class="d-flex justify-content-between mb-2">
+              <p class="fw-bold">台中陳小姐</p>
+              <p class="text-info">2021/03/06</p>
+            </div>
+            <p class="mb-1">過往沒有使用過該產品，想說試試看，沒想到我家的臭寶貝超喜歡！</p>
+            <div>
+              <i
+                class="bi bi-star-fill text-primary"
+                :class="star"
+                v-for="(star, idx) in 5"
+                :key="`star${idx}`"
+              ></i>
+            </div>
+          </li>
+          <li class="py-4">
+            <div class="d-flex justify-content-between mb-2">
+              <p class="fw-bold">台中王小姐</p>
+              <p class="text-info">2021/05/06</p>
+            </div>
+            <p class="mb-1">推薦給想購買的了，我家寶貝是見證者 :)</p>
+            <div>
+              <i
+                class="bi bi-star-fill text-primary"
+                :class="star"
+                v-for="(star, idx) in 5"
+                :key="`star${idx}`"
+              ></i>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div v-show="tabContnet === 'productValue'">商品評價</div>
   </div>
 
   <div class="container p-4 p-lg-8">
@@ -137,7 +169,8 @@
 </template>
 
 <script>
-import { apiGetSpecficProduct, apiGetProductsAll, apiAddCart } from '@/api';
+import { apiGetSpecficProduct, apiGetProductsAll } from '@/api';
+import cartsMixin from '@/mixins/cartsMixin';
 import VueEasyLightbox from 'vue-easy-lightbox';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
 import PageTitle from '@/layout/PageTitle.vue';
@@ -149,13 +182,14 @@ export default {
     PageTitle,
   },
   inject: ['emitter'],
+  mixins: [cartsMixin],
   data() {
     return {
       visible: false,
       imageIdx: 0,
       mainImageIdx: 0,
       productId: '',
-      requestQty: null,
+      requestQty: 1,
       tabContnet: 'description',
       productDetail: {},
       relativeProducts: [],
@@ -173,6 +207,20 @@ export default {
     },
     mainImage() {
       return this.imgs.find((img) => img.id === this.mainImageIdx) || '';
+    },
+    starClass() {
+      const starArr = ['bi-star', 'bi-star', 'bi-star', 'bi-star', 'bi-star'];
+      const star = this.productDetail?.rate || 0;
+      starArr.forEach((item, idx) => {
+        if (star >= idx + 1) {
+          starArr[idx] = 'bi-star-fill';
+        } else if (Math.floor(star) === idx + 1) {
+          starArr[idx] = 'bi-star-half';
+        } else {
+          starArr[idx] = item;
+        }
+      });
+      return starArr;
     },
   },
   methods: {
@@ -213,15 +261,7 @@ export default {
         });
         this.requestQty = 1;
       } else {
-        try {
-          const res = await apiAddCart({ id: this.productId, qty: this.requestQty });
-          this.$vHttpsNotice(res, '加入購物車');
-          this.emitter.emit('updateCart');
-        } catch (error) {
-          this.$vErrorNotice();
-        } finally {
-          this.toggleLoding({ pos: '', id: '' });
-        }
+        this.addToCart({ productId: this.productId, qty: this.requestQty });
       }
     },
     init() {

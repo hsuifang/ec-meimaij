@@ -1,11 +1,5 @@
 <template>
-  <div
-    ref="canvas"
-    class="offcanvas offcanvas-end"
-    data-bs-backdrop="false"
-    tabindex="-1"
-    aria-labelledby="createItemLabel"
-  >
+  <div ref="canvas" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="createItemLabel">
     <div class="offcanvas-header border-bottom">
       <h5 class="offcanvas-title" id="createItemLabel">購物車</h5>
       <button
@@ -37,11 +31,11 @@
             <p class="fw-bold text-info">{{ $filters.currency(item.product.price) }}</p>
             <div class="d-flex justify-content-between align-items-end">
               <div class="fw-bold">
-                <a href="#" class="pe-2" @click.prevent="minusCartQty">
+                <a href="#" class="pe-2" @click.prevent="minusCartQty(item)">
                   <i class="bi bi-dash fs-6"></i>
                 </a>
                 <span class="fs-6">{{ item.qty }}</span>
-                <a href="#" class="ps-2" @click.prevent="addCartQty">
+                <a href="#" class="ps-2" @click.prevent="addCartQty(item)">
                   <i class="bi bi-plus fs-6"></i>
                 </a>
               </div>
@@ -55,13 +49,26 @@
       <div>
         <div class="offcanvas-footer border">
           <div class="p-3">
-            <p>購買{{ carts.length }}項產品</p>
-            <h4 class="py-3">總共：${{ price.final_total }}</h4>
-            <router-link to="cart" class="btn btn-outline-primary btn-lg w-100 mb-3" type="button"
-              >購物車</router-link
+            <p>
+              購買<span class="text-secondary px-2">{{ totalVolume }}</span
+              >項產品
+            </p>
+            <h4 class="py-3">總共：{{ $filters.currency(price.final_total) }}</h4>
+
+            <a
+              href="#"
+              @click.prevent="changeRoute('/cart')"
+              class="btn btn-outline-primary btn-lg w-100 mb-3"
+              type="button"
+              >購物車</a
             >
-            <router-link to="/checkout" class="btn btn-primary btn-lg w-100" type="button"
-              >直接購買</router-link
+
+            <a
+              href="#"
+              @click.prevent="changeRoute('/checkout')"
+              class="btn btn-primary btn-lg w-100 text-white"
+              type="button"
+              >直接購買</a
             >
           </div>
         </div>
@@ -83,23 +90,29 @@ export default {
   methods: {
     open() {
       this.bsOffcanvas.show();
+      this.fetchCartList();
     },
     close() {
       this.bsOffcanvas.hide();
     },
-    minusCartQty() {
-      console.log('minusCartQty');
+    minusCartQty(item) {
+      if (item.qty === 1) {
+        this.deleteItemFromCart({ cartId: item.id });
+      } else {
+        this.updateCart({ cartId: item.id, productId: item.product.id, qty: item.qty - 1 });
+      }
     },
-    addCartQty() {
-      console.log('addCartQty');
+    addCartQty(item) {
+      this.updateCart({ cartId: item.id, productId: item.product.id, qty: item.qty + 1 });
+    },
+    changeRoute(router) {
+      this.close();
+      this.$router.push(router);
     },
   },
   mounted() {
     const offCanvas = this.$refs.canvas;
     this.bsOffcanvas = new Offcanvas(offCanvas);
-  },
-  created() {
-    this.fetchCartList();
   },
 };
 </script>

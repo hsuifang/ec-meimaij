@@ -4,25 +4,25 @@
       <h2 class="fs-6">鎂麥產品 / 健康 ▪︎ 寵愛</h2>
     </template>
   </PageTitle>
-  <div class="container py-6">
+  <div class="container pt-0 pb-4 py-lg-6">
     <div class="row">
       <div class="col-lg-3">
         <!-- catagory -->
-        <div class="p-4">
-          <h3 class="fs-6 mb-4 fw-bold">產品類型</h3>
-          <ul class="ps-1">
+        <div class="p-lg-4">
+          <h3 class="fs-6 mb-4 fw-bold d-none d-lg-block">產品類型</h3>
+          <ul class="ps-1 productType-select">
             <li class="mb-2" v-for="type in typesList" :key="type.category">
               <a
                 href="#"
                 @click.prevent="typeSelected = type.category"
                 :class="{ 'text-primary': typeSelected === type.category }"
-                >{{ type.category }} | {{ type.count }}</a
+                >{{ type.category }} <span class="d-none d-lg-inline">/ {{ type.count }}</span></a
               >
             </li>
           </ul>
         </div>
       </div>
-      <div class="col-lg-9">
+      <div class="col-lg-9" v-if="products.length > 0">
         <ul class="d-flex mb-4" data-discript="filterViewType">
           <li class="p-1">
             <a href="#" data-view="product-grid" @click.prevent="productView = 'grid'"
@@ -42,7 +42,7 @@
           </li>
         </ul>
         <div class="row mb-6">
-          <template v-for="item in products" :key="item.id">
+          <template v-for="item in products" :key="item?.id">
             <div class="col-lg-4" v-show="productView === 'grid'">
               <ProductsViewCard :type="productView" :content="item" />
             </div>
@@ -55,11 +55,14 @@
           <Pagination :pageInfo="pageInfo" @changePage="changePage" />
         </div>
       </div>
+      <div class="col-lg-9" v-else>
+        <p>目前沒有產品</p>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { apiGetCleintProducts, apiGetProductsAll } from '@/api';
+import { apiGetProductsAll } from '@/api';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
 import Pagination from '@/components/Pagination.vue';
 import PageTitle from '@/layout/PageTitle.vue';
@@ -75,12 +78,10 @@ export default {
     return {
       productView: 'grid',
       productsAll: [],
-      products: [],
       pageInfo: {
-        current_page: 1,
-        has_next: false,
-        has_pre: false,
-        total_pages: 1,
+        current: 1,
+        total: 1,
+        size: 10,
       },
       typeSelected: '全部',
     };
@@ -98,45 +99,38 @@ export default {
       return [
         {
           category: '全部',
-          count: this.products.length,
+          count: this.productsAll.length,
         },
         ...types,
       ];
     },
+    products() {
+      const data = [];
+      const content = this.productsAll.filter((product) => {
+        if (this.typeSelected !== '全部') {
+          return product.category === this.typeSelected;
+        }
+        return true;
+      });
+      const { current, total, size } = this.pageInfo;
+      const maxNumber = total === current ? content.length : current * size;
+      const fromNumber = (current - 1) * 10;
+      for (let i = fromNumber; i < maxNumber; i += 1) {
+        data.push(content[i]);
+      }
+      return data;
+    },
   },
   methods: {
-    async fetchProductList(page = 1) {
+    async fetchAllProduct() {
       this.$vLoading(true);
-      try {
-        const res = await apiGetCleintProducts(page);
-        const { success, products, pagination } = res.data;
-        if (success) {
-          this.productsAll = products;
-          this.products = products;
-          this.pageInfo = pagination;
-        } else {
-          this.$vHttpsNotice(res, '產品顯示');
-        }
-      } catch (error) {
-        this.$vErrorNotice();
-      } finally {
-        this.$vLoading(false);
-      }
-    },
-
-    async filterCategoryProduct() {
       try {
         const res = await apiGetProductsAll();
         const { success, products } = res.data;
         if (success) {
           this.productsAll = products;
-          this.products = products.filter((product) => product.category === this.typeSelected);
-          this.pageInfo = {
-            current_page: 1,
-            has_next: false,
-            has_pre: false,
-            total_pages: 1,
-          };
+          this.pageInfo.current_page = 1;
+          this.pageInfo.total_pages = Math.ceil(this.productsAll.length / this.pageInfo.size);
         } else {
           this.$vHttpsNotice(res, '產品顯示');
         }
@@ -147,21 +141,16 @@ export default {
       }
     },
     changePage(page) {
-      this.fetchOrders(page);
+      this.pageInfo.current = page;
     },
   },
   watch: {
-    typeSelected(val) {
-      if (val === '全部') {
-        this.fetchProductList();
-      } else {
-        this.filterCategoryProduct();
-      }
+    typeSelected() {
+      this.fetchAllProduct();
     },
   },
   created() {
-    this.fetchProductList();
-    // this.filterCategoryProduct();
+    this.fetchAllProduct();
   },
 };
 </script>

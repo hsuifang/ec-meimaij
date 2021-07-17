@@ -15,6 +15,11 @@ export default {
     };
   },
   inject: ['emitter'],
+  computed: {
+    totalVolume() {
+      return this.carts?.reduce((acc, carts) => acc + carts.qty, 0);
+    },
+  },
   methods: {
     async fetchCartList() {
       this.$vLoading(true);
@@ -25,6 +30,7 @@ export default {
           this.carts = data.carts;
           this.price.total = data.total;
           this.price.final_total = data.final_total;
+          this.emitter.emit('updateCart', { volume: this.totalVolume });
         } else {
           this.$vHttpsNotice(res, '查看購物清單');
         }
@@ -35,19 +41,22 @@ export default {
       }
     },
     async addToCart({ productId, qty }) {
+      this.$vLoading(true);
       this.toggleLoding({ pos: 'list', id: productId });
       try {
         const res = await apiAddCart({ id: productId, qty });
-        this.emitter.emit('updateCart');
+        this.fetchCartList();
         this.$vHttpsNotice(res, '加入購物車');
       } catch (error) {
         this.$vErrorNotice();
       } finally {
         this.toggleLoding({ pos: '', id: '' });
+        this.$vLoading(false);
       }
     },
     async updateCart({ cartId, productId, qty }) {
       try {
+        this.$vLoading(true);
         const res = await apiUpdateCart({ cartId, productId, qty });
         const { success } = res.data;
         if (success) {
@@ -57,9 +66,11 @@ export default {
         }
       } catch (error) {
         this.$vErrorNotice();
+        this.$vLoading(false);
       }
     },
     async deleteItemFromCart({ cartId }) {
+      this.$vLoading(true);
       this.toggleLoding({ pos: 'delItem', id: cartId });
       try {
         const res = await apiDeleteCart(cartId);
@@ -72,10 +83,12 @@ export default {
         this.toggleLoding({ pos: '', id: '' });
       } catch (error) {
         this.$vErrorNotice();
+        this.$vLoading(false);
       }
     },
     async deleteAllCart() {
       try {
+        this.$vLoading(true);
         const res = await apiDeleteAllCart();
         const { success } = res.data;
         if (success) {
@@ -86,6 +99,7 @@ export default {
         }
       } catch (error) {
         this.$vErrorNotice();
+        this.$vLoading(false);
       }
     },
     toggleLoding({ pos, id }) {

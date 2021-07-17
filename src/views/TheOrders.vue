@@ -114,10 +114,8 @@ export default {
       currentItem: {},
       orders: [],
       pageInfo: {
-        current_page: 1,
-        has_next: false,
-        has_pre: false,
-        total_pages: 1,
+        current: 1,
+        total: 1,
       },
       isCreateItem: true,
       isLoading: false,
@@ -132,7 +130,10 @@ export default {
         const { orders, pagination, success } = res.data;
         if (success) {
           this.orders = orders;
-          this.pageInfo = pagination;
+          this.pageInfo = {
+            current: pagination.current_page,
+            total: pagination.total_pages,
+          };
         } else {
           this.$vHttpNotice(res, '取得訂單資訊');
         }

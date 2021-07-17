@@ -50,7 +50,7 @@
           {{ product.content }}
         </p>
         <div>
-          <button class="btn btn-primary me-3" type="button">加入購物車</button>
+          <button class="btn btn-primary me-3 text-white" type="button">加入購物車</button>
           <button class="btn btn-outline-info me-3" type="button">
             <i class="bi bi-plus"></i>
           </button>
@@ -65,7 +65,6 @@ import cartsMixin from '@/mixins/cartsMixin';
 
 export default {
   name: 'ShopProduct',
-  // temp
   props: {
     type: {
       type: String,
@@ -106,7 +105,6 @@ export default {
     },
   },
   methods: {
-    addCart() {},
     viewDetail(id) {
       this.$router.push(`/product/${id}`);
     },

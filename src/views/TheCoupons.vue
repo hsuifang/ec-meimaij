@@ -108,10 +108,8 @@ export default {
       coupons: [],
       couponsCount: 0,
       pageInfo: {
-        current_page: 1,
-        has_next: false,
-        has_pre: false,
-        total_pages: 1,
+        current: 1,
+        total: 1,
       },
       isCreateItem: true,
       isLoading: false,
@@ -134,7 +132,10 @@ export default {
         const { coupons, pagination, success } = res.data;
         if (success) {
           this.coupons = coupons;
-          this.pageInfo = pagination;
+          this.pageInfo = {
+            current: pagination.current_page,
+            total: pagination.total_pages,
+          };
         } else {
           this.$vHttpsNotice(res, '優惠券顯示');
         }
@@ -145,13 +146,10 @@ export default {
       }
     },
     async toggleCouponItemStatus(item) {
-      console.log(item);
       this.isLoading = true;
       this.currentItem = item;
       this.currentItem.is_enabled = this.currentItem.is_enabled ? 1 : 0;
-
       this.isCreateItem = false;
-
       await this.submitCouponItem(this.currentItem);
       this.isLoading = false;
     },

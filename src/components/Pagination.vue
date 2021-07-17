@@ -1,6 +1,6 @@
 <template>
   <ul class="pagination">
-    <li class="page-item me-2" :class="{ disabled: !pageInfo.has_pre }">
+    <li class="page-item me-2" :class="{ disabled: pageInfo.current_page === 1 }">
       <a
         class="page-link"
         href="#"
@@ -14,12 +14,12 @@
     <li
       class="page-item me-2"
       :class="{ active: num === pageInfo.current_page }"
-      v-for="num in pageInfo.total_pages"
+      v-for="num in pageInfo.total"
       :key="`page${num}`"
     >
       <a class="page-link" href="#" @click.prevent="changePage(num)">{{ num }}</a>
     </li>
-    <li class="page-item" :class="{ disabled: !pageInfo.has_next }">
+    <li class="page-item" :class="{ disabled: pageInfo.current_page === pageInfo.total }">
       <a class="page-link" href="#" @click.prevent="changePage(current + 1)">&gt;</a>
     </li>
   </ul>
@@ -31,8 +31,6 @@ export default {
     pageInfo: {
       type: Object,
       default: () => ({
-        has_pre: false,
-        has_next: false,
         current: 1,
         total: 1,
       }),

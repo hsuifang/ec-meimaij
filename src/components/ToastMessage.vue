@@ -1,6 +1,6 @@
 <template>
   <!-- show -->
-  <div class="position-fixed top-0 end-0" style="z-index: 2000">
+  <div class="position-fixed end-0" style="z-index: 2000; top: 50px">
     <div
       class="toast show"
       role="alert"

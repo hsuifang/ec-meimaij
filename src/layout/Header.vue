@@ -17,17 +17,13 @@
         </button>
         <!-- logo -->
         <div class="navbar-brand me-5 pointer" @click="$router.push('/')">
-          <img
-            src="https://opencart.dostguru.com/PT01/petshop_02/image/catalog/logo.png"
-            alt="logo"
-            class="navbar-brand-item"
-          />
+          <img src="/images/logo.svg" alt="logo" class="navbar-brand-item" height="40" />
         </div>
         <!-- laptop nav -->
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav navbar-nav-scroll">
             <li class="nav-item me-3">
-              <router-link to="/" class="nav-link active" aria-current="page">首頁</router-link>
+              <router-link to="/" class="nav-link" aria-current="page">首頁</router-link>
             </li>
             <li v-dropdown class="nav-item me-3 dropdown">
               <router-link
@@ -44,7 +40,7 @@
               </ul>
             </li>
             <!-- v-dropdown -->
-            <li v-dropdown class="nav-item me-3 dropdown">
+            <!-- <li v-dropdown class="nav-item me-3 dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="javascript:void(0)"
@@ -60,7 +56,7 @@
             </li>
             <li class="nav-item">
               <router-link to="/products" class="nav-link">專欄</router-link>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="d-flex align-items-center">
@@ -71,10 +67,18 @@
           <a href="#" @click.prevent="checkCart">
             <i class="bi-bag-fill fs-5"></i>
             <p
-              class="position-absolute left-50 bg-primary px-1 py-0 text-white rounded-circle"
-              style="font-size: 12px; padding-top: 2px; padding-bottom: 2px; top: -14px; left: 2px"
+              class="
+                position-absolute
+                left-50
+                bg-primary
+                px-1
+                py-0
+                text-white
+                rounded-circle
+                navbar-cart
+              "
             >
-              {{ carts?.length }}
+              {{ volume }}
             </p>
           </a>
         </div>
@@ -83,7 +87,7 @@
       <div class="mobile-collapse" :class="{ show: navbarToggle }">
         <ul class="navbar-nav navbar-nav-scroll p-4">
           <li class="nav-item me-3">
-            <router-link to="/" class="nav-link active" aria-current="page">首頁</router-link>
+            <router-link to="/" class="nav-link" aria-current="page">首頁</router-link>
           </li>
           <li class="nav-item me-3">
             <router-link to="/products" class="nav-link" role="button" aria-expanded="false"
@@ -91,14 +95,14 @@
             >
           </li>
           <!-- v-dropdown -->
-          <li class="nav-item me-3">
+          <!-- <li class="nav-item me-3">
             <a class="nav-link" href="javascript:void(0)" role="button" aria-expanded="false">
               常見問題
             </a>
           </li>
           <li class="nav-item">
             <router-link to="/products" class="nav-link">專欄</router-link>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -118,6 +122,7 @@ export default {
   data() {
     return {
       navbarToggle: false,
+      volume: '',
     };
   },
   methods: {
@@ -126,12 +131,13 @@ export default {
     },
   },
   mounted() {
-    this.emitter.on('updateCart', () => {
-      this.fetchCartList();
+    this.emitter.on('updateCart', ({ volume }) => {
+      this.volume = volume;
     });
   },
   created() {
     this.fetchCartList();
+    this.volume = this.totalVolume;
   },
 };
 </script>
