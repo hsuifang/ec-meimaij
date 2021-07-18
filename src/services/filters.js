@@ -1,4 +1,4 @@
-export function currency(price) {
+export function currency(price = 0) {
   const num = Number(price).toFixed(0);
   return num && `NT$ ${num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 }

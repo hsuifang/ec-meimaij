@@ -23,7 +23,7 @@
         </button>
         <!-- LOGO  -->
         <div class="navbar-brand me-5 pointer" @click="$router.push('/')">
-          <img src="/images/logo.svg" alt="logo" class="navbar-brand-item" height="40" />
+          <img src="images/logo.svg" alt="logo" class="navbar-brand-item" height="40" />
         </div>
         <!-- LAPTOP NAV START -->
         <div class="collapse navbar-collapse">

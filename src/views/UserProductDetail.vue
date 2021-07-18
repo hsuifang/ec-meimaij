@@ -11,7 +11,7 @@
     <div class="row mb-4 mb-lg-8">
       <div class="col-lg-5">
         <div class="w-100" @click="showCoverImage(mainImage.id)">
-          <div class="squre-img mb-3 text-primary-10">
+          <div class="squre-img mb-3 bg-primary-10">
             <img :src="mainImage.src" alt="mainImage" />
           </div>
           <div class="position-absolute bottom-0 end-0">
@@ -26,7 +26,7 @@
             alt="thumbnailImg"
             width="80"
             height="80"
-            class="me-2 obj-fit-contain text-primary-10"
+            class="me-2 obj-fit-contain bg-primary-10"
             @click="mainImageIdx = img.id"
           />
         </div>
@@ -296,6 +296,7 @@ export default {
   },
   created() {
     this.init();
+    window.scrollTo(0, 0);
   },
 };
 // @todo: 看評價

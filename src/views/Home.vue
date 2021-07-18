@@ -130,7 +130,7 @@ export default {
       clientFeedBack: [
         {
           id: 1,
-          avator: '/images/logo.svg',
+          avator: 'images/logo.svg',
           name: '陳先生',
           pet: '黃金獵犬',
           product: '雞肉乾糧',
@@ -138,7 +138,7 @@ export default {
         },
         {
           id: 2,
-          avator: '/images/logo.svg',
+          avator: 'images/logo.svg',
           name: '許花',
           pet: '博美',
           product: '潔牙骨',
@@ -146,7 +146,7 @@ export default {
         },
         {
           id: 3,
-          avator: '/images/logo.svg',
+          avator: 'images/logo.svg',
           name: '台北yoyo',
           pet: '米克斯',
           product: '生食',

@@ -509,7 +509,6 @@ $utilities: map-merge(
           "muted": $text-muted,
           "black-50": rgba($black, .5),
           "white-50": rgba($white, .5),
-          "primary-10": rgba($primary, .1),
           "reset": inherit,
         )
       )
@@ -524,7 +523,8 @@ $utilities: map-merge(
         (
           "body": $body-bg,
           "white": $white,
-          "transparent": transparent
+          "transparent": transparent,
+          "primary-10": rgba($primary, .1),
         )
       )
     ),
