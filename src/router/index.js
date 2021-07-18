@@ -11,6 +11,7 @@ const routes = [
       },
       {
         path: 'products',
+        name: 'products',
         component: () => import('../views/UserProducts.vue'),
       },
       {
@@ -24,6 +25,10 @@ const routes = [
       {
         path: 'checkout',
         component: () => import('../views/UserCheckout.vue'),
+      },
+      {
+        path: 'favorite',
+        component: () => import('../views/UserFavorite.vue'),
       },
     ],
   },

@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="border-top">
     <div class="py-6">
       <ul class="list-unstyled list-unstyled d-flex justify-content-center mb-2 mb-lg-3">
         <li class="me-3">

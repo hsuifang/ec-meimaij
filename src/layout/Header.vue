@@ -21,11 +21,11 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- logo -->
+        <!-- LOGO  -->
         <div class="navbar-brand me-5 pointer" @click="$router.push('/')">
           <img src="/images/logo.svg" alt="logo" class="navbar-brand-item" height="40" />
         </div>
-        <!-- laptop nav -->
+        <!-- LAPTOP NAV START -->
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav navbar-nav-scroll">
             <li class="nav-item me-3">
@@ -40,36 +40,31 @@
                 >鎂麥產品</router-link
               >
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="javascript:void(0)">鎂麥生肉餐</a></li>
-                <li><a class="dropdown-item" href="javascript:void(0)">鎂麥鮮食</a></li>
-                <li><a class="dropdown-item" href="javascript:void(0)">鎂麥零食</a></li>
+                <li>
+                  <a class="dropdown-item" href="#" @click.prevent="productRouter('生食餐')"
+                    >鎂麥生食餐</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" @click.prevent="productRouter('鮮食')"
+                    >鎂麥鮮食</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" @click.prevent="productRouter('零食')"
+                    >鎂麥零食</a
+                  >
+                </li>
               </ul>
             </li>
-            <!-- v-dropdown -->
-            <!-- <li v-dropdown class="nav-item me-3 dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="javascript:void(0)"
-                role="button"
-                aria-expanded="false"
-              >
-                常見問題
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><router-link class="dropdown-item" to="/cart">生食</router-link></li>
-                <li><a class="dropdown-item" href="#">訂購與寄送</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <router-link to="/products" class="nav-link">專欄</router-link>
-            </li> -->
           </ul>
         </div>
+        <!-- laptop NAV END -->
         <div class="d-flex align-items-center">
           <router-link to="/login"><i class="bi bi-person fs-4 me-3"></i></router-link>
-          <a href="#">
+          <router-link to="/favorite">
             <i class="bi bi-bookmark-heart fs-5 me-3"></i>
-          </a>
+          </router-link>
           <a href="#" @click.prevent="checkCart">
             <i class="bi-bag-fill fs-5"></i>
             <p
@@ -89,7 +84,7 @@
           </a>
         </div>
       </div>
-      <!-- mobile nav -->
+      <!-- MOBILE NAV START -->
       <div class="mobile-collapse" :class="{ show: navbarToggle }">
         <ul class="navbar-nav navbar-nav-scroll p-4">
           <li class="nav-item me-3">
@@ -100,17 +95,9 @@
               >鎂麥產品</router-link
             >
           </li>
-          <!-- v-dropdown -->
-          <!-- <li class="nav-item me-3">
-            <a class="nav-link" href="javascript:void(0)" role="button" aria-expanded="false">
-              常見問題
-            </a>
-          </li>
-          <li class="nav-item">
-            <router-link to="/products" class="nav-link">專欄</router-link>
-          </li> -->
         </ul>
       </div>
+      <!-- MOBILE NAV END -->
     </nav>
     <CartOffcanvas ref="canvas" />
   </div>
@@ -135,6 +122,13 @@ export default {
     checkCart() {
       this.$refs.canvas.open();
     },
+    productRouter(typeSelected) {
+      if (this.$route.path === '/products') return;
+      this.$router.push({
+        name: 'products',
+        params: { typeSelected },
+      });
+    },
   },
   mounted() {
     this.emitter.on('updateCart', ({ volume = 0 }) => {
@@ -146,4 +140,5 @@ export default {
     this.volume = this.totalVolume;
   },
 };
+// @todo: 專欄 / 常見問題
 </script>

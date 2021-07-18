@@ -41,11 +41,10 @@
               v-for="(star, idx) in starClass"
               :key="`star${idx}`"
             ></i>
-            | <a href="#" @click.prevent>看評價</a>
           </div>
           <h3 class="text-primary mb-3 mb-lg-4">
             {{ $filters.currency(productDetail.price) }}
-            <del class="h4 text-info">{{ $filters.currency(productDetail.origin_price) }}</del>
+            <del class="fs-5 text-info">{{ $filters.currency(productDetail.origin_price) }}</del>
           </h3>
           <p class="text-info mb-2" v-html="productDetail.description"></p>
           <p class="text-info mb-4" v-html="productDetail.content"></p>
@@ -64,7 +63,13 @@
             <button class="btn btn-primary me-2" type="button" @click="addToCart">
               加入購物車
             </button>
-            <button class="btn btn-outline-info" type="button"><i class="bi bi-heart"></i></button>
+            <button
+              class="btn btn-outline-info"
+              type="button"
+              @click="toggleFavorite(productDetail)"
+            >
+              <i class="bi" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -170,6 +175,7 @@
 <script>
 import { apiGetSpecficProduct, apiGetProductsAll } from '@/api';
 import cartsMixin from '@/mixins/cartsMixin';
+import favoriteMixin from '@/mixins/favoriteMixin';
 import VueEasyLightbox from 'vue-easy-lightbox';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
 import PageTitle from '@/layout/PageTitle.vue';
@@ -181,7 +187,7 @@ export default {
     PageTitle,
   },
   inject: ['emitter'],
-  mixins: [cartsMixin],
+  mixins: [cartsMixin, favoriteMixin],
   data() {
     return {
       visible: false,
@@ -248,10 +254,6 @@ export default {
         }
       }
     },
-    toggleLoding({ pos, id }) {
-      this.loadingItem.pos = pos;
-      this.loadingItem.id = id;
-    },
     async addToCart() {
       if (this.requestQty < 1) {
         this.emitter.emit('notice-message', {
@@ -262,6 +264,10 @@ export default {
       } else {
         this.addToCart({ productId: this.productId, qty: this.requestQty });
       }
+    },
+    toggleLoding({ pos, id }) {
+      this.loadingItem.pos = pos;
+      this.loadingItem.id = id;
     },
     init() {
       this.productId = this.$route.params.id;
@@ -285,10 +291,14 @@ export default {
       this.init();
     },
   },
+  mounted() {
+    this.initFavorite(this.productId);
+  },
   created() {
     this.init();
   },
 };
+// @todo: 看評價
 </script>
 
 <style lang="scss">

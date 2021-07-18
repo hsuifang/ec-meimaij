@@ -54,10 +54,10 @@
         </ul>
         <div class="row mb-6">
           <template v-for="item in products" :key="item?.id">
-            <div class="col-lg-4" v-show="productView === 'grid'">
+            <div class="col-md-6 col-lg-4 mb-3" v-show="productView === 'grid'">
               <ProductsViewCard :type="productView" :content="item" />
             </div>
-            <div class="col-12" v-show="productView === 'list'">
+            <div class="col-12 mb-3" v-show="productView === 'list'">
               <ProductsViewCard :type="productView" :content="item" />
             </div>
           </template>
@@ -159,6 +159,12 @@ export default {
     typeSelected() {
       this.fetchAllProduct();
     },
+  },
+  mounted() {
+    const { typeSelected } = this.$route.params;
+    if (typeSelected) {
+      this.typeSelected = typeSelected;
+    }
   },
   created() {
     this.fetchAllProduct();
