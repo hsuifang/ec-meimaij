@@ -14,9 +14,9 @@
           ></a>
         </div>
         <div class="product__badge">
-          <span class="badge" :class="`bg-${product.status?.type}`">{{
+          <!-- <span class="badge" :class="`bg-${product.status?.type}`">{{
             product.status?.text
-          }}</span>
+          }}</span> -->
           <div class="ms-auto">
             <i
               class="bi bi-star-fill text-primary"

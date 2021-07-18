@@ -5,13 +5,24 @@
     </template>
   </PageTitle>
   <div class="container pt-0 pb-4 py-lg-6">
-    <div class="row">
+    <div class="row gx-5">
       <div class="col-lg-3">
         <!-- catagory -->
-        <div class="p-lg-4">
-          <h3 class="fs-6 mb-4 fw-bold d-none d-lg-block">產品類型</h3>
-          <ul class="ps-1 productType-select">
-            <li class="mb-2" v-for="type in typesList" :key="type.category">
+        <div>
+          <h3
+            class="
+              fs-6
+              fw-bold
+              d-none d-lg-block
+              p-lg-3
+              bg-light
+              border-start border-primary border-4
+            "
+          >
+            產品類型
+          </h3>
+          <ul class="ps-1 productType-select p-lg-4">
+            <li class="mb-3" v-for="type in typesList" :key="type.category">
               <a
                 href="#"
                 @click.prevent="typeSelected = type.category"
@@ -23,8 +34,8 @@
         </div>
       </div>
       <div class="col-lg-9" v-if="products.length > 0">
-        <ul class="d-flex mb-4" data-discript="filterViewType">
-          <li class="p-1">
+        <ul class="d-flex px-3 py-2 mb-4 bg-light" data-discript="filterViewType">
+          <li class="me-3">
             <a href="#" data-view="product-grid" @click.prevent="productView = 'grid'"
               ><i
                 class="bi bi-grid fs-4 fw-bold"
@@ -32,7 +43,7 @@
               ></i
             ></a>
           </li>
-          <li class="p-1">
+          <li>
             <a href="#" data-view="product-list" @click.prevent="productView = 'list'"
               ><i
                 class="bi bi-list fs-4 fw-bold"

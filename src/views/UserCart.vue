@@ -36,8 +36,7 @@
                         alt=""
                         width="70"
                         height="70"
-                        class="img-fluid me-3"
-                        style="height: 70px; object-fit: contain"
+                        class="img-fluid me-3 obj-fit-contain"
                       />
                     </div>
                   </th>
@@ -87,10 +86,23 @@
         </div>
         <div class="d-flex justify-content-between mt-3">
           <div class="d-flex">
-            <input id="coupon" type="text" class="form-control me-2" style="width: 200px" min="1" />
-            <button type="button" class="btn btn-secondary text-white">
+            <input
+              id="coupon"
+              type="text"
+              class="form-control me-2"
+              style="width: 200px"
+              v-model="couponCode"
+            />
+            <button type="button" class="btn btn-secondary text-white" @click="applyCoupon">
               <i class="bi bi-gift text-white me-2"></i>使用優惠券
             </button>
+            <div
+              v-if="loadingItem.pos === 'applyCoupon'"
+              class="spinner-border spinner-border-sm position-absolute top-50 start-100"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
           <div v-if="carts.length > 0">
             <button
@@ -114,8 +126,10 @@
     </div>
     <ul class="text-end pt-5 pb-3 border-bottom">
       <li class="mb-4">小計: {{ $filters.currency(price.total) }}</li>
-      <li class="mb-4">折扣: {{ $filters.currency(price.final_total - price.total) }}</li>
-      <li class="mb-4">總計: {{ $filters.currency(price.final_total) }}</li>
+      <li class="mb-4">折扣: {{ $filters.currency(price.total - price.final_total) }}</li>
+      <li class="mb-4">
+        總計: <span class="fw-bold">{{ $filters.currency(price.final_total) }}</span>
+      </li>
     </ul>
     <div class="d-flex justify-content-between py-3">
       <router-link class="btn btn-outline-secondary" to="products">繼續購物</router-link>
@@ -142,7 +156,8 @@ export default {
     };
   },
   methods: {
-    async applyCoupn() {
+    async applyCoupon() {
+      if (!this.couponCode) return;
       this.toggleLoding({ pos: 'applyCoupon' });
       try {
         const res = await apiApplyCoupon(this.couponCode);
@@ -156,6 +171,10 @@ export default {
       } finally {
         this.toggleLoding({ pos: '' });
       }
+    },
+    toggleLoding({ pos, id }) {
+      this.loadingItem.pos = pos;
+      this.loadingItem.id = id;
     },
   },
   created() {

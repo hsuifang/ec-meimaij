@@ -1,5 +1,11 @@
 <template>
   <div class="sticky-top">
+    <div class="bg-primary py-1">
+      <p class="container">
+        一起加油！即日起至7/26優惠碼限時輸入：<span class="fw-bold text-secondary">e7e7x80</span>
+        全館8折優惠
+      </p>
+    </div>
     <nav
       class="navbar navbar-expand-lg bg-white navbar-light border-bottom border-primary shadow-sm"
     >
@@ -131,7 +137,7 @@ export default {
     },
   },
   mounted() {
-    this.emitter.on('updateCart', ({ volume }) => {
+    this.emitter.on('updateCart', ({ volume = 0 }) => {
       this.volume = volume;
     });
   },

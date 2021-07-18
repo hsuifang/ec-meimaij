@@ -127,8 +127,7 @@
                         <input
                           type="radio"
                           name="checkedStatus"
-                          class="me-1 position-absolute"
-                          style="opacity: 0"
+                          class="me-1 position-absolute opacity-0"
                           :value="status.id"
                           :id="`${status.type}Status`"
                           v-model="statusType"

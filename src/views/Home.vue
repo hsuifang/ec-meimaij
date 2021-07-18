@@ -89,19 +89,18 @@
     <div class="container py-4 py-lg-8">
       <div class="section-title text-center mb-5 mb-lg-8">
         <h2 class="mb-2">購買者心得</h2>
-        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> -->
       </div>
       <div class="row pt-3">
         <div class="col-lg-4 mb-5 mb-lg-0" v-for="item in clientFeedBack" :key="item.id">
           <div class="pin shadow-sm p-5 bg-white">
-            <p class="mb-4 fw-bold text-secondary">購買雞肉乾糧 --</p>
+            <p class="mb-4 fw-bold text-secondary">購買{{ item.product }} --</p>
             <div class="d-flex align-items-center">
               <img
                 :src="item.avator"
                 alt="avator"
                 width="50"
                 height="50"
-                class="rounded-circle overflow-hidden me-3 border border-secondary border-2"
+                class="overflow-hidden me-3 border border-secondary border-2"
               />
               <div>
                 <h6 class="mb-1">飼養{{ item.pet }}{{ item.name }}</h6>
@@ -131,8 +130,7 @@ export default {
       clientFeedBack: [
         {
           id: 1,
-          avator:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+          avator: '/images/logo.svg',
           name: '陳先生',
           pet: '黃金獵犬',
           product: '雞肉乾糧',
@@ -140,8 +138,7 @@ export default {
         },
         {
           id: 2,
-          avator:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+          avator: '/images/logo.svg',
           name: '許花',
           pet: '博美',
           product: '潔牙骨',
@@ -149,8 +146,7 @@ export default {
         },
         {
           id: 3,
-          avator:
-            'http://themetechmount.net/opencart/frizty-layout4/image/cache/catalog/pro/11-270x329.jpg',
+          avator: '/images/logo.svg',
           name: '台北yoyo',
           pet: '米克斯',
           product: '生食',

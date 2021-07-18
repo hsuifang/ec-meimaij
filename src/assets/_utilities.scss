@@ -509,6 +509,7 @@ $utilities: map-merge(
           "muted": $text-muted,
           "black-50": rgba($black, .5),
           "white-50": rgba($white, .5),
+          "primary-10": rgba($primary, .1),
           "reset": inherit,
         )
       )
@@ -594,6 +595,16 @@ $utilities: map-merge(
       responsive: true,
       values: contain cover grab
     ),
+    "opacity": (
+      property: opacity,
+      values: (
+        0: 0,
+        25: .25,
+        50: .5,
+        75: .75,
+        100: 1,
+      )
+    )
     // scss-docs-end utils-visibility
   ),
   $utilities
