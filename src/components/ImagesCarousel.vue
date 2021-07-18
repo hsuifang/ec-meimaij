@@ -34,21 +34,7 @@
   </swiper>
 </template>
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
-// Import Swiper styles
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.min.css';
-
-import SwiperCore, { Navigation } from 'swiper/core';
-// install Swiper modules
-SwiperCore.use([Navigation]);
-
 export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   data() {
     return {
       parallaxSwiperWidth: 0,

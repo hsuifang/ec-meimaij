@@ -13,10 +13,19 @@ import { errorHandleMessage, httpNoticeMessage } from '@/services/noticeMessageS
 
 import dirDropdown from '@/directives/dropdown';
 
+// Import Swiper styles
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.min.css';
+import SwiperCore, { Navigation } from 'swiper/core';
+
 import App from './App.vue';
 import router from './router';
 
 import { currency, localeDateStr, localeTimeStr } from './services/filters';
+
+// install Swiper modules
+SwiperCore.use([Navigation]);
 
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule]);
@@ -50,6 +59,8 @@ app
   .use(VueEasyLightbox)
   .use(VueLoading)
   .use(router)
+  .component('Swiper', Swiper)
+  .component('SwiperSlide', SwiperSlide)
   .component('v-form', Form)
   .component('v-field', Field)
   .component('error-message', ErrorMessage)
