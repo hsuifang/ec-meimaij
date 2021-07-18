@@ -1,5 +1,5 @@
 <template>
-  <div class="back">
+  <div class="back bg-logo min-vh-100">
     <div class="container py-5">
       <ul class="nav justify-content-center align-items-center">
         <li class="nav-item"><router-link class="nav-link" to="/">回到前台</router-link></li>
@@ -78,12 +78,7 @@ export default {
 };
 </script>
 <style lang="scss">
-// f6ab4a
-// 7e4c4f
-
 .back {
-  min-height: 100vh;
-  background: #efefef;
   .router-link-exact-active {
     font-weight: bold;
     border-bottom: 3px solid #7e4c4f;

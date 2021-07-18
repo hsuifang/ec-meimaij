@@ -36,7 +36,7 @@
           }}</del>
         </p>
         <a href="#" type="button" @click.prevent="toggleFavorite(product)">
-          <i class="bi" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
+          <i class="bi text-danger" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
         </a>
       </div>
     </div>
@@ -69,7 +69,7 @@
           <i class="bi bi-info"></i>
         </button>
         <button class="btn btn-outline-info" type="button" @click="toggleFavorite(product)">
-          <i class="bi" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
+          <i class="bi text-danger" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
         </button>
       </div>
     </div>
@@ -89,10 +89,6 @@ export default {
     content: {
       type: Object,
       default: () => ({}),
-    },
-    star: {
-      type: Number,
-      default: 0,
     },
   },
   mixins: [cartsMixin, favoriteMixin],

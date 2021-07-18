@@ -4,6 +4,11 @@
     <router-view></router-view>
   </div>
   <Footer />
+  <div class="position-fixed bottom-0 end-0 translate-middle shadow rounded-circle">
+    <a href="https://lin.ee/Z3ZDysc" target="_blank">
+      <img src="/images/line-social.png" />
+    </a>
+  </div>
 </template>
 
 <script>
@@ -15,9 +20,6 @@ export default {
   components: {
     Header,
     Footer,
-  },
-  data() {
-    return {};
   },
 };
 </script>

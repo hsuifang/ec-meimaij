@@ -105,13 +105,17 @@
                 <p class="fw-bold">名稱</p>
                 <p class="fw-bold">金額</p>
               </li>
-              <li
-                class="list-group-item d-flex justify-content-between"
-                v-for="cart in carts"
-                :key="cart.id"
-              >
-                <p>{{ cart.product.title }} x {{ cart.qty }}</p>
-                <p>{{ $filters.currency(cart.product.price) }}</p>
+              <li class="list-group-item" v-for="cart in carts" :key="cart.id">
+                <div class="d-flex justify-content-between mb-2">
+                  <p>{{ cart.product.title }} x {{ cart.qty }}</p>
+                  <p>{{ $filters.currency(cart.product.price) }}</p>
+                </div>
+                <div v-if="cart.coupon" class="text-muted fs-8">
+                  優惠券:
+                  <span class="bg-primary text-white rounded-pill py-1 px-2 fs-8">
+                    {{ cart.coupon.code }}
+                  </span>
+                </div>
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <p class="fw-bold">小計</p>
@@ -178,7 +182,6 @@ export default {
       },
       collapse: '',
       couponCode: '',
-      usedCode: '',
     };
   },
   mixins: [cartsMixin],
@@ -190,7 +193,6 @@ export default {
       try {
         const res = await apiApplyCoupon(this.couponCode);
         if (res.data.success) {
-          this.usedCode = this.couponCode;
           this.fetchCartList();
         }
         this.couponCode = '';

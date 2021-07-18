@@ -1090,8 +1090,8 @@ $pagination-border-radius-lg: $border-radius-lg !default;
 // Cards
 
 // scss-docs-start card-variables
-$card-spacer-y: $spacer !default;
-$card-spacer-x: $spacer !default;
+$card-spacer-y: 2rem; //$spacer !default;
+$card-spacer-x: 2rem; // $spacer !default;
 $card-title-spacer-y: $spacer / 2 !default;
 $card-border-width: $border-width !default;
 $card-border-radius: $border-radius !default;
@@ -1258,7 +1258,7 @@ $modal-content-inner-border-radius: subtract(
 $modal-content-box-shadow-xs: $box-shadow-sm !default;
 $modal-content-box-shadow-sm-up: $box-shadow !default;
 
-$modal-backdrop-bg: $black !default;
+$modal-backdrop-bg:  $black !default;
 $modal-backdrop-opacity: 0.5 !default;
 $modal-header-border-color: $border-color !default;
 $modal-footer-border-color: $modal-header-border-color !default;

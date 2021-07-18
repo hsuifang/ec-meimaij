@@ -10,7 +10,7 @@
       ></button>
     </div>
     <div class="offcanvas-body pt-0 bg-white">
-      <ul>
+      <ul v-if="totalVolume > 0">
         <li
           class="d-flex align-items-center py-4 px-3"
           :class="{ 'border-bottom': item !== 10 }"
@@ -46,6 +46,7 @@
           </div>
         </li>
       </ul>
+      <p class="py-5" v-else>目前無產品</p>
       <div>
         <div class="offcanvas-footer border">
           <div class="p-3">
@@ -54,22 +55,23 @@
               >項產品
             </p>
             <h4 class="py-3">總共：{{ $filters.currency(price.final_total) }}</h4>
+            <template v-if="totalVolume !== 0">
+              <a
+                href="#"
+                @click.prevent="changeRoute('/cart')"
+                class="btn btn-outline-primary btn-lg w-100 mb-3"
+                type="button"
+                >購物車</a
+              >
 
-            <a
-              href="#"
-              @click.prevent="changeRoute('/cart')"
-              class="btn btn-outline-primary btn-lg w-100 mb-3"
-              type="button"
-              >購物車</a
-            >
-
-            <a
-              href="#"
-              @click.prevent="changeRoute('/checkout')"
-              class="btn btn-primary btn-lg w-100 text-white"
-              type="button"
-              >直接購買</a
-            >
+              <a
+                href="#"
+                @click.prevent="changeRoute('/checkout')"
+                class="btn btn-primary btn-lg w-100 text-white"
+                type="button"
+                >直接購買</a
+              >
+            </template>
           </div>
         </div>
       </div>

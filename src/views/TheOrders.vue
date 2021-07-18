@@ -9,7 +9,7 @@
             <button
               type="button"
               class="btn btn-outline-secondary py-2 px-3"
-              @click="deleteAllOrders"
+              @click="showCheckAgain({ title: '全部' })"
             >
               刪除全部
             </button>
@@ -70,7 +70,7 @@
                     type="button"
                     class="btn btn-sm btn-danger text-white"
                     data-action="remove"
-                    @click="deleteOrderItem({ id: item.id, title: item.title })"
+                    @click="showCheckAgain({ id: item.id, title: item.title })"
                   >
                     刪除
                   </button>
@@ -91,23 +91,26 @@
         </div>
       </div>
     </div>
-    <OrderModal
-      ref="orderModal"
-      :orderInfo="currentItem"
-      @updateOrder="submitOrderItem"
-      @clearItem="currentItem = {}"
-    />
   </div>
+  <OrderModal
+    ref="orderModal"
+    :orderInfo="currentItem"
+    @updateOrder="submitOrderItem"
+    @clearItem="currentItem = {}"
+  />
+  <QuestionModal ref="questionModal" :content="questionModalContent" @checkInfo="checkInfo" />
 </template>
 <script>
 import { apiGetOrders, apiUpdateOrder, apiDelOrder, apiDelOrderAll } from '@/api';
 import Pagination from '@/components/Pagination.vue';
 import OrderModal from '@/components/OrderModal.vue';
+import QuestionModal from '@/components/QuestionModal.vue';
 
 export default {
   components: {
     Pagination,
     OrderModal,
+    QuestionModal,
   },
   data() {
     return {
@@ -119,6 +122,8 @@ export default {
       },
       isCreateItem: true,
       isLoading: false,
+      questionModalContent: '',
+      targetItemId: '',
     };
   },
   methods: {
@@ -149,18 +154,16 @@ export default {
       await this.submitOrderItem(this.currentItem);
       this.isLoading = false;
     },
-    async deleteOrderItem({ id, title = '' }) {
-      if (window.confirm(`你確定要刪除${title}嗎？`)) {
-        this.isLoading = true;
-        try {
-          const res = await apiDelOrder(id);
-          if (res.data.success) {
-            this.fetchOrders(this.pageInfo.current_page);
-          }
-        } catch (error) {
-          this.isLoading = false;
-          this.$vErrorNotice();
+    async deleteOrderItem(id) {
+      this.isLoading = true;
+      try {
+        const res = await apiDelOrder(id);
+        if (res.data.success) {
+          this.fetchOrders(this.pageInfo.current_page);
         }
+      } catch (error) {
+        this.isLoading = false;
+        this.$vErrorNotice();
       }
     },
     async deleteAllOrders() {
@@ -203,6 +206,18 @@ export default {
         this.$vErrorNotice();
       } finally {
         this.$vLoading(false);
+      }
+    },
+    showCheckAgain({ id, title }) {
+      this.questionModalContent = `你確定要刪除-${title}嗎？`;
+      this.targetItemId = id;
+      this.$refs.questionModal.openModal();
+    },
+    checkInfo() {
+      if (!this.targetItemId) {
+        this.deleteAllOrders();
+      } else {
+        this.deleteOrderItem(this.targetItemId);
       }
     },
     // 觸發新增編輯按鈕

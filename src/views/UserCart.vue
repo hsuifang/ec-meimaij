@@ -29,17 +29,29 @@
             <tbody>
               <template v-if="carts.length > 0">
                 <tr v-for="item in carts" :key="item.product_id">
-                  <th scope="row">
+                  <td>
                     <div class="p-2">
                       <img
                         :src="item.product.imageUrl"
-                        alt=""
-                        width="70"
-                        height="70"
-                        class="img-fluid me-3 obj-fit-contain"
+                        alt="產品圖片"
+                        width="120"
+                        height="120"
+                        class="img-fluid me-5 obj-fit-contain"
                       />
+                      <div class="ml-3 d-inline-block align-middle">
+                        <h5 class="fs-6 6mb-0 text-dark">{{ item.product.title }}</h5>
+                        <p class="fs-8 text-muted font-weight-normal font-italic mb-2">
+                          類別: {{ item.product.category }}
+                        </p>
+                        <div v-if="item.coupon" class="text-muted fs-8">
+                          優惠券:
+                          <span class="bg-primary text-white rounded-pill py-1 px-2 fs-8">
+                            {{ item.coupon.code }}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </th>
+                  </td>
                   <td class="align-middle">
                     <strong>{{ $filters.currency(item.product.price) }}</strong>
                   </td>

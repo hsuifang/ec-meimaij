@@ -36,7 +36,7 @@
       <div class="col-lg-6">
         <div class="row g-0 mb-5">
           <div class="col-6">
-            <router-link to="products" class="img">
+            <router-link to="products" class="home-img">
               <img height="300" class="obj-fit-contain" src="images/favorite1.jpg" alt="dog" />
             </router-link>
           </div>
@@ -57,7 +57,7 @@
             <button type="button" class="btn btn-primary text-white">購鎂麥</button>
           </div>
           <div class="col-6">
-            <router-link to="products" class="img">
+            <router-link to="products" class="home-img">
               <img height="300" class="obj-fit-contain" src="images/favorite2.jpg" alt="dog" />
             </router-link>
           </div>
@@ -65,7 +65,7 @@
       </div>
       <!-- right side -->
       <div class="col-lg-6">
-        <router-link to="products" class="coverImg">
+        <router-link to="products" class="home-coverImg">
           <img height="300" src="images/ad.jpg" alt="dog" />
         </router-link>
       </div>

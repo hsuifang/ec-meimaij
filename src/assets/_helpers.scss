@@ -1,0 +1,61 @@
+.pointer {
+  cursor: pointer;
+}
+
+.bg-logo {
+  overflow: hidden;
+  &::after {
+    content : "";
+    background-image: url('/images/logo.svg');
+    background-color: rgba($primary, 0.1);
+    background-size: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity : 0.1;
+    z-index: -1;
+    transform: rotate(-2deg);
+  }
+}
+
+.border-end-custom  {
+  @include media-breakpoint-up(lg) {
+    &::after {
+      content: '▪︎';
+      position: absolute;
+      color: $secondary;
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 20px $primary, 0 10px $primary , 0 -10px $primary, 0 -20px $primary;
+    }
+
+  }
+}
+
+.btn-outline-info {
+  &:hover {
+    i {
+      color: white
+    }
+  }
+}
+.btn-outline-primary {
+  &:hover {
+    color: $white;
+  }
+}
+
+.form-switch {
+  .form-check-input {
+    border-radius: 0.5rem;
+  }
+}
+
+.modal {
+  background-color: rgba(black, 0.5);
+  z-index: 20;
+}

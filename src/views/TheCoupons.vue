@@ -62,7 +62,7 @@
                     type="button"
                     class="btn btn-sm btn-danger text-white"
                     data-action="remove"
-                    @click="deleteCouponItem({ id: item.id, title: item.title })"
+                    @click="checkInfo({ id: item.id, title: item.title })"
                   >
                     刪除
                   </button>
@@ -90,17 +90,24 @@
       @updateCoupon="submitCouponItem"
       @clearItem="currentItem = {}"
     />
+    <QuestionModal
+      ref="questionModal"
+      :content="questionModalContent"
+      @checkInfo="deleteCouponItem(targetItemId)"
+    />
   </div>
 </template>
 <script>
 import { apiGetCoupons, apiCreateCoupon, apiUpdateCoupon, apiDelCoupon } from '@/api';
 import Pagination from '@/components/Pagination.vue';
 import CouponModal from '@/components/CouponModal.vue';
+import QuestionModal from '@/components/QuestionModal.vue';
 
 export default {
   components: {
     Pagination,
     CouponModal,
+    QuestionModal,
   },
   data() {
     return {
@@ -113,6 +120,8 @@ export default {
       },
       isCreateItem: true,
       isLoading: false,
+      questionModalContent: '',
+      targetItemId: '',
     };
   },
   methods: {
@@ -153,18 +162,16 @@ export default {
       await this.submitCouponItem(this.currentItem);
       this.isLoading = false;
     },
-    async deleteCouponItem({ id, title }) {
-      if (window.confirm(`你確定要刪除-${title}嗎？`)) {
+    async deleteCouponItem(id) {
+      try {
         this.isLoading = true;
-        try {
-          const res = await apiDelCoupon(id);
-          if (res.data.success) {
-            this.fetchCoupons();
-          }
-        } catch (error) {
-          this.isLoading = false;
-          this.$vErrorNotice();
+        const res = await apiDelCoupon(id);
+        if (res.data.success) {
+          this.fetchCoupons();
         }
+      } catch (error) {
+        this.isLoading = false;
+        this.$vErrorNotice();
       }
     },
     // 新增及編輯
@@ -208,6 +215,11 @@ export default {
     },
     changePage(page) {
       this.fetchCoupons(page);
+    },
+    checkInfo({ id, title }) {
+      this.questionModalContent = `你確定要刪除-${title}嗎？`;
+      this.targetItemId = id;
+      this.$refs.questionModal.openModal();
     },
     init() {
       this.currentItem = this.generateItem();

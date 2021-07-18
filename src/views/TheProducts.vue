@@ -20,8 +20,8 @@
               <th scope="col">產品名稱</th>
               <th scope="col">類別</th>
               <th scope="col">評價</th>
-              <th scope="col">原價</th>
-              <th scope="col">售價</th>
+              <th class="text-end" scope="col">原價</th>
+              <th class="text-end" scope="col">售價</th>
               <th scope="col">是否啟用</th>
               <th scope="col">刪除</th>
             </tr>
@@ -31,8 +31,8 @@
               <td>{{ item.title }}</td>
               <td>{{ item.category }}</td>
               <td>{{ item.rate || '-' }}</td>
-              <td>$ {{ item.origin_price }}</td>
-              <td>$ {{ item.price }}</td>
+              <td class="text-end">{{ $filters.currency(item.origin_price) }}</td>
+              <td class="text-end">{{ $filters.currency(item.price) }}</td>
               <td>
                 <div class="form-check form-switch">
                   <input
@@ -56,7 +56,7 @@
                   type="button"
                   class="btn btn-sm btn-danger text-white"
                   data-action="remove"
-                  @click="deleteProductItem({ id: item.id, title: item.title })"
+                  @click="checkInfo({ id: item.id, title: item.title })"
                 >
                   刪除
                 </button>
@@ -83,6 +83,11 @@
       @submitProductItem="updateProductItem"
       @clearItem="initGenerateForm"
     />
+    <QuestionModal
+      ref="questionModal"
+      :content="questionModalContent"
+      @checkInfo="deleteProductItem(targetItemId)"
+    />
   </div>
 </template>
 <script>
@@ -94,11 +99,13 @@ import {
 } from '@/api';
 import Pagination from '@/components/Pagination.vue';
 import ProductModal from '@/components/ProductModal.vue';
+import QuestionModal from '@/components/QuestionModal.vue';
 
 export default {
   components: {
     Pagination,
     ProductModal,
+    QuestionModal,
   },
   data() {
     return {
@@ -110,6 +117,8 @@ export default {
         total: 1,
       },
       isCreateItem: true,
+      questionModalContent: '',
+      targetItemId: '',
     };
   },
   methods: {
@@ -157,17 +166,15 @@ export default {
       this.currentProductItem.is_enabled = !this.currentProductItem.is_enabled;
       await this.submitProductItem({ isNew: false, content: this.currentProductItem });
     },
-    async deleteProductItem({ id, title }) {
-      if (window.confirm(`你確定要刪除-${title}嗎？`)) {
-        this.$vLoading(true);
-        try {
-          const res = await apiDeleteProductItem(id);
-          if (res.data.success) {
-            this.fetchProductData();
-          }
-        } catch (error) {
-          this.$vLoading(false);
+    async deleteProductItem(id) {
+      this.$vLoading(true);
+      try {
+        const res = await apiDeleteProductItem(id);
+        if (res.data.success) {
+          this.fetchProductData();
         }
+      } catch (error) {
+        this.$vLoading(false);
       }
     },
     // 新增及編輯
@@ -197,6 +204,11 @@ export default {
       } finally {
         this.$vLoading(false);
       }
+    },
+    checkInfo({ id, title }) {
+      this.questionModalContent = `你確定要刪除-${title}嗎？`;
+      this.targetItemId = id;
+      this.$refs.questionModal.openModal();
     },
     // 觸發新增編輯按鈕
     handleProductItem(item) {

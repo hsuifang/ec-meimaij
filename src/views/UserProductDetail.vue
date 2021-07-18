@@ -68,7 +68,7 @@
               type="button"
               @click="toggleFavorite(productDetail)"
             >
-              <i class="bi" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
+              <i class="bi text-danger" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
             </button>
           </div>
         </div>

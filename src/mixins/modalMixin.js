@@ -19,6 +19,5 @@ export default {
       keyboard: false,
       backdrop: false,
     });
-    // this.modal.on('hidden.bs.modal', this.doSomethingOnHidden);
   },
 };

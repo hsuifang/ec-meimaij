@@ -13,7 +13,7 @@
 
     <li
       class="page-item me-2"
-      :class="{ active: num === pageInfo.current_page }"
+      :class="{ active: num === pageInfo.current }"
       v-for="num in pageInfo.total"
       :key="`page${num}`"
     >
