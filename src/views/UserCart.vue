@@ -96,17 +96,17 @@
             </tbody>
           </table>
         </div>
-        <div class="d-flex justify-content-between mt-3">
-          <div class="d-flex">
+        <div class="d-lg-flex justify-content-between mt-3">
+          <div class="d-flex mb-3 mb-lg-0">
             <input
               id="coupon"
               type="text"
               class="form-control me-2"
-              style="width: 200px"
+              style="width: 180px"
               v-model="couponCode"
             />
             <button type="button" class="btn btn-secondary text-white" @click="applyCoupon">
-              <i class="bi bi-gift text-white me-2"></i>使用優惠券
+              <i class="bi bi-gift text-white me-2"></i>優惠碼
             </button>
             <div
               v-if="loadingItem.pos === 'applyCoupon'"

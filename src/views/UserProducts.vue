@@ -5,7 +5,7 @@
     </template>
   </PageTitle>
   <div class="container pt-0 pb-4 py-lg-6">
-    <div class="row gx-5">
+    <div class="row gx-lg-5">
       <div class="col-lg-3">
         <!-- catagory -->
         <div>

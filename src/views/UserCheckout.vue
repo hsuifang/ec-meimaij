@@ -28,7 +28,7 @@
     </div>
     <div class="pb-5">
       <v-form ref="form" v-slot="{ errors }" @submit="requestOrder">
-        <div class="row gx-5">
+        <div class="row gx-lg-5">
           <div class="col-lg-6">
             <h3 class="h5 mb-4 py-3 fw-bold">購買者資訊</h3>
             <div class="mb-3 mb-lg-4">
@@ -100,7 +100,7 @@
           </div>
           <div class="col-lg-6">
             <h3 class="h5 mb-4 py-3 fw-bold">購買項目</h3>
-            <ul class="bg-light list-group list-group-flush p-5 mb-3 mb-lg-4">
+            <ul class="bg-light list-group list-group-flush p-2 p-lg-5 mb-3 mb-lg-4">
               <li class="list-group-item d-flex justify-content-between">
                 <p class="fw-bold">名稱</p>
                 <p class="fw-bold">金額</p>
