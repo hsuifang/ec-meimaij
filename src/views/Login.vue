@@ -2,7 +2,7 @@
   <section class="bg-logo">
     <div class="container min-vh-100">
       <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-lg-8">
           <div class="card top-50 p-3">
             <div class="card-body">
               <form @submit.prevent="handleLogin" id="js-loginForm">
