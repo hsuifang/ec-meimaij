@@ -118,15 +118,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.offcanvas {
-  padding-bottom: 220px;
-}
-.offcanvas-footer {
-  background: #fff;
-  position: fixed;
-  width: 400px;
-  right: 0;
-  bottom: 0;
-}
-</style>

@@ -59,3 +59,17 @@
   background-color: rgba(black, 0.5);
   z-index: 20;
 }
+
+.offcanvas {
+  padding-bottom: 220px;
+}
+.offcanvas-footer {
+  background: #fff;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  @include media-breakpoint-up(md) {
+    width: 400px;
+  }
+}

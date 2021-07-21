@@ -6,7 +6,7 @@
   </PageTitle>
   <!-- 購物車 -->
   <div class="container pt-0 pb-4 pt-lg-3 py-lg-6">
-    <div class="row mt-4 mb-4 p-5 bg-white rounded border">
+    <div class="row mt-4 mb-4 py-3 p-md-5 bg-white rounded border">
       <div class="col-lg-12">
         <div class="table-responsive">
           <table class="table">

@@ -18,7 +18,7 @@
             <i class="bi bi-search fs-2"></i>
           </div>
         </div>
-        <div class="d-flex">
+        <div class="text-nowrap overflow-scroll">
           <img
             v-for="(img, idx) in imgs"
             :key="`${idx}thumbnailImg`"
@@ -60,7 +60,7 @@
                 v-model.number="requestQty"
               />
             </div>
-            <button class="btn btn-primary me-2" type="button" @click="addToCart">
+            <button class="btn btn-primary text-white me-2" type="button" @click="addUserCart">
               加入購物車
             </button>
             <button
@@ -75,7 +75,7 @@
       </div>
     </div>
     <div class="pt-3 p-4 pt-lg-6 p-lg-8 bg-light">
-      <ul class="d-flex justify-content-center mb-5">
+      <ul class="d-flex justify-content-center mb-3 mb-lg-5">
         <li
           class="h5 me-6 pb-3 fw-bold border-primary border-4"
           :class="{ 'border-bottom': tabContnet === 'description' }"
@@ -254,7 +254,7 @@ export default {
         }
       }
     },
-    async addToCart() {
+    addUserCart() {
       if (this.requestQty < 1) {
         this.emitter.emit('notice-message', {
           style: 'danger',

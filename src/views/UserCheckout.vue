@@ -22,15 +22,15 @@
           v-model="couponCode"
         />
         <button type="button" class="btn btn-secondary text-white" @click="applyCoupon">
-          <i class="bi bi-gift text-white me-2"></i>使用優惠券
+          <i class="bi bi-gift text-white d-none d-sm-inline me-sm-2"></i>優惠券
         </button>
       </div>
     </div>
     <div class="pb-5">
       <v-form ref="form" v-slot="{ errors }" @submit="requestOrder">
         <div class="row gx-lg-5">
-          <div class="col-lg-6">
-            <h3 class="h5 mb-4 py-3 fw-bold">購買者資訊</h3>
+          <div class="col-lg-6 order-2 order-lg-1">
+            <h3 class="h5 mb-md-4 py-3 fw-bold">購買者資訊</h3>
             <div class="mb-3 mb-lg-4">
               <label for="name" class="form-label">姓名</label>
               <v-field
@@ -97,16 +97,34 @@
                 v-model="form.message"
               ></textarea>
             </div>
+            <div class="text-end d-lg-none">
+              <button
+                type="submit"
+                class="btn btn-primary px-4 text-white"
+                :disabled="loadingItem.pos === 'requestOrder'"
+              >
+                購買確認
+              </button>
+              <div
+                v-if="loadingItem.pos === 'requestOrder'"
+                class="position-absolute top-50 start-100"
+                style="transform: translateX(-10px)"
+              >
+                <div class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-lg-6">
-            <h3 class="h5 mb-4 py-3 fw-bold">購買項目</h3>
+          <div class="col-lg-6 order-1 order-lg-2">
+            <h3 class="h5 mb-md-4 py-3 fw-bold">購買項目</h3>
             <ul class="bg-light list-group list-group-flush p-2 p-lg-5 mb-3 mb-lg-4">
-              <li class="list-group-item d-flex justify-content-between">
-                <p class="fw-bold">名稱</p>
+              <li class="list-group-item d-flex justify-content-md-between">
+                <p class="fw-bold">名稱 <span class="d-md-none">/</span></p>
                 <p class="fw-bold">金額</p>
               </li>
               <li class="list-group-item" v-for="cart in carts" :key="cart.id">
-                <div class="d-flex justify-content-between mb-2">
+                <div class="d-md-flex justify-content-between mb-md-2">
                   <p>{{ cart.product.title }} x {{ cart.qty }}</p>
                   <p>{{ $filters.currency(cart.product.price) }}</p>
                 </div>
@@ -130,7 +148,7 @@
                 <p class="fw-bold">{{ $filters.currency(price.final_total) }}</p>
               </li>
             </ul>
-            <div class="text-end">
+            <div class="text-end d-none d-lg-block">
               <button
                 type="submit"
                 class="btn btn-primary px-4 text-white"

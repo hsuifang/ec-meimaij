@@ -35,12 +35,12 @@
       <!-- left side -->
       <div class="col-lg-6">
         <div class="row g-0 mb-5">
-          <div class="col-6">
+          <div class="col-md-6">
             <router-link to="products" class="home-img">
               <img height="300" class="obj-fit-contain" src="images/favorite1.jpg" alt="dog" />
             </router-link>
           </div>
-          <div class="col-6 d-flex flex-column justify-content-center align-items-start ps-5 pe-3">
+          <div class="col-md-6 d-flex flex-column justify-content-center align-items-start p-3">
             <span class="badge bg-danger rounded-pill mb-3 py-2">新商品</span>
             <h3 class="mb-3">雞肉/牛肉餐盒</h3>
             <p class="mb-3 text-info">
@@ -50,13 +50,23 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-6 d-flex flex-column justify-content-center align-items-start p-3">
+          <div
+            class="
+              col-md-6
+              order-2 order-md-1
+              d-flex
+              flex-column
+              justify-content-center
+              align-items-start
+              p-3
+            "
+          >
             <span class="badge bg-info rounded-pill mb-3 py-2">最高7折折扣</span>
             <h3 class="mb-3">雞肉大麥乾糧</h3>
             <p class="mb-3 text-info">強化肌肉所需的優質蛋白質/天然纖維助於腸道消化健康</p>
             <button type="button" class="btn btn-primary text-white">購鎂麥</button>
           </div>
-          <div class="col-6">
+          <div class="col-md-6 order-1 order-md-2">
             <router-link to="products" class="home-img">
               <img height="300" class="obj-fit-contain" src="images/favorite2.jpg" alt="dog" />
             </router-link>

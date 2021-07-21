@@ -22,7 +22,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- LOGO  -->
-        <div class="navbar-brand me-5 pointer" @click="$router.push('/')">
+        <div class="navbar-brand me-0 me-lg-5 pointer" @click="$router.push('/')">
           <img src="images/logo.svg" alt="logo" class="navbar-brand-item" height="40" />
         </div>
         <!-- LAPTOP NAV START -->
