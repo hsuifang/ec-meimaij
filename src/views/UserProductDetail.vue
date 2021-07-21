@@ -3,7 +3,7 @@
     <template v-slot:breadcrumb>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">鎂麥產品 / 健康 ▪︎ 寵愛</li>
-        <li class="breadcrumb-item active" aria-current="page">detail</li>
+        <li class="breadcrumb-item active" aria-current="page">產品內容</li>
       </ol>
     </template>
   </PageTitle>
