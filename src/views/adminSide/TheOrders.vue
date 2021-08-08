@@ -29,7 +29,11 @@
           <tbody>
             <tr v-if="isLoading">
               <td class="text-center text-muted" colspan="6">
-                <img width="100" src="https://media.giphy.com/media/wnYB3vx9t6PXiq1ubB/giphy.gif" />
+                <img
+                  alt="loading"
+                  width="100"
+                  src="https://media.giphy.com/media/wnYB3vx9t6PXiq1ubB/giphy.gif"
+                />
               </td>
             </tr>
             <template v-else>
@@ -127,7 +131,6 @@ export default {
     };
   },
   methods: {
-    // 取得產品資料
     async fetchOrders(page = 1) {
       try {
         this.isLoading = true;
@@ -183,7 +186,6 @@ export default {
         this.$vLoading(false);
       }
     },
-    // 編輯
     async submitOrderItem(content) {
       try {
         this.$vLoading(true);
@@ -220,7 +222,6 @@ export default {
         this.deleteOrderItem(this.targetItemId);
       }
     },
-    // 觸發新增編輯按鈕
     handleOrderItem(item) {
       if (item) {
         this.currentItem = item;
@@ -228,7 +229,6 @@ export default {
       }
       this.$refs.orderModal.openModal();
     },
-    // [emit]
     updateOrderItem(info) {
       this.submitOrderItem(info);
     },

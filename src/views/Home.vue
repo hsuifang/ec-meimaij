@@ -3,31 +3,31 @@
   <ImagesCarousel />
   <!-- Annoucement  -->
   <div class="container py-4 py-lg-8">
-    <div class="row">
-      <div class="col-lg-4 border-end-custom mb-4 mb-lg-0">
+    <ul class="row">
+      <li class="col-lg-4 border-end-custom mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
-          <img src="images/line-color.svg" alt="line" width="50" class="mb-3" />
+          <img src="images/line-color.svg" alt="service-line" width="50" class="mb-3" />
           <h4 class="mb-2">LINE 服務</h4>
           <p>10:00 - 21:00 LINE專人線上諮詢</p>
         </div>
-      </div>
-      <div class="col-lg-4 border-end-custom mb-4 mb-lg-0">
+      </li>
+      <li class="col-lg-4 border-end-custom mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
-          <img src="images/truck.svg" alt="" width="50" class="mb-3" />
+          <img src="images/truck.svg" alt="service-freeDeliverfee" width="50" class="mb-3" />
           <h4 class="mb-2">滿額免運</h4>
           <p>常溫商品滿NT$ 699免運</p>
           <p>冷凍商品滿NT$ 1799免運</p>
         </div>
-      </div>
-      <div class="col-lg-4 mb-4 mb-lg-0">
+      </li>
+      <li class="col-lg-4 mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
-          <img src="images/box-color.svg" alt="" width="50" class="mb-3" />
+          <img src="images/box-color.svg" alt="service-fase" width="50" class="mb-3" />
           <h4 class="mb-2">快速配送</h4>
           <p>工作日12:00前訂單，當日出貨</p>
           <p>台灣本島最快隔日送達</p>
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
   <!-- Ad -->
   <div class="container pb-4 pb-lg-8">
@@ -37,7 +37,12 @@
         <div class="row g-0 mb-5">
           <div class="col-md-6">
             <router-link to="products" class="home-img">
-              <img height="300" class="obj-fit-contain" src="images/favorite1.jpg" alt="dog" />
+              <img
+                height="300"
+                class="obj-fit-contain"
+                src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628179002992.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Di%2BtdZjeglAi5FmUqALCRjE6YppsKyowDYLc2JtF1ZUDqnx9NPtmbknASdZVk7s0gdCb%2B6xBo7ZmMTJ2I2VVmwc%2Fk48cUk5JMe%2ByjfE2NOJtK7iwPyrp5l4e8RDJC485ZfduibzDJ%2BmgFiqBGKEdzzWQ2%2BY5AukMqi9cuuXRUQgQbR6eZfe3q39LDTlBUduWHsCTOc2VBiCy8DUXpC47D7YO9K0Bb%2FXR5dVSYvPBDkKC5%2BYzJNxyP6Tj5uvAnTazltJM9lZSfdEXUiUR3IltdyMW0%2Fb0nrpPe6hyFjGe2QX1S1nsIuUDfb67GWWeenEPz%2F8Swz9rxNo8diDEuS%2BJTg%3D%3D"
+                alt="favorite-first"
+              />
             </router-link>
           </div>
           <div class="col-md-6 d-flex flex-column justify-content-center align-items-start p-3">
@@ -68,7 +73,12 @@
           </div>
           <div class="col-md-6 order-1 order-md-2">
             <router-link to="products" class="home-img">
-              <img height="300" class="obj-fit-contain" src="images/favorite2.jpg" alt="dog" />
+              <img
+                height="300"
+                class="obj-fit-contain"
+                src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628178999582.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=q90hXyluSlw%2FkhhHW0I4mbej39wDF2wH9dOL6bt5YJ8Evm64cCpRkiWyJkYbJHMucCXJGkYcm4OC28dVAi1Ga6iJD5xAYbN77I8sO0uxqIk82kWIPiPdiygKUj%2BoPsfwBL%2BAy3fdKmzYhN7g0qWnxnBGiSuX0vOiBEcfaEdOKINNZZJ5rGQI6V78G58EupKKTQ4VXAqnNxIpASsoYE9TmBJzd93oFR%2FQJJyaY8Y5GCeBurakP2kT3m%2FDiJB%2BPl%2FKDOF4W3sVXgqqm2wg0N%2B19xDUO1AfSlnXnwY%2BmiJnlbMjTZ2ddaCxcXhZmDgY2DiGzgHb%2BjGzG62ttT1j9p7jPw%3D%3D"
+                alt="favorite-second"
+              />
             </router-link>
           </div>
         </div>
@@ -76,7 +86,11 @@
       <!-- right side -->
       <div class="col-lg-6">
         <router-link to="products" class="home-coverImg">
-          <img height="300" src="images/ad.jpg" alt="dog" />
+          <img
+            height="300"
+            src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628178875634.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=HnnSrmmC8A2InAdKJzuWE4ogBBJ08UOkuXa94Wb9i%2FbZPLPvJ19ZIYHh5cT0b66RpA8uFXa2l6IWbSXGNcCI%2FaUCSKHHYqB0hZtlagEJ5SuMEds67tiv2Ib4vQHc%2BYHf%2FhBoip6JwTXfCn%2BhGSsg3dYKiRsyfMuQJOsynNBnxKgobrqpslMkku9IhTWk4iYmZPqz%2Bb8duW6pH2ST8QE0p6Y0houYgOhDq4DyFKqKfIFcXhJRGv2w9K6K%2Bpy%2F6OLk3Qb8YPMpycCOzeJoSuNhjCVB17v2zbXVk4B9dTnOw8nklYOtT%2BcmavdhvqaGSROaAN%2F5OwrSCfpK%2FXoLfr15Sw%3D%3D"
+            alt="favorite-ad"
+          />
         </router-link>
       </div>
     </div>
@@ -168,15 +182,17 @@ export default {
   methods: {
     async setFamousProducts() {
       const res = await apiGetProductsAll();
-      const { products } = res.data;
-      const productAllLength = products.length;
-      const getMaxLength = 4;
-      const productSet = [];
-      for (let i = 0; this.products.length < getMaxLength; i += 1) {
-        const idx = Math.floor(Math.random() * productAllLength);
-        if (!productSet.includes(idx)) {
-          productSet.push(idx);
-          this.products.push(products[idx]);
+      const { products, success } = res.data;
+      if (success) {
+        const productAllLength = products.length;
+        const getMaxLength = 4;
+        const productSet = [];
+        for (let i = 0; this.products.length < getMaxLength; i += 1) {
+          const idx = Math.floor(Math.random() * productAllLength);
+          if (!productSet.includes(idx)) {
+            productSet.push(idx);
+            this.products.push(products[idx]);
+          }
         }
       }
     },

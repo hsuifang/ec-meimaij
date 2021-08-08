@@ -28,6 +28,10 @@ export default {
           this.isFavorite = false;
         }
       }
+      this.emitter.emit('notice-message', {
+        style: 'success',
+        title: `${this.isFavorite ? '加入' : '移除'}收藏`,
+      });
     },
     initFavorite(productId) {
       const favoriteProducts = this.getFavoriteProducts('meimaijlove');

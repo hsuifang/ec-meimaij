@@ -83,7 +83,7 @@
                       <div class="shadow-sm mb-3">
                         <div class="p-2">
                           <div class="productImg rounded">
-                            <img class="rounded-start w-100 h-100" :src="img.url" />
+                            <img class="rounded-start w-100 h-100" :src="img.url" alt="產品圖片" />
                           </div>
                           <input
                             :id="`mainImages${idx}`"
@@ -249,7 +249,11 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <button type="submit" class="btn btn-primary text-white w-100 rounded-pill">
+                    <button
+                      type="submit"
+                      class="btn btn-primary text-white w-100 rounded-pill"
+                      :disabled="!isButtonValid"
+                    >
                       {{ currentProductItem.id ? '編輯' : '新增' }}
                     </button>
                   </div>
@@ -278,6 +282,12 @@ export default {
   mixins: [modalMixin],
   inject: ['emitter'],
   emits: ['clearItem', 'submitProductItem'],
+  computed: {
+    isButtonValid() {
+      const requireItem = ['title', 'category', 'unit', 'origin_price', 'price'];
+      return requireItem.every((item) => this.currentProductItem[item]);
+    },
+  },
   data() {
     return {
       statuses: [
@@ -308,9 +318,7 @@ export default {
     };
   },
   methods: {
-    // 新增及編輯
     submitProductItem() {
-      // this.currentProductItem.status = this.statuses.find((item) => item.id === this.statusType);
       const productId = this.currentProductItem.id;
       try {
         this.currentProductItem.imageUrl = this.images.find(
@@ -380,11 +388,11 @@ export default {
   watch: {
     productItem(val) {
       this.currentProductItem = { ...val };
-      // 主要圖片
+      // Deal with Main Image
       const { imageUrl, imagesUrl } = this.currentProductItem;
       const mainImages = imageUrl ? [{ id: 'currentImg0', url: imageUrl }] : [];
       if (imageUrl) this.mainImgId = 'currentImg0';
-      // 其他圖片處理
+      // Deal with rest Images
       const images = imagesUrl || [];
       const restImages = images
         .filter((item) => Boolean(item))

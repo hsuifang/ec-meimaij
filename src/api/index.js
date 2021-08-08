@@ -35,12 +35,19 @@ export const apiDeleteCart = (id) => req('delete', `${userPath}/cart/${id}`);
 export const apiDeleteAllCart = () => req('delete', `${userPath}/carts`);
 // 購物車列表
 export const apiGetCartList = () => req('get', `${userPath}/cart`);
-// 結帳付款
+
+// 使用coupon
+export const apiApplyCoupon = (code) => req('post', `${userPath}/coupon`, { data: { code } });
+
+// 訂單
 export const apiGenerateOrder = function apiGenerateOrder({ user, message }) {
   return req('post', `${userPath}/order`, { data: { user, message } });
 };
+export const apiUserQueryOrders = (page) => req('get', `${userPath}/orders?page=${page}`);
+export const apiUserGetOrder = (orderId) => req('get', `${userPath}/order/${orderId}`);
 
-export const apiApplyCoupon = (code) => req('post', `${userPath}/coupon`, { data: { code } });
+// 結帳
+export const apiUserPayment = (orderId) => req('post', `${userPath}/pay/${orderId}`);
 
 // 管理控制台 [需驗證]
 //

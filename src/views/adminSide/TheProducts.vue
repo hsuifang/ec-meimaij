@@ -137,7 +137,6 @@ export default {
         imagesUrl: ['', '', '', '', ''],
       };
     },
-    // 取得產品資料
     async fetchProductData(page = 1) {
       try {
         this.$vLoading(true);
@@ -177,7 +176,6 @@ export default {
         this.$vLoading(false);
       }
     },
-    // 新增及編輯
     async submitProductItem({ isNew, content }) {
       try {
         this.$vLoading(true);
@@ -196,7 +194,6 @@ export default {
           } else {
             this.fetchProductData();
           }
-          // this.currentProductItem = this.generateItemForm();
         }
         this.$vHttpsNotice(res, '產品調整');
       } catch (error) {
@@ -210,7 +207,6 @@ export default {
       this.targetItemId = id;
       this.$refs.questionModal.openModal();
     },
-    // 觸發新增編輯按鈕
     handleProductItem(item) {
       if (item) {
         this.currentProductItem = item;
@@ -221,7 +217,6 @@ export default {
       }
       this.$refs.productModal.openModal();
     },
-    // [emit]: product-canvasoff
     updateProductItem(info) {
       this.submitProductItem(info);
     },

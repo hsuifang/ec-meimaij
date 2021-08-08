@@ -4,7 +4,7 @@
       <ul class="nav justify-content-center align-items-center">
         <li class="nav-item"><router-link class="nav-link" to="/">回到前台</router-link></li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/products">產品列表</router-link>
+          <router-link class="nav-link" to="/admin">產品列表</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/admin/orders">訂單</router-link>
@@ -41,7 +41,6 @@ export default {
           const { success } = res.data;
           if (success) {
             this.isAuthenticated = true;
-            this.$router.push('/admin/products');
           } else {
             this.$router.push('/login');
           }
@@ -55,7 +54,6 @@ export default {
         this.$vLoading(false);
       }
     },
-    // logout
     async handleLogout() {
       this.$vLoading(true);
       try {

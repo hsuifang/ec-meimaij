@@ -69,7 +69,7 @@
       display: block;
       transition: height 0.7s;
       &.show {
-        height: 190px;
+        height: 120px;
       }
     }
   }
@@ -93,7 +93,6 @@
     align-items: center;
   }
   .swiper-slide {
-    // min-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -175,6 +174,9 @@
     .product__trigger {
       opacity: 1;
       top: 50%;
+      i {
+        top: -7px;
+      }
     }
     .product__badge {
       opacity: 1;

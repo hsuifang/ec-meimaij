@@ -2,6 +2,8 @@ import { createApp } from 'vue';
 import VueEasyLightbox from 'vue-easy-lightbox';
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
 import AllRules from '@vee-validate/rules';
@@ -13,7 +15,6 @@ import { errorHandleMessage, httpNoticeMessage } from '@/services/noticeMessageS
 
 import dirDropdown from '@/directives/dropdown';
 
-// Import Swiper styles
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.min.css';
@@ -24,7 +25,6 @@ import router from './router';
 
 import { currency, localeDateStr, localeTimeStr } from './services/filters';
 
-// install Swiper modules
 SwiperCore.use([Navigation]);
 
 Object.keys(AllRules).forEach((rule) => {
@@ -36,12 +36,10 @@ configure({
   validateOnInput: true,
 });
 
-// 設定預設語系
 setLocale('zh_TW');
 
 const app = createApp(App);
 
-// globalProperties start
 app.config.globalProperties.$filters = {
   currency,
   localeDateStr,
@@ -50,18 +48,17 @@ app.config.globalProperties.$filters = {
 app.config.globalProperties.$vLoading = $loading;
 app.config.globalProperties.$vHttpsNotice = httpNoticeMessage;
 app.config.globalProperties.$vErrorNotice = errorHandleMessage;
-// globalProperties
 
-// directive
 app.directive('dropdown', dirDropdown);
 
 app
   .use(VueEasyLightbox)
   .use(VueLoading)
+  .use(VueSweetalert2)
   .use(router)
   .component('Swiper', Swiper)
   .component('SwiperSlide', SwiperSlide)
-  .component('v-form', Form)
-  .component('v-field', Field)
+  .component('VForm', Form)
+  .component('VField', Field)
   .component('error-message', ErrorMessage)
   .mount('#app');

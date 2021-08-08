@@ -88,7 +88,12 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="$emit('updateCoupon', couponInfo)">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="$emit('updateCoupon', couponInfo)"
+            :disabled="!isButtonValid"
+          >
             更新優惠券
           </button>
         </div>
@@ -114,6 +119,12 @@ export default {
     DatePicker,
   },
   mixins: [modalMixin],
+  computed: {
+    isButtonValid() {
+      const requireItem = ['code', 'percent', 'title', 'due_date'];
+      return requireItem.every((item) => this.couponInfo[item]);
+    },
+  },
   data() {
     return {
       couponInfo: {},

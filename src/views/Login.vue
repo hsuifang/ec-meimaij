@@ -28,7 +28,11 @@
                     required
                   />
                 </div>
-                <button type="submit" class="btn btn-primary text-white m-auto d-block">
+                <button
+                  type="submit"
+                  class="btn btn-primary text-white m-auto d-block"
+                  :disabled="!isButtonValid"
+                >
                   送出
                 </button>
               </form>
@@ -52,6 +56,11 @@ export default {
       },
     };
   },
+  computed: {
+    isButtonValid() {
+      return this.login.username && this.login.password;
+    },
+  },
   methods: {
     async handleLogin() {
       this.$vLoading(true);
@@ -62,7 +71,7 @@ export default {
         const { success, token } = res.data;
         if (success) {
           JWT.saveToken(token);
-          this.$router.push('/admin/products');
+          this.$router.push('/admin');
         } else {
           this.$vHttpsNotice(res, '登入');
         }

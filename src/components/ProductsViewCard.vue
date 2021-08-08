@@ -27,7 +27,7 @@
       </div>
     </router-link>
     <div class="product__content" v-show="type == 'grid'">
-      <p class="mb-2">{{ product.title }}</p>
+      <h4 class="fs-7 mb-2">{{ product.title }}</h4>
       <div class="d-flex justify-content-between">
         <p class="text-primary">
           {{ $filters.currency(product.price) }}
@@ -35,7 +35,7 @@
             $filters.currency(product.origin_price)
           }}</del>
         </p>
-        <a href="#" type="button" @click.prevent="toggleFavorite(product)">
+        <a href="#" @click.prevent="toggleFavorite(product)">
           <i class="bi text-danger" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
         </a>
       </div>
@@ -123,7 +123,6 @@ export default {
   },
   created() {
     this.product = { ...this.content };
-    // call favorite mixins
     this.initFavorite(this.product.id);
   },
 };

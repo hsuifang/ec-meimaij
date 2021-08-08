@@ -7,50 +7,76 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'home',
         component: () => import('../views/Home.vue'),
       },
       {
         path: 'products',
-        name: 'products',
-        component: () => import('../views/UserProducts.vue'),
+        name: 'userProducts',
+        component: () => import('../views/userSide/UserProducts.vue'),
       },
       {
         path: 'product/:id',
-        component: () => import('../views/UserProductDetail.vue'),
+        name: 'userProductDetail',
+        component: () => import('../views/userSide/UserProductDetail.vue'),
       },
       {
         path: 'cart',
-        component: () => import('../views/UserCart.vue'),
+        name: 'userCart',
+        component: () => import('../views/userSide/UserCart.vue'),
       },
       {
         path: 'checkout',
-        component: () => import('../views/UserCheckout.vue'),
+        name: 'userCheckout',
+        component: () => import('../views/userSide/UserCheckout.vue'),
       },
       {
-        path: 'favorite',
-        component: () => import('../views/UserFavorite.vue'),
+        path: 'order/:id',
+        name: 'userOrder',
+        component: () => import('../views/userSide/UserOrder.vue'),
+      },
+      {
+        path: 'member',
+        name: 'userCenter',
+        component: () => import('../views/userSide/UserCenter.vue'),
+        children: [
+          {
+            path: '',
+            name: 'orderHistory',
+            component: () => import('../views/userSide/UserOrderHistory.vue'),
+          },
+          {
+            path: 'favorite',
+            name: 'userFavorite',
+            component: () => import('../views/userSide/UserFavorite.vue'),
+          },
+        ],
       },
     ],
   },
   {
     path: '/login',
+    name: 'login',
     component: () => import('../views/Login.vue'),
   },
   {
     path: '/admin',
-    component: () => import('../views/Admin.vue'),
+    component: () => import('../views/adminSide/Admin.vue'),
     children: [
       {
-        path: 'products',
-        component: () => import('../views/TheProducts.vue'),
+        path: '',
+        name: 'adminProduct',
+        component: () => import('../views/adminSide/TheProducts.vue'),
       },
       {
         path: 'orders',
-        component: () => import('../views/TheOrders.vue'),
+        name: 'adminOrders',
+        component: () => import('../views/adminSide/TheOrders.vue'),
       },
       {
         path: 'coupons',
-        component: () => import('../views/TheCoupons.vue'),
+        name: 'adminCoupons',
+        component: () => import('../views/adminSide/TheCoupons.vue'),
       },
     ],
   },

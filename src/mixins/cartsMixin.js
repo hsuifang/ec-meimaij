@@ -45,8 +45,10 @@ export default {
       this.toggleLoding({ pos: 'list', id: productId });
       try {
         const res = await apiAddCart({ id: productId, qty });
-        this.fetchCartList();
-        this.$vHttpsNotice(res, '加入購物車');
+        if (res.data.success) {
+          this.fetchCartList();
+          this.$vHttpsNotice(res, '加入購物車');
+        }
       } catch (error) {
         this.$vErrorNotice();
       } finally {

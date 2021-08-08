@@ -28,7 +28,11 @@
           <tbody>
             <tr v-if="isLoading">
               <td class="text-center text-muted" colspan="6">
-                <img width="100" src="https://media.giphy.com/media/wnYB3vx9t6PXiq1ubB/giphy.gif" />
+                <img
+                  alt="loading"
+                  width="100"
+                  src="https://media.giphy.com/media/wnYB3vx9t6PXiq1ubB/giphy.gif"
+                />
               </td>
             </tr>
             <template v-else>
@@ -133,7 +137,6 @@ export default {
         due_date: '',
       };
     },
-    // 取得產品資料
     async fetchCoupons(page = 1) {
       try {
         this.isLoading = true;
@@ -174,7 +177,6 @@ export default {
         this.$vErrorNotice();
       }
     },
-    // 新增及編輯
     async submitCouponItem(content) {
       try {
         const couponId = content.id;
@@ -198,7 +200,6 @@ export default {
         this.$vErrorNotice();
       }
     },
-    // 觸發新增編輯按鈕
     handleCouponItem(item) {
       if (item) {
         this.currentItem = item;
@@ -209,7 +210,6 @@ export default {
       }
       this.$refs.couponModal.openModal();
     },
-    // [emit]: product-canvasoff
     updateCouponItem(info) {
       this.submitCouponItem(info);
     },

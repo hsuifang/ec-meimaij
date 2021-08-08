@@ -37,14 +37,18 @@ export default {
     clearMsg(idx) {
       this.messages.splice(idx, 1);
     },
-  },
-  inject: ['emitter'],
-  mounted() {
-    this.emitter.on('notice-message', (message) => {
+    handleEmitMsg(message) {
       const { style = 'success', title, content } = message;
       this.messages.push({ style, title, content });
       this.showMsg();
-    });
+    },
+  },
+  inject: ['emitter'],
+  mounted() {
+    this.emitter.on('notice-message', this.handleEmitMsg);
+  },
+  unmounted() {
+    this.emitter.off('notice-message', this.handleEmitMsg);
   },
 };
 </script>

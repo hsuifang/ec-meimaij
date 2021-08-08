@@ -44,6 +44,6 @@ export default function requestInstance(method, url, data = null) {
         },
       });
     default:
-      return () => console.log(`未知method: ${method}`);
+      return '';
   }
 }

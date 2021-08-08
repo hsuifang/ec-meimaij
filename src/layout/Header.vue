@@ -2,7 +2,7 @@
   <div class="sticky-top">
     <div class="bg-primary py-1">
       <p class="container text-dark">
-        一起加油！即日起至7/26優惠碼限時輸入：<span class="fw-bold text-light">e7e7x80</span>
+        一起加油！即日起至8/18優惠碼限時輸入：<span class="fw-bold text-light">e7e7x80</span>
         全館8折優惠
       </p>
     </div>
@@ -23,7 +23,7 @@
         </button>
         <!-- LOGO  -->
         <div class="navbar-brand me-0 me-lg-5 pointer" @click="$router.push('/')">
-          <img src="images/logo.svg" alt="logo" class="navbar-brand-item" height="40" />
+          <img src="images/logo.svg" alt="web-logo" class="navbar-brand-item" height="40" />
         </div>
         <!-- LAPTOP NAV START -->
         <div class="collapse navbar-collapse">
@@ -61,10 +61,12 @@
         </div>
         <!-- laptop NAV END -->
         <div class="d-flex align-items-center">
-          <router-link to="/login"><i class="bi bi-person fs-4 me-3"></i></router-link>
-          <router-link to="/favorite">
+          <a href="#" @click.prevent="$router.push('/member')">
+            <i class="bi bi-person fs-4 me-3"></i>
+          </a>
+          <a href="#" @click.prevent="$router.push('/member/favorite')">
             <i class="bi bi-bookmark-heart fs-5 me-3"></i>
-          </router-link>
+          </a>
           <a href="#" @click.prevent="checkCart">
             <i class="bi-bag-fill fs-5"></i>
             <p
@@ -85,7 +87,7 @@
         </div>
       </div>
       <!-- MOBILE NAV START -->
-      <div class="mobile-collapse" :class="{ show: navbarToggle }">
+      <div class="mobile-collapse d-lg-none" :class="{ show: navbarToggle }">
         <ul class="navbar-nav navbar-nav-scroll p-4">
           <li class="nav-item me-3">
             <router-link to="/" class="nav-link" aria-current="page">首頁</router-link>
@@ -125,7 +127,7 @@ export default {
     productRouter(typeSelected) {
       if (this.$route.path === '/products') return;
       this.$router.push({
-        name: 'products',
+        name: 'userProducts',
         params: { typeSelected },
       });
     },
@@ -134,11 +136,8 @@ export default {
     this.emitter.on('updateCart', ({ volume = 0 }) => {
       this.volume = volume;
     });
-  },
-  created() {
     this.fetchCartList();
     this.volume = this.totalVolume;
   },
 };
-// @todo: 專欄 / 常見問題
 </script>

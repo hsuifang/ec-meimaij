@@ -39,7 +39,11 @@
                   <i class="bi bi-plus fs-6"></i>
                 </a>
               </div>
-              <button class="btn btn-outline-info" @click="deleteItemFromCart({ cartId: item.id })">
+              <button
+                type="button"
+                class="btn btn-outline-info"
+                @click="deleteItemFromCart({ cartId: item.id })"
+              >
                 <i class="bi bi-trash"></i>
               </button>
             </div>
@@ -56,19 +60,18 @@
             </p>
             <h4 class="py-3">總共：{{ $filters.currency(price.final_total) }}</h4>
             <template v-if="totalVolume !== 0">
-              <a
-                href="#"
+              <button
                 @click.prevent="changeRoute('/cart')"
-                class="btn btn-outline-primary btn-lg w-100 mb-3"
                 type="button"
-                >購物車</a
+                class="btn btn-outline-primary btn-lg w-100 mb-3"
               >
+                購物車
+              </button>
 
               <a
                 href="#"
                 @click.prevent="changeRoute('/checkout')"
                 class="btn btn-primary btn-lg w-100 text-white"
-                type="button"
                 >直接購買</a
               >
             </template>

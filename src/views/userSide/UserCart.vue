@@ -12,18 +12,10 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" class="py-3 border-0 bg-light">
-                  <p>名稱</p>
-                </th>
-                <th scope="col" class="py-3 border-0 bg-light">
-                  <p>金額</p>
-                </th>
-                <th scope="col" class="py-3 border-0 bg-light">
-                  <p>數量</p>
-                </th>
-                <th scope="col" class="py-3 border-0 bg-light">
-                  <p>刪除</p>
-                </th>
+                <th scope="col" class="py-3 border-0 bg-light">名稱</th>
+                <th scope="col" class="py-3 border-0 bg-light">金額</th>
+                <th scope="col" class="py-3 border-0 bg-light">數量</th>
+                <th scope="col" class="py-3 border-0 bg-light">刪除</th>
               </tr>
             </thead>
             <tbody>
@@ -33,14 +25,14 @@
                     <div class="p-2">
                       <img
                         :src="item.product.imageUrl"
-                        alt="產品圖片"
+                        alt="productImage"
                         width="120"
                         height="120"
                         class="img-fluid me-5 obj-fit-contain"
                       />
                       <div class="ml-3 d-inline-block align-middle">
                         <h5 class="fs-6 6mb-0 text-dark">{{ item.product.title }}</h5>
-                        <p class="fs-8 text-muted font-weight-normal font-italic mb-2">
+                        <p class="fs-8 text-muted font-weight-normal fst-italic mb-2">
                           類別: {{ item.product.category }}
                         </p>
                         <div v-if="item.coupon" class="text-muted fs-8">
@@ -105,7 +97,12 @@
               style="width: 180px"
               v-model="couponCode"
             />
-            <button type="button" class="btn btn-secondary text-white" @click="applyCoupon">
+            <button
+              type="button"
+              class="btn btn-secondary text-white"
+              @click="applyCoupon"
+              :disabled="!couponCode"
+            >
               <i class="bi bi-gift text-white me-2"></i>優惠碼
             </button>
             <div
@@ -145,7 +142,9 @@
     </ul>
     <div class="d-flex justify-content-between py-3">
       <router-link class="btn btn-outline-secondary" to="products">繼續購物</router-link>
-      <router-link class="btn btn-primary px-4 text-white" to="checkout">結帳</router-link>
+      <router-link v-if="carts.length !== 0" class="btn btn-primary px-4 text-white" to="checkout"
+        >結帳</router-link
+      >
     </div>
   </div>
 </template>

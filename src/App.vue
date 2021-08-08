@@ -39,6 +39,9 @@ export default {
   mounted() {
     emitter.on('v-loading', ({ isLoading }) => this.handleLoading(isLoading));
   },
+  unmounted() {
+    emitter.off('v-loading', ({ isLoading }) => this.handleLoading(isLoading));
+  },
 };
 </script>
 

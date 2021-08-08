@@ -7,10 +7,10 @@
       </ol>
     </template>
   </PageTitle>
-  <div class="container pt-0 pb-4 py-lg-6">
+  <div class="container pt-0 pb-4 py-lg-5">
     <div class="row mb-4 mb-lg-8">
       <div class="col-lg-5">
-        <div class="w-100" @click="showCoverImage(mainImage.id)">
+        <div class="w-100 pointer" @click="showCoverImage(mainImage.id)">
           <div class="squre-img mb-3 bg-primary-10">
             <img :src="mainImage.src" alt="mainImage" />
           </div>
@@ -26,7 +26,7 @@
             alt="thumbnailImg"
             width="80"
             height="80"
-            class="me-2 obj-fit-contain bg-primary-10"
+            class="me-2 obj-fit-contain bg-primary-10 pointer"
             @click="mainImageIdx = img.id"
           />
         </div>
@@ -52,7 +52,7 @@
             <div class="d-flex align-items-center mb-3 mb-lg-0">
               <label for="input-quantity" class="me-2">數量</label>
               <input
-                type="text"
+                type="number"
                 name="quantity"
                 min="1"
                 id="input-quantity"
@@ -60,12 +60,12 @@
                 v-model.number="requestQty"
               />
             </div>
-            <button class="btn btn-primary text-white me-2" type="button" @click="addUserCart">
+            <button type="button" class="btn btn-primary text-white me-2" @click="addUserCart">
               加入購物車
             </button>
             <button
-              class="btn btn-outline-info"
               type="button"
+              class="btn btn-outline-info"
               @click="toggleFavorite(productDetail)"
             >
               <i class="bi text-danger" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
@@ -156,11 +156,12 @@
       @hide="handleHide"
     >
       <template v-slot:prev-btn="{ prev }">
-        <button class="btn btn-light" @click="prev" style="top: 50vh">&lt;</button>
+        <button type="button" class="btn btn-light" @click="prev" style="top: 50vh">&lt;</button>
       </template>
 
       <template v-slot:next-btn="{ next }">
         <button
+          type="button"
           class="btn btn-light text-end position-absolute end-0"
           @click="next"
           style="top: 50vh"
@@ -242,15 +243,17 @@ export default {
     },
     async setFamousProducts() {
       const res = await apiGetProductsAll();
-      const { products } = res.data;
-      const productAllLength = products.length;
-      const getMaxLength = 4;
-      const productSet = [];
-      for (let i = 0; this.relativeProducts.length < getMaxLength; i += 1) {
-        const idx = Math.floor(Math.random() * productAllLength);
-        if (!productSet.includes(idx)) {
-          productSet.push(idx);
-          this.relativeProducts.push(products[idx]);
+      const { products, success } = res.data;
+      if (success) {
+        const productAllLength = products.length;
+        const getMaxLength = 4;
+        const productSet = [];
+        for (let i = 0; this.relativeProducts.length < getMaxLength; i += 1) {
+          const idx = Math.floor(Math.random() * productAllLength);
+          if (!productSet.includes(idx)) {
+            productSet.push(idx);
+            this.relativeProducts.push(products[idx]);
+          }
         }
       }
     },
@@ -293,13 +296,10 @@ export default {
   },
   mounted() {
     this.initFavorite(this.productId);
-  },
-  created() {
     this.init();
     window.scrollTo(0, 0);
   },
 };
-// @todo: 看評價
 </script>
 
 <style lang="scss">

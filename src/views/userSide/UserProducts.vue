@@ -4,34 +4,36 @@
       <h2 class="fs-6">鎂麥產品 / 健康 ▪︎ 寵愛</h2>
     </template>
   </PageTitle>
-  <div class="container pt-0 pb-4 py-lg-6">
+  <div class="container pt-0 pb-4 py-lg-5">
     <div class="row gx-lg-5">
       <div class="col-lg-3">
-        <!-- catagory -->
-        <div>
-          <h3
-            class="
-              fs-6
-              fw-bold
-              d-none d-lg-block
-              p-lg-3
-              bg-light
-              border-start border-primary border-4
-            "
+        <h3
+          class="
+            fs-6
+            fw-bold
+            d-none d-lg-block
+            p-lg-3
+            bg-light
+            border-start border-primary border-4
+          "
+        >
+          產品類型
+        </h3>
+        <ul class="ps-1 productType-select p-lg-4">
+          <li
+            class="mb-3"
+            v-for="type in typesList"
+            :key="type.category"
+            @click.prevent="typeSelected = type.category"
           >
-            產品類型
-          </h3>
-          <ul class="ps-1 productType-select p-lg-4">
-            <li class="mb-3" v-for="type in typesList" :key="type.category">
-              <a
-                href="#"
-                @click.prevent="typeSelected = type.category"
-                :class="{ 'text-primary': typeSelected === type.category }"
-                >{{ type.category }} <span class="d-none d-lg-inline">/ {{ type.count }}</span></a
-              >
-            </li>
-          </ul>
-        </div>
+            <a
+              href="#"
+              class="w-100 d-block"
+              :class="{ 'text-primary': typeSelected === type.category }"
+              >{{ type.category }} <span class="d-none d-lg-inline">/ {{ type.count }}</span></a
+            >
+          </li>
+        </ul>
       </div>
       <div class="col-lg-9" v-if="products.length > 0">
         <ul class="d-flex px-3 py-2 mb-4 bg-light" data-discript="filterViewType">
@@ -160,13 +162,11 @@ export default {
       this.fetchAllProduct();
     },
   },
-  mounted() {
+  created() {
     const { typeSelected } = this.$route.params;
     if (typeSelected) {
       this.typeSelected = typeSelected;
     }
-  },
-  created() {
     this.fetchAllProduct();
   },
 };

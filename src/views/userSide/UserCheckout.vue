@@ -1,7 +1,7 @@
 <template>
   <PageTitle>
     <template v-slot:breadcrumb>
-      <h2 class="fs-6">鎂麥 / 購買</h2>
+      <h2 class="fs-6">鎂麥 / 確認購買</h2>
     </template>
   </PageTitle>
   <div class="container pt-0 pb-4 pt-lg-3 py-lg-6">
@@ -21,19 +21,24 @@
           style="width: 200px"
           v-model="couponCode"
         />
-        <button type="button" class="btn btn-secondary text-white" @click="applyCoupon">
+        <button
+          type="button"
+          class="btn btn-secondary text-white"
+          @click="applyCoupon"
+          :disabled="!couponCode"
+        >
           <i class="bi bi-gift text-white d-none d-sm-inline me-sm-2"></i>優惠券
         </button>
       </div>
     </div>
     <div class="pb-5">
-      <v-form ref="form" v-slot="{ errors }" @submit="requestOrder">
+      <VForm ref="form" v-slot="{ errors }" @submit="requestOrder">
         <div class="row gx-lg-5">
           <div class="col-lg-6 order-2 order-lg-1">
             <h3 class="h5 mb-md-4 py-3 fw-bold">購買者資訊</h3>
             <div class="mb-3 mb-lg-4">
               <label for="name" class="form-label">姓名</label>
-              <v-field
+              <VField
                 id="name"
                 name="姓名"
                 type="email"
@@ -42,12 +47,12 @@
                 placeholder="請輸入姓名"
                 rules="required"
                 v-model="form.user.name"
-              ></v-field>
+              ></VField>
               <error-message name="姓名" class="invalid-feedback"></error-message>
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="email" class="form-label">Email</label>
-              <v-field
+              <VField
                 id="email"
                 name="Email"
                 type="email"
@@ -56,12 +61,12 @@
                 placeholder="請輸入Email"
                 rules="email|required"
                 v-model="form.user.email"
-              ></v-field>
+              ></VField>
               <error-message name="Email" class="invalid-feedback"></error-message>
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="tel" class="form-label">電話</label>
-              <v-field
+              <VField
                 id="tel"
                 name="電話"
                 type="tel"
@@ -70,12 +75,12 @@
                 placeholder="請輸入電話"
                 rules="min:8|max:10|required"
                 v-model="form.user.tel"
-              ></v-field>
+              ></VField>
               <error-message name="電話" class="invalid-feedback"></error-message>
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="address" class="form-label">地址</label>
-              <v-field
+              <VField
                 id="address"
                 name="地址"
                 type="text"
@@ -84,7 +89,7 @@
                 placeholder="請輸入地址"
                 rules="required"
                 v-model="form.user.address"
-              ></v-field>
+              ></VField>
               <error-message name="地址" class="invalid-feedback"></error-message>
             </div>
             <div class="mb-3 mb-lg-4">
@@ -101,7 +106,7 @@
               <button
                 type="submit"
                 class="btn btn-primary px-4 text-white"
-                :disabled="loadingItem.pos === 'requestOrder'"
+                :disabled="loadingItem.pos === 'requestOrder' || carts.length === 0"
               >
                 購買確認
               </button>
@@ -152,7 +157,7 @@
               <button
                 type="submit"
                 class="btn btn-primary px-4 text-white"
-                :disabled="loadingItem.pos === 'requestOrder'"
+                :disabled="loadingItem.pos === 'requestOrder' || carts.length === 0"
               >
                 購買確認
               </button>
@@ -168,7 +173,7 @@
             </div>
           </div>
         </div>
-      </v-form>
+      </VForm>
     </div>
   </div>
 </template>
@@ -228,16 +233,15 @@ export default {
           user: this.form.user,
           message: this.form.message,
         });
-        const { success } = res.data;
+        const { success, orderId } = res.data;
         if (success) {
           this.$vHttpsNotice(res, '送出訂單');
           this.emitter.emit('updateCart', { volume: 0 });
-          this.$router.push('/');
+          this.$router.push(`/order/${orderId}`);
         } else {
           this.$vHttpsNotice(res, '送出訂單');
         }
       } catch (error) {
-        console.log(error);
         this.$vErrorNotice();
       } finally {
         this.toggleLoding({ pos: '' });

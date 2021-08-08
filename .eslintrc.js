@@ -16,6 +16,5 @@ module.exports = {
     'object-shorthand': 'off',
     'class-methods-use-this': 'off',
     'object-curly-newline': 'off',
-    'no-alert': 'off',
   },
 };
