@@ -104,6 +104,7 @@
     <CartOffcanvas ref="canvas" />
   </div>
 </template>
+
 <script>
 import CartOffcanvas from '@/components/CartOffcanvas.vue';
 import cartsMixin from '@/mixins/cartsMixin';
@@ -125,7 +126,6 @@ export default {
       this.$refs.canvas.open();
     },
     productRouter(typeSelected) {
-      if (this.$route.path === '/products') return;
       this.$router.push({
         name: 'userProducts',
         params: { typeSelected },

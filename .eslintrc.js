@@ -10,11 +10,6 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-unused-vars': 'warn',
-    'func-names': 'off',
-    'no-process-exit': 'off',
-    'object-shorthand': 'off',
-    'class-methods-use-this': 'off',
     'object-curly-newline': 'off',
   },
 };

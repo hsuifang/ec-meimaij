@@ -60,9 +60,10 @@
     <p>
       目前有 <span>{{ list.length }}</span> 項訂購
     </p>
-    <Pagination :pageInfo="pageInfo" @changePage="changePage"></Pagination>
+    <Pagination :pageInfo="pageInfo" @changePage="changePage" />
   </div>
 </template>
+
 <script>
 import { apiUserQueryOrders } from '@/api';
 import Pagination from '@/components/Pagination.vue';

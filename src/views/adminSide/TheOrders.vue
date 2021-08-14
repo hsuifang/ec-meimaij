@@ -104,6 +104,7 @@
   />
   <QuestionModal ref="questionModal" :content="questionModalContent" @checkInfo="checkInfo" />
 </template>
+
 <script>
 import { apiGetOrders, apiUpdateOrder, apiDelOrder, apiDelOrderAll } from '@/api';
 import Pagination from '@/components/Pagination.vue';
@@ -152,10 +153,15 @@ export default {
       }
     },
     async toggleOrderItemStatus(item) {
-      this.isLoading = true;
-      this.currentItem = item;
-      await this.submitOrderItem(this.currentItem);
-      this.isLoading = false;
+      try {
+        this.isLoading = true;
+        this.currentItem = item;
+        await this.submitOrderItem(this.currentItem);
+      } catch (error) {
+        this.$vErrorNotice();
+      } finally {
+        this.isLoading = false;
+      }
     },
     async deleteOrderItem(id) {
       this.isLoading = true;
@@ -165,8 +171,9 @@ export default {
           this.fetchOrders(this.pageInfo.current_page);
         }
       } catch (error) {
-        this.isLoading = false;
         this.$vErrorNotice();
+      } finally {
+        this.isLoading = false;
       }
     },
     async deleteAllOrders() {

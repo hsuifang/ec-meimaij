@@ -16,9 +16,7 @@
             bg-light
             border-start border-primary border-4
           "
-        >
-          產品類型
-        </h3>
+        ></h3>
         <ul class="ps-1 productType-select p-lg-4">
           <li
             class="mb-3"
@@ -30,6 +28,7 @@
               href="#"
               class="w-100 d-block"
               :class="{ 'text-primary': typeSelected === type.category }"
+              @click.prevent
               >{{ type.category }} <span class="d-none d-lg-inline">/ {{ type.count }}</span></a
             >
           </li>
@@ -74,6 +73,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { apiGetProductsAll } from '@/api';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
@@ -133,6 +133,9 @@ export default {
       }
       return data;
     },
+    routeTypeSelected() {
+      return this.$route.params.typeSelected;
+    },
   },
   methods: {
     async fetchAllProduct() {
@@ -158,15 +161,15 @@ export default {
     },
   },
   watch: {
+    routeTypeSelected(val) {
+      this.typeSelected = val;
+      this.fetchAllProduct();
+    },
     typeSelected() {
       this.fetchAllProduct();
     },
   },
   created() {
-    const { typeSelected } = this.$route.params;
-    if (typeSelected) {
-      this.typeSelected = typeSelected;
-    }
     this.fetchAllProduct();
   },
 };

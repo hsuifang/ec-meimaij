@@ -43,6 +43,7 @@
     </div>
   </section>
 </template>
+
 <script>
 import JWT from '@/api/cookies';
 import { apiSignIn } from '@/api';

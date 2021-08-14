@@ -3,13 +3,12 @@
 *:before {
   position: relative;
   transition: all 0.1s ease;
-  // outline: 1px solid #eee;
   letter-spacing: 1px;
 }
 
 ::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
+  width: 0px;
+  background: transparent;
 }
 
 body {

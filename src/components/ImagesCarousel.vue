@@ -33,6 +33,7 @@
     <div class="swiper-button-next swiper-button-white"></div>
   </swiper>
 </template>
+
 <script>
 export default {
   data() {

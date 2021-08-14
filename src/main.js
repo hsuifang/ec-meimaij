@@ -60,5 +60,5 @@ app
   .component('SwiperSlide', SwiperSlide)
   .component('VForm', Form)
   .component('VField', Field)
-  .component('error-message', ErrorMessage)
+  .component('ErrorMessage', ErrorMessage)
   .mount('#app');

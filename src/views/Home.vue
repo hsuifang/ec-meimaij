@@ -51,7 +51,13 @@
             <p class="mb-3 text-info">
               特選上等牛、雞的新鮮材料，並保有精華烹調而成，風味極佳，讓寵物吃得營養均衡！
             </p>
-            <button type="button" class="btn btn-outline-primary">購鎂麥</button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="$router.push('/products')"
+            >
+              購鎂麥
+            </button>
           </div>
         </div>
         <div class="row g-0">
@@ -69,7 +75,13 @@
             <span class="badge bg-info rounded-pill mb-3 py-2">最高7折折扣</span>
             <h3 class="mb-3">雞肉大麥乾糧</h3>
             <p class="mb-3 text-info">強化肌肉所需的優質蛋白質/天然纖維助於腸道消化健康</p>
-            <button type="button" class="btn btn-primary text-white">購鎂麥</button>
+            <button
+              type="button"
+              class="btn btn-primary text-white"
+              @click="$router.push('/products')"
+            >
+              購鎂麥
+            </button>
           </div>
           <div class="col-md-6 order-1 order-md-2">
             <router-link to="products" class="home-img">
@@ -137,6 +149,7 @@
     </div>
   </section>
 </template>
+
 <script>
 import ImagesCarousel from '@/components/ImagesCarousel.vue';
 import ProductsViewCard from '@/components/ProductsViewCard.vue';
@@ -181,19 +194,23 @@ export default {
   },
   methods: {
     async setFamousProducts() {
-      const res = await apiGetProductsAll();
-      const { products, success } = res.data;
-      if (success) {
-        const productAllLength = products.length;
-        const getMaxLength = 4;
-        const productSet = [];
-        for (let i = 0; this.products.length < getMaxLength; i += 1) {
-          const idx = Math.floor(Math.random() * productAllLength);
-          if (!productSet.includes(idx)) {
-            productSet.push(idx);
-            this.products.push(products[idx]);
+      try {
+        const res = await apiGetProductsAll();
+        const { products, success } = res.data;
+        if (success) {
+          const productAllLength = products.length;
+          const getMaxLength = 4;
+          const productSet = [];
+          for (let i = 0; this.products.length < getMaxLength; i += 1) {
+            const idx = Math.floor(Math.random() * productAllLength);
+            if (!productSet.includes(idx)) {
+              productSet.push(idx);
+              this.products.push(products[idx]);
+            }
           }
         }
+      } catch (error) {
+        this.$vErrorNotice();
       }
     },
   },

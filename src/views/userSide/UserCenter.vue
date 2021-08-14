@@ -34,6 +34,7 @@
               href="#"
               class="w-100 d-block"
               :class="{ 'text-primary': contentSelected === content.pathname }"
+              @click.prevent
               >{{ content.title }}
             </a>
           </li>
@@ -46,6 +47,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import PageTitle from '@/layout/PageTitle.vue';
 
@@ -69,8 +71,13 @@ export default {
       ],
     };
   },
+  computed: {
+    routerContentSelected() {
+      return this.$route.name;
+    },
+  },
   watch: {
-    '$route.name'(val) {
+    routerContentSelected(val) {
       this.contentSelected = val;
     },
   },

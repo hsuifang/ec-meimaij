@@ -48,7 +48,7 @@
                 rules="required"
                 v-model="form.user.name"
               ></VField>
-              <error-message name="姓名" class="invalid-feedback"></error-message>
+              <ErrorMessage name="姓名" class="invalid-feedback" />
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="email" class="form-label">Email</label>
@@ -62,7 +62,7 @@
                 rules="email|required"
                 v-model="form.user.email"
               ></VField>
-              <error-message name="Email" class="invalid-feedback"></error-message>
+              <ErrorMessage name="Email" class="invalid-feedback" />
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="tel" class="form-label">電話</label>
@@ -76,7 +76,7 @@
                 rules="min:8|max:10|required"
                 v-model="form.user.tel"
               ></VField>
-              <error-message name="電話" class="invalid-feedback"></error-message>
+              <ErrorMessage name="電話" class="invalid-feedback" />
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="address" class="form-label">地址</label>
@@ -90,7 +90,7 @@
                 rules="required"
                 v-model="form.user.address"
               ></VField>
-              <error-message name="地址" class="invalid-feedback"></error-message>
+              <ErrorMessage name="地址" class="invalid-feedback" />
             </div>
             <div class="mb-3 mb-lg-4">
               <label for="message" class="form-label">留言或備註</label>
@@ -177,6 +177,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { apiGenerateOrder, apiApplyCoupon } from '@/api';
 import Collapse from 'bootstrap/js/dist/collapse';

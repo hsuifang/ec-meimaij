@@ -9,7 +9,7 @@
   </PageTitle>
   <div class="container pt-0 pb-4 py-lg-5">
     <div class="row mb-4 mb-lg-8">
-      <div class="col-lg-5">
+      <div class="col-lg-4 offset-lg-1">
         <div class="w-100 pointer" @click="showCoverImage(mainImage.id)">
           <div class="squre-img mb-3 bg-primary-10">
             <img :src="mainImage.src" alt="mainImage" />
@@ -31,8 +31,8 @@
           />
         </div>
       </div>
-      <div class="col-lg-7">
-        <div class="py-5 border-bottom">
+      <div class="col-lg-6">
+        <div class="py-5 ps-lg-5 border-bottom">
           <h2 class="mb-3">{{ productDetail.title }}</h2>
           <div class="mb-4">
             <i
@@ -231,30 +231,39 @@ export default {
   },
   methods: {
     async showProductDetail(id) {
-      this.$vLoading(true);
-      const res = await apiGetSpecficProduct(id);
-      const { success, product } = res.data;
-      if (success) {
-        this.productDetail = product;
-      } else {
-        this.$vHttpsNotice(res, '查看產品');
+      try {
+        this.$vLoading(true);
+        const res = await apiGetSpecficProduct(id);
+        const { success, product } = res.data;
+        if (success) {
+          this.productDetail = product;
+        } else {
+          this.$vHttpsNotice(res, '查看產品');
+        }
+      } catch (error) {
+        this.$vErrorNotice();
+      } finally {
+        this.$vLoading(false);
       }
-      this.$vLoading(false);
     },
     async setFamousProducts() {
-      const res = await apiGetProductsAll();
-      const { products, success } = res.data;
-      if (success) {
-        const productAllLength = products.length;
-        const getMaxLength = 4;
-        const productSet = [];
-        for (let i = 0; this.relativeProducts.length < getMaxLength; i += 1) {
-          const idx = Math.floor(Math.random() * productAllLength);
-          if (!productSet.includes(idx)) {
-            productSet.push(idx);
-            this.relativeProducts.push(products[idx]);
+      try {
+        const res = await apiGetProductsAll();
+        const { products, success } = res.data;
+        if (success) {
+          const productAllLength = products.length;
+          const getMaxLength = 4;
+          const productSet = [];
+          for (let i = 0; this.relativeProducts.length < getMaxLength; i += 1) {
+            const idx = Math.floor(Math.random() * productAllLength);
+            if (!productSet.includes(idx)) {
+              productSet.push(idx);
+              this.relativeProducts.push(products[idx]);
+            }
           }
         }
+      } catch (error) {
+        this.$vErrorNotice();
       }
     },
     addUserCart() {
@@ -277,6 +286,7 @@ export default {
       if (this.productId) {
         this.showProductDetail(this.productId);
         this.setFamousProducts();
+        this.initFavorite(this.productId);
       } else {
         this.$router.push('/products');
       }
@@ -289,13 +299,7 @@ export default {
       this.visible = false;
     },
   },
-  watch: {
-    '$route.params.id'() {
-      this.init();
-    },
-  },
   mounted() {
-    this.initFavorite(this.productId);
     this.init();
     window.scrollTo(0, 0);
   },

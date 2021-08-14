@@ -72,7 +72,7 @@
           <p>
             目前有 <span>{{ products.length }}</span> 項產品
           </p>
-          <Pagination :pageInfo="pageInfo" @changePage="changePage"></Pagination>
+          <Pagination :pageInfo="pageInfo" @changePage="changePage" />
         </div>
       </div>
     </div>
@@ -90,6 +90,7 @@
     />
   </div>
 </template>
+
 <script>
 import {
   apiGetAdminProducts,
@@ -161,9 +162,13 @@ export default {
       }
     },
     async toggleProductItemStatus(item) {
-      this.currentProductItem = item;
-      this.currentProductItem.is_enabled = !this.currentProductItem.is_enabled;
-      await this.submitProductItem({ isNew: false, content: this.currentProductItem });
+      try {
+        this.currentProductItem = item;
+        this.currentProductItem.is_enabled = !this.currentProductItem.is_enabled;
+        await this.submitProductItem({ isNew: false, content: this.currentProductItem });
+      } catch (error) {
+        this.$vErrorNotice();
+      }
     },
     async deleteProductItem(id) {
       this.$vLoading(true);

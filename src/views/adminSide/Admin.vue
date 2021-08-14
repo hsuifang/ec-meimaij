@@ -20,6 +20,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { apiCheckUser, apiLogout } from '@/api';
 import JWT from '@/api/cookies';
@@ -75,6 +76,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .back {
   .router-link-exact-active {

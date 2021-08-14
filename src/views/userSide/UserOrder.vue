@@ -106,6 +106,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { apiUserGetOrder, apiUserPayment } from '@/api';
 import PageTitle from '@/layout/PageTitle.vue';
@@ -117,7 +118,9 @@ export default {
   data() {
     return {
       orderId: '',
-      order: {},
+      order: {
+        products: [],
+      },
     };
   },
   methods: {

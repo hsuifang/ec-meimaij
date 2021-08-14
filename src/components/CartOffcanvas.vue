@@ -67,7 +67,6 @@
               >
                 購物車
               </button>
-
               <a
                 href="#"
                 @click.prevent="changeRoute('/checkout')"
@@ -81,6 +80,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import cartsMixin from '@/mixins/cartsMixin';
 import Offcanvas from 'bootstrap/js/dist/offcanvas';

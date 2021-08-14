@@ -83,7 +83,7 @@
           <p>
             目前有 <span>{{ coupons.length }}</span> 項優惠券
           </p>
-          <Pagination :pageInfo="pageInfo" @changePage="changePage"></Pagination>
+          <Pagination :pageInfo="pageInfo" @changePage="changePage" />
         </div>
       </div>
     </div>
@@ -101,6 +101,7 @@
     />
   </div>
 </template>
+
 <script>
 import { apiGetCoupons, apiCreateCoupon, apiUpdateCoupon, apiDelCoupon } from '@/api';
 import Pagination from '@/components/Pagination.vue';
@@ -158,12 +159,17 @@ export default {
       }
     },
     async toggleCouponItemStatus(item) {
-      this.isLoading = true;
-      this.currentItem = item;
-      this.currentItem.is_enabled = this.currentItem.is_enabled ? 1 : 0;
-      this.isCreateItem = false;
-      await this.submitCouponItem(this.currentItem);
-      this.isLoading = false;
+      try {
+        this.isLoading = true;
+        this.currentItem = item;
+        this.currentItem.is_enabled = this.currentItem.is_enabled ? 1 : 0;
+        this.isCreateItem = false;
+        await this.submitCouponItem(this.currentItem);
+      } catch (error) {
+        this.$vErrorNotice();
+      } finally {
+        this.isLoading = false;
+      }
     },
     async deleteCouponItem(id) {
       try {

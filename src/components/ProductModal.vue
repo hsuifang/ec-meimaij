@@ -266,6 +266,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import modalMixin from '@/mixins/modalMixin';
 import { apiUploadImg } from '@/api';

@@ -24,6 +24,7 @@
     </li>
   </ul>
 </template>
+
 <script>
 export default {
   name: 'pagination',

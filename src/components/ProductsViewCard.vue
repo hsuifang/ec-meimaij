@@ -1,6 +1,5 @@
 <template>
   <div class="product mb-5" :class="{ 'd-flex': type == 'list' }">
-    <!-- mb-3 -->
     <router-link :to="`/product/${product.id}`" class="d-block" :style="imgStyle">
       <div class="product__img">
         <img :src="product.imageUrl" alt="productImg" />
@@ -13,9 +12,6 @@
         ></a>
       </div>
       <div class="product__badge">
-        <!-- <span class="badge" :class="`bg-${product.status?.type}`">{{
-            product.status?.text
-          }}</span> -->
         <div class="ms-auto">
           <i
             class="bi bi-star-fill text-primary"
@@ -41,9 +37,7 @@
       </div>
     </div>
     <div class="product__listContent" :style="{ width: '70%' }" v-show="type == 'list'">
-      <h4 class="mb-3">
-        <a href="#">{{ product.title }}</a>
-      </h4>
+      <h4 class="mb-3">{{ product.title }}</h4>
       <p class="text-primary mb-3">
         <del class="text-muted fs-8" v-if="product.price < product.origin_price">{{
           $filters.currency(product.origin_price)
@@ -75,6 +69,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import cartsMixin from '@/mixins/cartsMixin';
 import favoriteMixin from '@/mixins/favoriteMixin';
