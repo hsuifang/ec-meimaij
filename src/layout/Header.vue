@@ -2,7 +2,7 @@
   <div class="sticky-top">
     <div class="bg-primary py-1">
       <p class="container text-dark">
-        一起加油！即日起至8/18優惠碼限時輸入：<span class="fw-bold text-light">e7e7x80</span>
+        一起加油！即日起至8/21優惠碼限時輸入：<span class="fw-bold text-light">e7e7x80</span>
         全館8折優惠
       </p>
     </div>

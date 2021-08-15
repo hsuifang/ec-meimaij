@@ -7,16 +7,9 @@
   <div class="container pt-0 pb-4 py-lg-5">
     <div class="row gx-lg-5">
       <div class="col-lg-3">
-        <h3
-          class="
-            fs-6
-            fw-bold
-            d-none d-lg-block
-            p-lg-3
-            bg-light
-            border-start border-primary border-4
-          "
-        ></h3>
+        <h3 class="fs-7 d-none d-lg-block p-lg-3 bg-light border-start border-primary border-5">
+          產品類型
+        </h3>
         <ul class="ps-1 productType-select p-lg-4">
           <li
             class="mb-3"
