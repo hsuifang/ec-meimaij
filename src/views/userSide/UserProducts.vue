@@ -56,7 +56,7 @@
             </div>
           </template>
         </div>
-        <div class="d-flex justify-content-center" v-if="this.typeSelected === '全部'">
+        <div class="d-flex justify-content-center">
           <Pagination :pageInfo="pageInfo" @changePage="changePage" />
         </div>
       </div>
@@ -84,11 +84,7 @@ export default {
     return {
       productView: 'grid',
       productsAll: [],
-      pageInfo: {
-        current: 1,
-        total: 1,
-        size: 10,
-      },
+      currentPage: 1,
       typeSelected: '全部',
     };
   },
@@ -110,24 +106,33 @@ export default {
         ...types,
       ];
     },
-    products() {
-      const data = [];
-      const content = this.productsAll.filter((product) => {
+    selectTypeProducts() {
+      return this.productsAll.filter((product) => {
         if (this.typeSelected !== '全部') {
           return product.category === this.typeSelected;
         }
         return true;
       });
+    },
+    products() {
+      const data = [];
       const { current, total, size } = this.pageInfo;
-      const maxNumber = total === current ? content.length : current * size;
+      const maxNumber = total === current ? this.selectTypeProducts.length : current * size;
       const fromNumber = (current - 1) * 10;
       for (let i = fromNumber; i < maxNumber; i += 1) {
-        data.push(content[i]);
+        data.push(this.selectTypeProducts[i]);
       }
       return data;
     },
     routeTypeSelected() {
       return this.$route.params.typeSelected;
+    },
+    pageInfo() {
+      return {
+        current: this.currentPage,
+        total: Math.ceil(this.selectTypeProducts.length / 10),
+        size: 10,
+      };
     },
   },
   methods: {
@@ -138,8 +143,6 @@ export default {
         const { success, products } = res.data;
         if (success) {
           this.productsAll = products;
-          this.pageInfo.current_page = 1;
-          this.pageInfo.total_pages = Math.ceil(this.productsAll.length / this.pageInfo.size);
         } else {
           this.$vHttpsNotice(res, '產品顯示');
         }
@@ -150,7 +153,7 @@ export default {
       }
     },
     changePage(page) {
-      this.pageInfo.current = page;
+      this.currentPage = page;
     },
   },
   watch: {
@@ -159,6 +162,7 @@ export default {
       this.fetchAllProduct();
     },
     typeSelected() {
+      this.currentPage = 1;
       this.fetchAllProduct();
     },
   },
