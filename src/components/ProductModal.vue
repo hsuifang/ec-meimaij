@@ -381,7 +381,9 @@ export default {
       }
     },
     updateTempImage() {
-      if (!this.inputImage) return;
+      if (!this.inputImage) {
+        return;
+      }
       const id = `new${new Date().getTime()}`;
       this.images.push({ id, url: this.inputImage });
       this.inputImage = '';
@@ -393,7 +395,9 @@ export default {
       // Deal with Main Image
       const { imageUrl, imagesUrl } = this.currentProductItem;
       const mainImages = imageUrl ? [{ id: 'currentImg0', url: imageUrl }] : [];
-      if (imageUrl) this.mainImgId = 'currentImg0';
+      if (imageUrl) {
+        this.mainImgId = 'currentImg0';
+      }
       // Deal with rest Images
       const images = imagesUrl || [];
       const restImages = images
