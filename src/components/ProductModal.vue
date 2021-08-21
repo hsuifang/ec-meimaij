@@ -326,6 +326,7 @@ export default {
           (item) => item.id === this.mainImgId,
         ).url;
       } catch (error) {
+        this.$vErrorNotice();
         this.currentProductItem.imageUrl = '';
       }
       this.currentProductItem.imagesUrl = this.images

@@ -212,7 +212,9 @@ export default {
   inject: ['emitter'],
   methods: {
     async applyCoupon() {
-      if (!this.couponCode) return;
+      if (!this.couponCode) {
+        return;
+      }
       this.toggleLoding({ pos: 'applyCoupon' });
       try {
         const res = await apiApplyCoupon(this.couponCode);

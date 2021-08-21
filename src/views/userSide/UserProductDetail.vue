@@ -8,128 +8,139 @@
     </template>
   </PageTitle>
   <div class="container pt-0 pb-4 py-lg-5">
-    <div class="row mb-4 mb-lg-8">
-      <div class="col-lg-4 offset-lg-1">
-        <div class="w-100 pointer" @click="showCoverImage(mainImage.id)">
-          <div class="squre-img mb-3 bg-primary-10">
-            <img :src="mainImage.src" alt="mainImage" />
-          </div>
-          <div class="position-absolute bottom-0 end-0">
-            <i class="bi bi-search fs-2"></i>
-          </div>
-        </div>
-        <div class="text-nowrap overflow-scroll">
-          <img
-            v-for="(img, idx) in imgs"
-            :key="`${idx}thumbnailImg`"
-            :src="img.src"
-            alt="thumbnailImg"
-            width="80"
-            height="80"
-            class="me-2 obj-fit-contain bg-primary-10 pointer"
-            @click="mainImageIdx = img.id"
-          />
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="py-5 ps-lg-5 border-bottom">
-          <h2 class="mb-3">{{ productDetail.title }}</h2>
-          <div class="mb-4">
-            <i
-              class="bi bi-star-fill text-primary"
-              :class="star"
-              v-for="(star, idx) in starClass"
-              :key="`star${idx}`"
-            ></i>
-          </div>
-          <h3 class="text-primary mb-3 mb-lg-4">
-            {{ $filters.currency(productDetail.price) }}
-            <del class="fs-5 text-info">{{ $filters.currency(productDetail.origin_price) }}</del>
-          </h3>
-          <p class="text-info mb-2" v-html="productDetail.description"></p>
-          <p class="text-info mb-4" v-html="productDetail.content"></p>
-          <div class="d-lg-flex">
-            <div class="d-flex align-items-center mb-3 mb-lg-0">
-              <label for="input-quantity" class="me-2">數量</label>
-              <input
-                type="number"
-                name="quantity"
-                min="1"
-                id="input-quantity"
-                class="form-control w-auto me-2"
-                v-model.number="requestQty"
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="row mb-4 mb-lg-8">
+          <div class="col-lg-5">
+            <div class="w-100 pointer" @click="showCoverImage(mainImage.id)">
+              <div class="squre-img mb-3 bg-primary-10">
+                <img :src="mainImage.src" alt="mainImage" />
+              </div>
+              <div class="position-absolute bottom-0 end-0">
+                <i class="bi bi-search fs-2"></i>
+              </div>
+            </div>
+            <div class="text-nowrap overflow-scroll">
+              <img
+                v-for="(img, idx) in imgs"
+                :key="`${idx}thumbnailImg`"
+                :src="img.src"
+                alt="thumbnailImg"
+                width="80"
+                height="80"
+                class="me-2 obj-fit-contain bg-primary-10 pointer"
+                @click="mainImageIdx = img.id"
               />
             </div>
-            <button type="button" class="btn btn-primary text-white me-2" @click="addUserCart">
-              加入購物車
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-info"
-              @click="toggleFavorite(productDetail)"
-            >
-              <i class="bi text-danger" :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"></i>
-            </button>
+          </div>
+          <div class="col-lg-7">
+            <div class="py-5 ps-lg-5 border-bottom">
+              <h2 class="mb-3">{{ productDetail.title }}</h2>
+              <div class="mb-4">
+                <i
+                  class="bi bi-star-fill text-primary"
+                  :class="star"
+                  v-for="(star, idx) in starClass"
+                  :key="`star${idx}`"
+                ></i>
+              </div>
+              <h3 class="text-primary mb-3 mb-lg-4">
+                {{ $filters.currency(productDetail.price) }}
+                <del class="fs-5 text-info">{{
+                  $filters.currency(productDetail.origin_price)
+                }}</del>
+              </h3>
+              <p class="text-info mb-2" v-html="productDetail.description"></p>
+              <p class="text-info mb-4" v-html="productDetail.content"></p>
+              <div class="d-lg-flex">
+                <div class="d-flex align-items-center mb-3 mb-lg-0">
+                  <label for="input-quantity" class="me-2">數量</label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    min="1"
+                    id="input-quantity"
+                    class="form-control w-auto me-2"
+                    v-model.number="requestQty"
+                  />
+                </div>
+                <button type="button" class="btn btn-primary text-white me-2" @click="addUserCart">
+                  加入購物車
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-info"
+                  @click="toggleFavorite(productDetail)"
+                >
+                  <i
+                    class="bi text-danger"
+                    :class="[isFavorite ? 'bi-heart-fill' : 'bi-heart']"
+                  ></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="pt-3 p-4 pt-lg-6 p-lg-8 bg-light">
-      <ul class="d-flex justify-content-center mb-3 mb-lg-5">
-        <li
-          class="h5 me-6 pb-3 fw-bold border-primary border-4"
-          :class="{ 'border-bottom': tabContnet === 'description' }"
-        >
-          <a href="#" class="text-info" @click.prevent="tabContnet = 'description'">產品說明</a>
-        </li>
-        <li
-          class="h5 pb-3 fw-bold border-primary border-4"
-          :class="{ 'border-bottom': tabContnet === 'productValue' }"
-        >
-          <a href="#" class="text-info" @click.prevent="tabContnet = 'productValue'">商品評價</a>
-        </li>
-      </ul>
-      <div v-show="tabContnet === 'description'">
-        <p class="py-3 fw-bold">說明 ---</p>
-        <p>{{ productDetail.description }}</p>
-        <p class="py-3 fw-bold">內容 ---</p>
-        <p>{{ productDetail.content }}</p>
-        <p class="py-3 fw-bold">規格 ---</p>
-        <p v-html="productDetail.spec"></p>
-      </div>
-      <div v-show="tabContnet === 'productValue'">
-        <ul>
-          <li class="py-4">
-            <div class="d-flex justify-content-between mb-2">
-              <p class="fw-bold">台中陳小姐</p>
-              <p class="text-info">2021/03/06</p>
-            </div>
-            <p class="mb-1">過往沒有使用過該產品，想說試試看，沒想到我家的臭寶貝超喜歡！</p>
-            <div>
-              <i
-                class="bi bi-star-fill text-primary"
-                :class="star"
-                v-for="(star, idx) in 5"
-                :key="`star${idx}`"
-              ></i>
-            </div>
-          </li>
-          <li class="py-4">
-            <div class="d-flex justify-content-between mb-2">
-              <p class="fw-bold">台中王小姐</p>
-              <p class="text-info">2021/05/06</p>
-            </div>
-            <p class="mb-1">推薦給想購買的了，我家寶貝是見證者 :)</p>
-            <div>
-              <i
-                class="bi bi-star-fill text-primary"
-                :class="star"
-                v-for="(star, idx) in 5"
-                :key="`star${idx}`"
-              ></i>
-            </div>
-          </li>
-        </ul>
+        <div class="pt-3 p-4 pt-lg-6 p-lg-8 bg-light">
+          <ul class="d-flex justify-content-center mb-3 mb-lg-5">
+            <li
+              class="h5 me-6 pb-3 fw-bold border-primary border-4"
+              :class="{ 'border-bottom': tabContnet === 'description' }"
+            >
+              <a href="#" class="text-info" @click.prevent="tabContnet = 'description'">產品說明</a>
+            </li>
+            <li
+              class="h5 pb-3 fw-bold border-primary border-4"
+              :class="{ 'border-bottom': tabContnet === 'productValue' }"
+            >
+              <a href="#" class="text-info" @click.prevent="tabContnet = 'productValue'"
+                >商品評價</a
+              >
+            </li>
+          </ul>
+          <div v-show="tabContnet === 'description'">
+            <p class="py-3 fw-bold">說明 ---</p>
+            <p>{{ productDetail.description }}</p>
+            <p class="py-3 fw-bold">內容 ---</p>
+            <p>{{ productDetail.content }}</p>
+            <p class="py-3 fw-bold">規格 ---</p>
+            <p v-html="productDetail.spec"></p>
+          </div>
+          <div v-show="tabContnet === 'productValue'">
+            <ul>
+              <li class="py-4">
+                <div class="d-flex justify-content-between mb-2">
+                  <p class="fw-bold">台中陳小姐</p>
+                  <p class="text-info">2021/03/06</p>
+                </div>
+                <p class="mb-1">過往沒有使用過該產品，想說試試看，沒想到我家的臭寶貝超喜歡！</p>
+                <div>
+                  <i
+                    class="bi bi-star-fill text-primary"
+                    :class="star"
+                    v-for="(star, idx) in 5"
+                    :key="`star${idx}`"
+                  ></i>
+                </div>
+              </li>
+              <li class="py-4">
+                <div class="d-flex justify-content-between mb-2">
+                  <p class="fw-bold">台中王小姐</p>
+                  <p class="text-info">2021/05/06</p>
+                </div>
+                <p class="mb-1">推薦給想購買的了，我家寶貝是見證者 :)</p>
+                <div>
+                  <i
+                    class="bi bi-star-fill text-primary"
+                    :class="star"
+                    v-for="(star, idx) in 5"
+                    :key="`star${idx}`"
+                  ></i>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

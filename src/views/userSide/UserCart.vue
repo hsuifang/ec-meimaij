@@ -9,10 +9,15 @@
     <div class="row mt-4 mb-4">
       <div class="col-lg-12">
         <div class="py-3 p-md-5 bg-white rounded border">
-          <div v-if="carts.length > 0" class="d-flex justify-content-end">
-            <a href="#" :disabled="loadingItem.pos === 'delAll'" @click.prevent="deleteAllCart">
+          <div v-if="carts.length > 0" class="d-flex justify-content-end mb-2">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              :disabled="loadingItem.pos === 'delAll'"
+              @click.prevent="deleteAllCart"
+            >
               刪除全部
-            </a>
+            </button>
           </div>
           <div class="table-responsive">
             <table class="table">
@@ -102,20 +107,22 @@
               style="width: 180px"
               v-model="couponCode"
             />
-            <button
-              type="button"
-              class="btn btn-secondary text-white"
-              @click="applyCoupon"
-              :disabled="!couponCode"
-            >
-              <i class="bi bi-gift text-white me-2"></i>優惠碼
-            </button>
-            <div
-              v-if="loadingItem.pos === 'applyCoupon'"
-              class="spinner-border spinner-border-sm position-absolute top-50 start-100"
-              role="status"
-            >
-              <span class="visually-hidden">Loading...</span>
+            <div>
+              <button
+                type="button"
+                class="btn btn-secondary text-white"
+                @click="applyCoupon"
+                :disabled="!couponCode"
+              >
+                <i class="bi bi-gift text-white me-2"></i>優惠碼
+              </button>
+              <div
+                v-if="loadingItem.pos === 'applyCoupon'"
+                class="spinner-border spinner-border-sm position-absolute top-50 start-100"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
           </div>
         </div>
@@ -159,12 +166,15 @@ export default {
   },
   methods: {
     async applyCoupon() {
-      if (!this.couponCode) return;
+      if (!this.couponCode) {
+        return;
+      }
       this.toggleLoding({ pos: 'applyCoupon' });
       try {
         const res = await apiApplyCoupon(this.couponCode);
         if (res.data.success) {
           this.usedCode = this.couponCode;
+          this.fetchCartList();
         }
         this.couponCode = '';
         this.$vHttpsNotice(res, '使用優惠券');

@@ -178,6 +178,7 @@ export default {
           this.fetchProductData();
         }
       } catch (error) {
+        this.$vErrorNotice();
         this.$vLoading(false);
       }
     },
