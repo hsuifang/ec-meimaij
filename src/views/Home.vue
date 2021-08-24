@@ -2,7 +2,7 @@
   <!-- Carousel -->
   <ImagesCarousel />
   <!-- Annoucement  -->
-  <div class="container py-4 py-lg-8">
+  <div class="container py-4 pb-lg-8">
     <ul class="row">
       <li class="col-lg-4 border-end-custom mb-4 mb-lg-0">
         <div class="text-center p-3 p-lg-5">
